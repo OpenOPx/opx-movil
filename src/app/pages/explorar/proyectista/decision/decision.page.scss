@@ -1,0 +1,21 @@
+ion-content {
+  --background: var(--ion-color-light) !important;
+}
+
+ion-list {
+  ion-list-header {
+    --background: var(--ion-color-light) !important;
+  }
+
+  ion-item {
+    ion-label {
+      font-weight: bold;
+    }
+  }
+}
+
+ion-footer {
+  ion-toolbar {
+    --background: var(--ion-color-light) !important;
+  }
+}

@@ -1,0 +1,79 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="regresar()">
+        <ion-icon slot="start" name="close"></ion-icon>
+      </ion-button>
+      <ion-title>Validar</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item lines="none" [color]="getColor(encuestas[slideActiveIndex].estado)">
+
+    <ion-icon *ngIf="encuestas[slideActiveIndex].estado===0" name="alert" slot="start" slot="start"></ion-icon>
+    <ion-icon *ngIf="encuestas[slideActiveIndex].estado===1" name="close-circle-outline" slot="start"></ion-icon>
+    <ion-icon *ngIf="encuestas[slideActiveIndex].estado===2" name="checkmark-circle" slot="start"></ion-icon>
+
+    <ion-label *ngIf="encuestas[slideActiveIndex].estado===0">Sin Validar</ion-label>
+    <ion-label *ngIf="encuestas[slideActiveIndex].estado===1">Inválida</ion-label>
+    <ion-label *ngIf="encuestas[slideActiveIndex].estado===2">Válida</ion-label>
+
+    <ion-label slot="end">
+      <ion-text class="ion-text-end">
+        <h2><b>{{slideActiveIndex + 1}}/{{slideLength}}</b></h2>
+      </ion-text>
+    </ion-label>
+  </ion-item>
+
+  <ion-grid *ngIf="encuestas[slideActiveIndex].estado===1" style="padding-bottom: 0px;">
+    <ion-row>
+      <ion-col style="padding-bottom: 0px;">
+        <ion-chip outline color="danger">
+          <ion-icon name="quote"></ion-icon>
+          <ion-label>{{encuestas[slideActiveIndex].observacion}}</ion-label>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-slides class="ion-no-padding" (ionSlideDidChange)="slideChange($event)" class="mainSlide" #slidePrincipal>
+    <ion-slide *ngFor="let encuesta of encuestas">
+      <ion-list>
+
+        <ion-item lines="none" *ngFor="let item of encuesta.formulario">
+          <ion-label>
+            <b>{{item.label}}</b>
+            <ion-text>
+              <p>{{item.respuesta }}</p>
+            </ion-text>
+          </ion-label>
+
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" color="primary" (click)="invalidar()">
+          INVÁLIDO
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button expand="full" color="primary" (click)="validar()">
+          VÁLIDO
+        </ion-button>
+      </ion-col>
+
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

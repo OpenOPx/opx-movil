@@ -1,0 +1,14 @@
+ion-content {
+  --background: var(--ion-color-light) !important;
+}
+.proyecto,
+.sin-proyectos {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+ion-card {
+  --background: #fff !important;
+  margin-bottom: 0px;
+  margin-top: 5px;
+}

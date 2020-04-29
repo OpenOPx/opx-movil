@@ -1,0 +1,64 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="regresar()">
+        <ion-icon slot="start" name="close"></ion-icon>
+      </ion-button>
+      <ion-title *ngIf="!validar">Mapeo</ion-title>
+      <ion-title *ngIf="validar">Validar</ion-title>
+    </ion-buttons>
+    <ion-buttons *ngIf="this.tarea.tareestado === 1 && validar" slot="secondary">
+      <ion-button>
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="this.tarea.tareestado === 0 && validar" slot="secondary">
+      <ion-button>
+        <ion-icon name="construct" mode="ios"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="this.tarea.tareestado === 2 && validar" slot="secondary">
+      <ion-button>
+        <ion-icon color="success" name="checkmark-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="cargando" class="splash">
+    <div class="spinner">
+      <ion-img src="assets/icon/logo-splash.png"></ion-img>
+    </div>
+  </div>
+  <div id="map" #mapa></div>
+
+  <!-- Botón flotante que actualiza la ubicación actual -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" (click)="actualizaUbicacion()">
+      <ion-icon color="primary" name="locate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+<ion-footer *ngIf="validar">
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" [disabled]="this.tarea.tareestado === 2 && cargando" color="primary"
+          (click)="invalidarCartografia()">
+          INVÁLIDO
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button expand="full" [disabled]="this.tarea.tareestado === 2 && cargando" color="primary"
+          (click)="validarCartografia()">
+          VÁLIDO
+        </ion-button>
+      </ion-col>
+
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

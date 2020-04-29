@@ -1,0 +1,14 @@
+ion-tab-button {
+  --background: var(--ion-color-primary) !important;
+  --color: rgba(158, 228, 250, 1);
+  --color-selected: var(--ion-color-light) !important;
+  ion-label {
+    display: none;
+  }
+}
+
+ion-tab-button.tab-selected {
+  ion-label {
+    display: block;
+  }
+}

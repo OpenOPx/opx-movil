@@ -1,0 +1,122 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Proyectos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="proyecto">
+
+  <!-- Descripción general del proyecto -->
+  <ion-grid class="proyecto" *ngIf="!cargando">
+    <ion-row>
+      <ion-col size="12">
+        <ion-item class="ion-no-padding" lines="none">
+          <div class="circle">{{proyecto.proyectista | iniciales}}</div>
+          <ion-label>
+            <ion-text>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="7">
+                    <h5>
+                      <b>{{proyecto.proyectista}}</b>
+                    </h5>
+                  </ion-col>
+                  <ion-col size="5">
+                    <h5>
+                      <ion-text color="medium">
+                        {{proyecto.proyfechacreacion | date: 'yyyy/MM/d'}} </ion-text>
+                    </h5>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-text color="dark">
+          <h1><b>{{proyecto.proynombre}}</b></h1>
+        </ion-text>
+        <ion-text color="medium">
+          <p>{{proyecto.proydescripcion}}</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Inicio Skeleton -->
+  <ion-grid class="proyecto" *ngIf="cargando">
+    <ion-row>
+      <ion-col size="12">
+        <ion-text color="dark">
+          <h1>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h1>
+        </ion-text>
+        <ion-item lines="none">
+          <div slot="start" class="circle">
+          </div>
+          <ion-label>
+            <ion-text>
+              <ion-grid class="ion-no-padding">
+                <ion-row>
+                  <ion-col size="7">
+                    <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-text color="medium">
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated width="50%"></ion-skeleton-text>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- FIn Skeleton -->
+
+  <ion-segment *ngIf="!cargando" (ionChange)="segmentChanged()">
+    <ion-segment-button value="tareas" checked>
+      <ion-label>
+        <ion-text>
+          <h2><b>TAREAS</b></h2>
+        </ion-text>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="validar">
+      <ion-label>
+        <ion-text>
+          <h2><b>VALIDAR</b></h2>
+        </ion-text>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="segmentoTareas">
+    <app-peticion-login mensaje="Para contribuir a este proyecto debes iniciar sesión." back="true"
+      *ngIf="!authService.token && !cargando"></app-peticion-login>
+    <app-tareas *ngIf="authService.token" [cargando]="cargando" [tareas]="tareas"></app-tareas>
+  </div>
+
+  <div *ngIf="segmentoValidar">
+    <div *ngIf="authService.token">
+      <app-tareas *ngIf="authService.user.rol === 'Validador' || authService.user.rol === 'Proyectista'"
+        [cargando]="cargando" [tareas]="tareasCompletadas"></app-tareas>
+      <ion-text
+        *ngIf="!(authService.user.rol === 'Validador' || authService.user.rol === 'Proyectista' || authService.user.rol === 'Super Administrador')"
+        class="ion-text-center ion-padding-horizontal">
+        <h3>No tienes el ranking suficiente para realizar validaciones</h3>
+      </ion-text>
+    </div>
+    <app-peticion-login mensaje="Para contribuir a este proyecto debes iniciar sesión."
+      *ngIf="!authService.token && !cargando"></app-peticion-login>
+  </div>
+
+</ion-content>

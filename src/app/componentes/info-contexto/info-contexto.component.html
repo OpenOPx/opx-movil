@@ -1,0 +1,87 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-text>
+      <h3 class="ion-padding-horizontal" style="margin-bottom: 0px;"><b>Barrio
+          {{barrioSeleccionado ? barrioSeleccionado.barrio : barrioUbicacion.barrio}}</b></h3>
+      <ion-item lines="none">
+        <ion-icon color="success" name="radio-button-on" style="padding-right: 5px;"></ion-icon>
+        <ion-label color="medium"><b>INDICADOR DE PAZ</b></ion-label>
+      </ion-item>
+    </ion-text>
+    <ion-buttons slot="end" class="ion-padding-end">
+      <ion-button fill="solid" color="primary" (click)="reproducir()">
+        <ion-icon *ngIf="!cargaReproduccion" name="volume-high"></ion-icon>
+        <ion-spinner *ngIf="cargaReproduccion"></ion-spinner>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-segment (ionChange)="segmentChanged($event)" class="ion-padding-bottom">
+    <ion-segment-button value="dia">
+      <ion-label>DÍA</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="semana">
+      <ion-label>SEMANA</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="mes">
+      <ion-label>MES</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="todo" checked>
+      <ion-label>TODO</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-item *ngIf="segmentoActual !== 'todo'">
+    <ion-label color="primary" position="fixed">Año <ion-text color="danger">*</ion-text>
+    </ion-label>
+    <ion-datetime (ionChange)="ionChange(defaultDate)" [min]="minDate" [max]="maxDate" displayFormat="YYYY"
+      name="defaultDate" [(ngModel)]="defaultDate" required>
+    </ion-datetime>
+  </ion-item>
+
+  <canvas [hidden]="cargandoBar" #barCanvas></canvas>
+
+  <ion-grid *ngIf="cargandoBar" style="padding: 20%;">
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="!loadingBullets" class="ion-padding">
+    <div *ngFor="let bullet of bulletCharts">
+      <ion-label>{{bullet.title}}</ion-label>
+      <jqxBulletChart width='95%' height='70px' barSize='50%' [showTooltip]='true' [title]='title'
+        [description]='description' [ranges]='bullet.ranges | bullet' [pointer]='bullet.pointer'
+        [target]='bullet.target' [ticks]='ticks'>
+      </jqxBulletChart>
+    </div>
+
+    <ion-chip *ngFor="let chip of ionchips" (click)="showHide(chip)" color="dark" [outline]="chip.check">
+      <ion-icon name="water" mode="ios" [style]="chip.style | sanitizerStyle" [color]="chip.color"></ion-icon>
+      <ion-label>{{chip.text}}</ion-label>
+    </ion-chip>
+    <ion-chip outline>
+      <ion-icon name="water" mode="ios" color="dark"></ion-icon>
+      <ion-label>Promedio</ion-label>
+    </ion-chip>
+    <ion-chip outline>
+      <ion-icon name="water" mode="ios" color="primary"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-chip>
+
+  </div>
+
+  <ion-grid *ngIf="loadingBullets" style="padding-top: 20%;">
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

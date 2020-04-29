@@ -1,0 +1,84 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: #fff;
+  line-height: 30px;
+  text-align: center;
+  background: var(--ion-color-primary) !important;
+}
+
+ion-segment {
+  --background: white !important;
+
+  ion-segment-button {
+    color: var(--ion-color-medium) !important;
+    padding-top: 1px;
+    margin-top: 1px;
+  }
+
+  ion-segment-button.segment-button-checked {
+    --background-checked: white !important;
+    color: var(--ion-color-primary) !important;
+  }
+}
+
+.my-custom-modal-css .modal-wrapper {
+  top: 25%;
+  height: 75%;
+  position: absolute;
+  --border-radius: 5px;
+}
+
+.splash {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spinner {
+  ion-img {
+    width: 190px;
+    -webkit-animation: rotation 2s infinite linear;
+  }
+
+  @-webkit-keyframes rotation {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(359deg);
+    }
+  }
+}

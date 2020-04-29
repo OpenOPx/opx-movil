@@ -1,0 +1,25 @@
+ion-content {
+  --background: var(--ion-color-light) !important;
+}
+ion-grid {
+  background-color: white !important;
+}
+
+ion-tab-button.tab-selected {
+  border-bottom: 2px;
+  border-bottom-style: solid;
+}
+
+.card-title {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ion-tab-button {
+  --background: var(--ion-color-primary) !important;
+  --color: rgba(158, 228, 250, 1);
+  --color-selected: var(--ion-color-light) !important;
+}
+ */

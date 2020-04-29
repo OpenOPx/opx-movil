@@ -1,0 +1,22 @@
+<ion-grid fixed>
+  <ion-row>
+    <ion-col class="ion-text-center">
+      <img class="ion-padding" style="padding-top: 90px;" *ngIf="pantalla==='tareas'" src="assets/images/tareas.png">
+      <ion-text color="dark">
+        <h2><b>{{mensaje}}</b></h2>
+      </ion-text>
+      <ion-button class="ion-text-uppercase" color="primary" expand="block" (click)="mostrarModal('login')">
+        Iniciar sesión
+      </ion-button>
+      <p>
+        <ion-text color="medium">
+          ¿Aún no tienes cuenta?
+        </ion-text>
+        <ion-text color="primary" (click)="mostrarModal('registro')">
+          <b> Registrate aquí</b>
+        </ion-text>
+      </p>
+
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -1,0 +1,58 @@
+<ion-content>
+  <div *ngIf="loading" class="splash">
+    <div class="spinner">
+      <ion-img src="assets/icon/logo-splash.png"></ion-img>
+    </div>
+  </div>
+
+  <div id="mapId"></div>
+
+  <!-- Botón flotante del proyectista -->
+  <div *ngIf="authService.user">
+    <ion-fab *ngIf="authService.user.rol === 'Proyectista' || authService.user.rol === 'Super Administrador'"
+      vertical="bottom" horizontal="start" slot="fixed">
+      <ion-fab-button color="light" routerLink="proyectista">
+        <ion-icon color="primary" name="add"></ion-icon>
+      </ion-fab-button>
+      <!-- <ion-fab-list side="top">
+        <ion-fab-button (click)="irDecision('tiempo')">
+          <ion-icon color="medium" name="time"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="irDecision('territorio')">
+          <ion-icon color="medium" name="apps" mode="ios"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="irDecision('objetivo')">
+          <ion-icon color="medium" name="shuffle" mode=ios></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list> -->
+    </ion-fab>
+  </div>
+
+  <!-- Botón flotante que actualiza la ubicación actual -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" (click)="actualizaUbicacion()">
+      <ion-icon color="primary" name="locate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+
+</ion-content>
+
+<ion-footer *ngIf="!loading && barrioUbicacion">
+  <ion-toolbar>
+    <ion-text (click)="openMyModal()">
+      <h3 class="ion-padding-horizontal" style="margin-bottom: 0px;"><b>Barrio {{barrioUbicacion.barrio}}</b></h3>
+      <ion-item lines="none">
+        <ion-icon color="success" name="radio-button-on" style="padding-right: 5px;"></ion-icon>
+        <ion-label color="medium"><b>INDICADOR DE PAZ</b></ion-label>
+      </ion-item>
+    </ion-text>
+    <ion-buttons slot="end" class="ion-padding-end">
+      <ion-button fill="solid" color="primary" (click)="reproducir()">
+        <ion-icon *ngIf="!cargaReproduccion" name="volume-high"></ion-icon>
+        <ion-spinner *ngIf="cargaReproduccion"></ion-spinner>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

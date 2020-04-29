@@ -1,0 +1,267 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrar()">
+        <ion-icon slot="start" name="close" color="medium"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides #slidePrincipal>
+
+    <!-- Nombres y apellidos -->
+    <ion-slide>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <ion-img src="assets/logo-opc.png"></ion-img>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-text color="dark">
+              <h1><b>Crea una cuenta de la OPC</b></h1>
+              <p>Ingresa tu nombre y apellido</p>
+            </ion-text>
+          </ion-col>
+
+          <form #form="ngForm">
+            <ion-col size="12">
+              <ion-item lines="full">
+                <ion-input type="text" placeholder="Nombre" clearInput name="nombre" [(ngModel)]="nuevoUsuario.nombre"
+                  required>
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="full">
+                <ion-input type="text" placeholder="Apellido" clearInput name="apellido"
+                  [(ngModel)]="nuevoUsuario.apellido" required>
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+            </ion-col>
+            <ion-col size="6">
+              <ion-button class="ion-text-uppercase" [disabled]="form.invalid" color="primary" expand="block"
+                (click)="siguiente()">
+                Siguiente
+              </ion-button>
+            </ion-col>
+          </form>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <!-- Nombres y apellidos -->
+
+    <!-- Nacimiento y genero -->
+    <ion-slide>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <ion-img src="assets/logo-opc.png"></ion-img>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-text color="dark">
+              <h1><b>Información básica</b></h1>
+              <p>Completa tu fecha de nacimiento y género</p>
+            </ion-text>
+          </ion-col>
+          <form #form2="ngForm">
+            <ion-col size="12">
+              <ion-grid class="ion-no-padding">
+                <ion-row>
+
+                  <ion-col>
+                    <ion-item lines="full">
+                      <ion-datetime placeholder="Fecha de Nacimiento" displayFormat="YYYY-MM-DD" name="fecha_nacimiento"
+                        [(ngModel)]="nuevoUsuario.fecha_nacimiento">
+                      </ion-datetime>
+                    </ion-item>
+                  </ion-col>
+
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="full">
+                <ion-select placeholder="Genero" name="genero" [(ngModel)]="nuevoUsuario.genero" required>
+                  <ion-select-option *ngFor="let gen of generos" [value]="gen.generoid">{{gen.nombre}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-button class="ion-text-uppercase" [disabled]="form2.invalid" color="primary" expand="block"
+                (click)="siguiente()">
+                Siguiente
+              </ion-button>
+            </ion-col>
+          </form>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <!-- Nacimiento y genero -->
+
+    <!-- Barrio y nivel educativo -->
+    <ion-slide>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <ion-img src="assets/logo-opc.png"></ion-img>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-text color="dark">
+              <h1><b>Información básica</b></h1>
+              <p>Cuentanos en que barrios vives y cual es tu nivel educativo</p>
+            </ion-text>
+          </ion-col>
+          <form #form3="ngForm">
+            <ion-col size="12">
+              <ion-item lines="full">
+                <ion-select placeholder="Barrio" name="barrio" [(ngModel)]="nuevoUsuario.barrio" required>
+                  <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.barrioid">{{barrio.nombre}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="full">
+                <ion-select placeholder="Nivel Educativo" name="niveleducativo"
+                  [(ngModel)]="nuevoUsuario.niveleducativo" required>
+                  <ion-select-option *ngFor="let nivel of nivelesEducativos" [value]="nivel.nivelid">{{nivel.nombre}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+            </ion-col>
+            <ion-col size="6">
+              <ion-button class="ion-text-uppercase" [disabled]="form3.invalid" color="primary" expand="block"
+                (click)="siguiente()">
+                Siguiente
+              </ion-button>
+            </ion-col>
+          </form>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <!-- Barrio y nivel educativo -->
+
+    <!-- Informarción de acceso -->
+    <ion-slide>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <ion-img src="assets/logo-opc.png"></ion-img>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-text color="dark">
+              <h1><b>Información de acceso</b></h1>
+              <p>Completa los siguientes datos</p>
+            </ion-text>
+          </ion-col>
+          <form #form4="ngForm">
+            <ion-col size="12">
+              <ion-item lines="full">
+                <ion-input type="tel" placeholder="Número de celular" clearInput name="telefono"
+                  [(ngModel)]="nuevoUsuario.telefono" required>
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="full">
+                <ion-input type="email" placeholder="E-mail" clearInput name="useremail"
+                  [(ngModel)]="nuevoUsuario.useremail"
+                  pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required #inputEmail>
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="full" style="margin-bottom: 5px;">
+                <ion-input [type]="passwordType" placeholder="Contraseña" [(ngModel)]="nuevoUsuario.userpassword"
+                  name="userpassword" minlength="8" clearInput
+                  pattern="^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[a-z])\S{8,16}$" required>
+                </ion-input>
+                <ion-icon color="medium" slot="end" [name]="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+              </ion-item>
+              <ion-label color="dark">
+                Utiliza 8 o más caracteres, con una combinación de letras, números y símbolos.
+              </ion-label>
+            </ion-col>
+
+            <ion-col size="6">
+            </ion-col>
+            <ion-col size="6">
+              <ion-button class="ion-text-uppercase" [disabled]="form4.invalid" color="primary" expand="block"
+                (click)="siguiente()">
+                Siguiente
+              </ion-button>
+            </ion-col>
+          </form>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <!-- Informarción de acceso -->
+
+    <!-- Finalizar registro -->
+    <ion-slide>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <ion-img src="assets/logo-opc.png"></ion-img>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-text color="dark">
+              <h1><b>Finalizar registro</b></h1>
+              <p>Al tocar "Registrarme", aceptas nuestras
+                <ion-text color="primary">condiciones</ion-text>, <ion-text color="primary">la política de datos
+                </ion-text> y la <ion-text color="primary">política</ion-text>
+                <ion-text color="primary">de cookies</ion-text>. Es posible que te enviemos
+                notificaciones por SMS
+              </p>
+            </ion-text>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-button class="ion-text-uppercase" color="primary" expand="block" (click)="registro()">
+              Registrarme
+            </ion-button>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <!-- Finalizar registro -->
+
+  </ion-slides>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar>
+    <ion-text class="ion-text-center">
+      <p>
+        <ion-text color="medium">
+          ¿Ya te encuentras registrado?
+        </ion-text>
+        <ion-text color="primary" (click)="mostrarModalLogin()"><b> Ingresa aquí</b></ion-text>
+      </p>
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>

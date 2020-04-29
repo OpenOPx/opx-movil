@@ -1,0 +1,21 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="regresar()">
+        <ion-icon slot="start" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <iframe *ngIf="!loading" [src]="url | sanitizer" frameborder="0"></iframe>
+
+  <ion-grid *ngIf="loading" class="ion-padding">
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

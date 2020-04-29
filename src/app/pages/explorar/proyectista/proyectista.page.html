@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Proyectista</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="loading" class="splash">
+    <div class="spinner">
+      <ion-img src="assets/icon/logo-splash.png"></ion-img>
+    </div>
+  </div>
+
+  <div id="mapPro"></div>
+
+  <!-- Botón flotante del proyectista -->
+  <div *ngIf="nombreSeleccionado">
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+      <ion-fab-button color="light">
+        <ion-icon color="primary" name="create"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-list side="top" *ngIf="tareaSeleccionada">
+        <ion-fab-button>
+          <ion-icon (click)="presentAlertPrompt()" color="medium" name="clipboard"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+
+      <ion-fab-list side="top" *ngIf="!tareaSeleccionada">
+        <ion-fab-button (click)="irDecision('tiempo')">
+          <ion-icon color="medium" name="time"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="irDecision('equipos')">
+          <ion-icon color="medium" name="contacts"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-label color="primary" position="floating">Proyecto <ion-text color="danger">*</ion-text>
+      </ion-label>
+      <ion-input (click)="presentPicker()" placeholder="Selecciona aqui" name="name"
+        [(ngModel)]="proyectoSeleccionado.proynombre">
+      </ion-input>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

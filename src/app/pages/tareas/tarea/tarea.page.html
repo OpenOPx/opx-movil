@@ -1,0 +1,65 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="navCtrl.back();"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tarea</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div id="mapp" #mapa></div>
+
+  <!-- Descripción general de la tarea -->
+  <ion-grid class="proyecto" *ngIf="!cargando">
+    <ion-row>
+      <ion-col size="12">
+        <ion-text>
+          <h5>
+            <ion-text color="dark" class="ion-padding-end">
+              <b>{{tarea.taretipo | tipoTarea}}</b>
+            </ion-text> {{tarea.tarefechacreacion | date: 'yyyy/MM/d'}}
+          </h5>
+        </ion-text>
+        <ion-text>
+          <h1><b>{{tarea.tarenombre}}</b></h1>
+        </ion-text>
+        <ion-text color="medium">
+          <p>{{tarea.taredescripcion}}</p>
+        </ion-text>
+        <ion-progress-bar class="ion-margin-top" color="warning" [value]="(tarea.progreso || 0)/100">
+        </ion-progress-bar>
+        <ion-item class="ion-no-padding" lines="none">
+          <ion-label slot="start">
+            <ion-text color="primary"><b>{{tarea.progreso || 0 | number: '1.0'}}%</b></ion-text>
+            <ion-text color="medium">
+              <b> Progreso</b>
+            </ion-text>
+          </ion-label>
+          <ion-label slot="end">
+            <ion-text color="medium">
+              <b>{{tarea.progreso || 0 | number: '1.0'}}/100</b>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+
+        <ion-button *ngIf="implementado && tarea.taretipo === 1" class="ion-text-uppercase" color="primary"
+          expand="block" (click)="encuesta()">
+          Realizar encuesta
+        </ion-button>
+
+        <ion-button *ngIf="tarea.taretipo === 2" class="ion-text-uppercase" color="primary" expand="block"
+          (click)="mapeo()">
+          Realizar mapeo
+        </ion-button>
+
+        <ion-button
+          *ngIf="authService.user.rol === 'Validador' || authService.user.rol === 'Proyectista' || authService.user.rol === 'Super Administrador'"
+          class="ion-text-uppercase" color="primary" expand="block" (click)="validar()">
+          Validar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,47 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrar()">
+        <ion-icon slot="start" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-grid class="ion-padding-vertical">
+    <ion-row>
+      <ion-col size="9">
+        <ion-text color="light">
+          <h4>Bienvenido al</h4>
+          <h1><b>Observatorio de Paz y Cultura Ciudadana</b></h1>
+        </ion-text>
+      </ion-col>
+      <ion-img id="linea" src="assets/lines.png"></ion-img>
+    </ion-row>
+  </ion-grid>
+
+
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="12">
+        <ion-button class="ion-text-uppercase padding" (click)="mostrarModal('login')" expand="block" type="button">
+          Iniciar sesión
+        </ion-button>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button class="ion-text-uppercase" (click)="mostrarModal('registro')" expand="block" type="button">
+          Registrarme
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+  <ion-img id="alcaldia" class="ion-padding" src="assets/images/logo-alcaldia.png"></ion-img>
+
+
+</ion-content>

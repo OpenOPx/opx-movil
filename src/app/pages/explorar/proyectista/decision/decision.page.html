@@ -1,0 +1,98 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Explorar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!cargando">
+
+  <ion-list>
+
+    <ion-list-header *ngIf="tipo === 'tiempo'">
+      <ion-label class="ion-text-uppercase">
+        <ion-text color="medium">
+          <h4><b>Decisión - {{tipo}}</b></h4>
+        </ion-text>
+      </ion-label>
+    </ion-list-header>
+
+    <form *ngIf="tipo === 'tiempo'" #form="ngForm" (ngSubmit)="actualizarProyecto()">
+      <ion-item lines="none">
+        <ion-label color="primary" position="floating">Fecha de inicio</ion-label>
+        <ion-icon slot="start" mode="md" name="hourglass"></ion-icon>
+        <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="YYYY-MM-DD" placeholder="Inicio del proyecto"
+          name="proyfechainicio" [(ngModel)]="proyecto.proyfechainicio" required>
+        </ion-datetime>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="primary" position="floating">Fecha de cierre</ion-label>
+        <ion-icon slot="start" mode="ios" name="hourglass"></ion-icon>
+        <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="YYYY-MM-DD" placeholder="Fin del proyecto"
+          name="proyfechacierre" [(ngModel)]="proyecto.proyfechacierre" required>
+        </ion-datetime>
+      </ion-item>
+
+      <ion-button class="ion-padding-vertical" class="ion-text-uppercase" color="primary" [disabled]="form.invalid"
+        expand="block" type="submit">
+        Actualizar fechas
+      </ion-button>
+    </form>
+
+    <div *ngIf="tipo === 'equipos'">
+      <ion-item-group>
+        <ion-item-divider color="light">
+          <ion-label>
+            <b>Equipo actual</b>
+          </ion-label>
+          <!--  <ion-icon slot="end" class="ion-padding-end" name="globe"></ion-icon> -->
+        </ion-item-divider>
+
+        <ion-item *ngFor="let item of equipoActual; let i=index">
+          <ion-label>{{item.userfullname}}</ion-label>
+          <ion-spinner *ngIf="item.eliminando" slot="end"></ion-spinner>
+          <ion-icon *ngIf="!item.eliminando" slot="end" color="danger" name="remove-circle-outline"
+            (click)="eliminarUsuario(item)"></ion-icon>
+        </ion-item>
+
+        <ion-item *ngIf="equipoActual.length === 0 && !cargandoEquipos" lines="none">
+          <ion-label>No hay usuarios asignados en el proyecto</ion-label>
+        </ion-item>
+
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-item-divider color="light">
+          <ion-label>
+            <b>Equipo disponible</b>
+          </ion-label>
+        </ion-item-divider>
+
+        <ion-item *ngFor="let item of equipoDisponible; let i=index">
+          <ion-label>{{item.userfullname}}</ion-label>
+          <ion-spinner *ngIf="item.eliminando" slot="end"></ion-spinner>
+          <ion-icon *ngIf="!item.eliminando" slot="end" color="secondary" name="person-add"
+            (click)="agregarUsuario(item)"></ion-icon>
+        </ion-item>
+
+        <ion-item *ngIf="equipoDisponible.length === 0 && !cargandoEquipos" lines="none">
+          <ion-label>No hay usuarios disponible para el proyecto</ion-label>
+        </ion-item>
+
+      </ion-item-group>
+    </div>
+  </ion-list>
+</ion-content>
+
+<ion-content *ngIf="cargando">
+  <ion-grid style="padding-top: 20%;">
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

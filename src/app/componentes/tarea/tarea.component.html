@@ -1,0 +1,35 @@
+<ion-card (click)="click()">
+  <ion-card-header>
+    <ion-text>
+      <h5>
+        <ion-text color="dark" class="ion-padding-end">
+          <b>{{tarea.taretipo | tipoTarea}}</b>
+        </ion-text> {{tarea.tarefechacreacion | date: 'yyyy/MM/d'}}
+      </h5>
+    </ion-text>
+    <ion-text color="dark">
+      <h3><b>{{tarea.tarenombre}}</b></h3>
+    </ion-text>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-text>
+      <p>{{tarea.taredescripcion}}</p>
+    </ion-text>
+    <ion-progress-bar class="ion-margin-top" color="primary" [value]="(tarea.progreso || 0)/100">
+    </ion-progress-bar>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label slot="start">
+        <ion-text color="primary"><b>{{tarea.progreso || 0 | number: '1.0'}}%</b></ion-text>
+        <ion-text color="medium">
+          <b> Progreso</b>
+        </ion-text>
+      </ion-label>
+      <ion-label slot="end">
+        <ion-text color="medium">
+          <b>{{tarea.progreso || 0 | number: '1.0'}}/100</b>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-card-content>
+</ion-card>

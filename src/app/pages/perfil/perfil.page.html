@@ -1,0 +1,120 @@
+<ion-content *ngIf="authService.token">
+
+  <div *ngIf="!loading">
+    <ion-item lines="none" class="ion-padding-top">
+      <div class="circulo">{{name | iniciales}}</div>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>
+        <ion-text class="ion-text-center" color="dark">
+          <h1>{{name}} <ion-icon (click)='hideShowEdit()' [name]="profileIcon" color="medium">
+            </ion-icon>
+          </h1>
+        </ion-text>
+        <ion-text class="ion-text-center" color="medium">
+          <h3><b>{{usuario.rolname | uppercase }}</b></h3>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </div>
+
+  <ion-list *ngIf="!loading">
+    <ion-item-divider>
+      <ion-label>CUENTA</ion-label>
+    </ion-item-divider>
+
+    <ion-item>
+      <ion-icon slot="start" name="contact"></ion-icon>
+      <ion-label>Nombre Completo</ion-label>
+      <ion-input slot="end" type="text" autocapitalize [disabled]="!profileEdit" name="userfullname"
+        [(ngModel)]="usuario.userfullname"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="transgender"></ion-icon>
+      <ion-label>Genero</ion-label>
+      <ion-select slot="end" [disabled]="!profileEdit" placeholder="Genero" name="generoid"
+        [(ngModel)]="usuario.generoid" required>
+        <ion-select-option *ngFor="let genero of generos" [value]="genero.generoid">{{genero.nombre | titlecase}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-icon slot="start" name="calendar"></ion-icon>
+      <ion-label>Fecha nacimiento</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" [disabled]="!profileEdit" name="fecha_nacimiento"
+        [(ngModel)]="usuario.fecha_nacimiento">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-icon slot="start" name="book"></ion-icon>
+      <ion-label>Nivel Educativo</ion-label>
+      <ion-select slot="end" [disabled]="!profileEdit" placeholder="Nivel Educativo" name="nivel_educativo_id"
+        [(ngModel)]="usuario.nivel_educativo_id" required>
+        <ion-select-option *ngFor="let nivel of nivelesEducativos" [value]="nivel.nivelid">{{nivel.nombre | titlecase}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>Barrio</ion-label>
+      <ion-select slot="end" [disabled]="!profileEdit" placeholder="Barrio" name="barrioid"
+        [(ngModel)]="usuario.barrioid" required>
+        <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.barrioid">{{barrio.nombre | titlecase}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-icon slot="start" name="phone-portrait"></ion-icon>
+      <ion-label>Telefono</ion-label>
+      <ion-input slot="end" type="tel" [disabled]="!profileEdit" name="telefono" [(ngModel)]="usuario.telefono">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="mail"></ion-icon>
+      <ion-label>Correo Electrónico</ion-label>
+      <ion-input slot="end" type="email" [disabled]="!profileEdit" name="useremail" [(ngModel)]="usuario.useremail">
+      </ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-icon slot="start" name="lock"></ion-icon>
+      <ion-label>Contraseña</ion-label>
+      <ion-input slot="end" type="password" [disabled]="!profileEdit" name="password" [(ngModel)]="usuario.password">
+      </ion-input>
+    </ion-item>
+
+    <ion-item lines="full" (click)="cerrarSesion()" detail>
+      <ion-icon slot="start" name="log-out"></ion-icon>
+      <ion-label>Cerrar Sesión</ion-label>
+    </ion-item>
+
+    <ion-item-divider>
+      <ion-label> ACERCA DE </ion-label>
+    </ion-item-divider>
+
+    <ion-item (click)="abrirLink()" lines="full">
+      <ion-icon slot="start" name="help-circle-outline"></ion-icon>
+      <ion-label>Ayuda</ion-label>
+    </ion-item>
+    <ion-item (click)="abrirLink()" lines="full">
+      <ion-icon slot="start" name="lock"></ion-icon>
+      <ion-label>Privacidad</ion-label>
+    </ion-item>
+    <ion-item (click)="abrirLink()" lines="full">
+      <ion-icon slot="start" name="copy"></ion-icon>
+      <ion-label>Condiciones Del Servicio</ion-label>
+    </ion-item>
+
+    <ion-item lines="none" color="light">
+      <ion-label color="medium" style="text-align: right;" slot="end">
+        V0.0.1
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

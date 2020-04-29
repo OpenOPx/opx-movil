@@ -1,0 +1,58 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrar()">
+        <ion-icon slot="start" name="close" color="medium"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-img src="assets/logo-opc.png"></ion-img>
+
+  <form #form="ngForm" (ngSubmit)="login(form)">
+
+    <ion-item lines="none">
+      <ion-label position="floating">E-mail</ion-label>
+      <ion-icon color="dark" slot="start" name="mail"></ion-icon>
+      <ion-input type="email" clearInput name="email" ngModel
+        pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-icon color="dark" slot="start" name="lock"></ion-icon>
+      <ion-input type="password" clearInput name="password" ngModel required>
+      </ion-input>
+    </ion-item>
+
+    <!-- <ion-item lines="none"> -->
+    <ion-label class="ion-padding-horizontal">
+      <ion-text color="primary" (click)="abrirLink()">
+        <p><b>¿Olvidaste tu contraseña?</b></p>
+      </ion-text>
+    </ion-label>
+    <!--   </ion-item> -->
+
+    <ion-button class="ion-text-uppercase" color="primary" [disabled]="form.invalid" expand="block" type="submit">
+      Iniciar sesión
+    </ion-button>
+  </form>
+
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar>
+    <ion-text class="ion-text-center">
+      <p>
+        <ion-text color="medium">
+          ¿Aún no tienes cuenta?
+        </ion-text>
+        <ion-text color="primary" (click)="mostrarModalRegistro()"><b> Registrate aquí</b></ion-text>
+      </p>
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>

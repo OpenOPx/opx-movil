@@ -291,6 +291,7 @@ export class DataLocalService {
     if (generos) {
       return this.storage.set('generos', generos);
     }
+    console.log("GENEROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS" + this.storage.get('generos'));
     return await this.storage.get('generos');
   }
 

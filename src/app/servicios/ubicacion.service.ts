@@ -31,7 +31,7 @@ export class UbicacionService {
       console.log('Error getting location', error);
     });
   }
-
+/*
   seguimientoUbicacion() {
     return this.geolocation.watchPosition()
       .pipe(map(data => {
@@ -39,7 +39,7 @@ export class UbicacionService {
         return this.ubicacionActual = data.coords;
       }));
   }
-
+*/
   /**
    * Devuelve un arreglo de polígonos que contienen un punto.
    */

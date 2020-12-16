@@ -1,6 +1,7 @@
 <ion-grid class="lista-tareas" *ngIf="!cargando" class="ion-no-padding">
   <ion-row>
     <ion-col size="12">
+      <!-- Le pasa al componente tarea la tarea que tiene este componente Tareas, el componente tarea los recibe por @Input-->
       <app-tarea [tarea]="tarea" *ngFor="let tarea of tareas"></app-tarea>
     </ion-col>
 

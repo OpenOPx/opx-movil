@@ -18,6 +18,12 @@ export class TareaComponent implements OnInit {
   ngOnInit() { }
 
   click() {
+    /**
+     * tabs.router.module.ts
+     * path: 'tabs',
+     *path: 't/:id',
+      loadChildren: () => import('../tareas/tarea/tarea.module').then(m => m.TareaPageModule)
+     */
     this.navCtrl.navigateForward(`/tabs/t/${this.tarea.tareid}`);
   }
 

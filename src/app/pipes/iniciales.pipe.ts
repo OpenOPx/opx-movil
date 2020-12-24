@@ -6,9 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class InicialesPipe implements PipeTransform {
 
   /**
-   * Obtiene la primera letra de dos palabras.
-   * Si solo contiene una palabra de optiene solo la primera.
-   * @param value string
+   * @description Obtiene la primera letra de dos palabras. Si solo contiene una palabra se optiene solo la primera.
+   * @param value cadena de texto que puede contener 2 palabras separadas por espacio
    */
   transform(value: string): string {
     const split = value.split(' ');

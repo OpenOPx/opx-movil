@@ -39,6 +39,7 @@ export class EquiposService {
     const headers = new HttpHeaders({ Authorization: this.authService.token });
     return this.http.get(`${URL}/${proyid}/usuarios-disponibles/`, { headers })
       .pipe(map((resp: any) => {
+        //BEYCKER REVISAR - Que devuelve esto? Usuarios que atributos tiene
         return resp.usuarios;
       }), catchError(e => this.errorService.handleError(e)));
   }

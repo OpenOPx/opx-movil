@@ -96,12 +96,19 @@ export class InfoContextoComponent implements OnInit {
     }
   }
 
+  /**
+   * Reproduce la información del barrio seleccionado
+   */
   async reproducir() {
     this.cargaReproduccion = true;
     await this.contextosService.reproducir(this.barrioUbicacion, this.barrioSeleccionado);
     this.cargaReproduccion = false;
   }
 
+  /**
+   * Mediante chart realiza una grafica en canva
+   * @param datos 
+   */
   cargarGraficaLinea(datos: any) {
     if (!datos) {
       this.uiService.presentToast('Recurso no disponible offline');
@@ -153,6 +160,7 @@ export class InfoContextoComponent implements OnInit {
 
   cargarBulletCharts(data: any) {
     this.bulletCharts = [];
+    //BEYCKER REVISAR - Ese conflictividad.nombre y e.indicadores no sé que sea
     data.forEach(e => {
       const titulo = e.conflictividad.nombre;
       const ind = e.indicadores;

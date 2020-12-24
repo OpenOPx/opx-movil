@@ -45,6 +45,7 @@ export class AuthService {
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const querystring = this.querystring({ username: email, password });
+    //opx.variamos.com/login/?username=test@opx.com&password=12345678
 
     return this.http.post(URL + '/login/', querystring, { headers })
       .pipe(map(async (resp: any) => {
@@ -55,6 +56,9 @@ export class AuthService {
       }), catchError(this.handleError));
   }
 
+  /**
+   * @description vacia el contenido del storage, ya que es un usuario nuevo (borra los valores almacenados de un usuario anterior)
+   */
   removeItems() {
     return Promise.all([
       this.storage.remove('tareas'),
@@ -65,8 +69,8 @@ export class AuthService {
   }
 
   /**
-   * Registro de usuarios en la plataforma
-   * Por defecto los usuarios registrados tienen el rol de Voluntario
+   * @description Registro de usuarios en la plataforma. Por defecto los usuarios registrados tienen el rol de Voluntario
+   * @param form objeto con todos los campos del usuario a registrar
    */
   registro(form: any) {
 
@@ -94,14 +98,14 @@ export class AuthService {
    * En caso de no tenerlo, se redirige a la página principal
    */
   getUser() {
-    if (!this.user.userid) {
+    if (!this.user.pers_id) {
       this.checkToken();
     }
     return { ...this.user };
   }
 
   /**
-   * Guarda el token en el almacenamiento local del dispositivo móvil.
+   * @description Guarda el token en el almacenamiento local del dispositivo móvil. (STORAGE - key = token, value=ValorDelToken)
    */
   async saveToken(token: string) {
     this.token = 'Bearer ' + token;
@@ -110,7 +114,8 @@ export class AuthService {
   }
 
   /**
-   * Guarda usuario en el almacenamiento local del dispositivo móvil.
+   * @description Guarda usuario en el almacenamiento local del dispositivo móvil. (STORAGE - key = user, value=user)
+   * @param user Usuario a guardar en el Storage
    */
   async saveUser(user: User) {
     this.user = user;
@@ -119,7 +124,7 @@ export class AuthService {
   }
 
   /**
-   * Carga el token del almacenamiento local del dispositivo móvil.
+   * @description Carga el token del almacenamiento local del dispositivo móvil.
    * En caso de no tener, retorna null.
    */
   async loadToken() {
@@ -128,7 +133,7 @@ export class AuthService {
   }
 
   /**
-   * Verifica que el token exista en el almacenamiento local del dispositivo móvil.
+   * @description Verifica que el token exista en el almacenamiento local del dispositivo móvil.
    */
   async checkToken(): Promise<boolean> {
     await this.loadToken();

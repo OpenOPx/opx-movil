@@ -28,7 +28,7 @@ export class UtilidadesService {
   ) { }
 
   /**
-   * Obtiene la lista de generos
+   * @description Obtiene la lista de generos. Si está offline, obtiene la lista de generos localmente del STORAGE. De lo contrario los obtiene del servidor
    */
   listaGeneros() {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
@@ -43,7 +43,7 @@ export class UtilidadesService {
   }
 
   /**
-   * Carga los niveles educativos.
+   * @description Carga los niveles educativos. Si está offline, obtiene la lista de niveles educativos localmente del STORAGE. De lo contrario los obtiene del servidor
    */
   listaNivelesEducativos() {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
@@ -58,7 +58,7 @@ export class UtilidadesService {
   }
 
   /**
-   * Barrios disponibles en la plataforma.
+   * @description Barrios disponibles en la plataforma. Si está offline, obtiene la lista de barrios localmente del STORAGE. De lo contrario los obtiene del servidor
    */
   listaBarrios() {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
@@ -73,7 +73,7 @@ export class UtilidadesService {
   }
 
   /**
-   * Elementos disponibles para realizar el mapeo.
+   * @description Elementos disponibles para realizar el mapeo.
    */
   listaElementosOSM() {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {

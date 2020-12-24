@@ -15,6 +15,10 @@ export class UiService {
     private toastController: ToastController
   ) { }
 
+  /**
+   * @description Muestra un mensaje en formato de alerta informativa con un botón de OK
+   * @param message Texto a mostrar en el recuadro
+   */
   async informativeAlert(message: string) {
     const alert = await this.alertController.create({
       message,
@@ -24,6 +28,10 @@ export class UiService {
     await alert.present();
   }
 
+  /**
+   * @description Muestra un mensaje en formato Toast flotante
+   * @param message Texto a mostrar en el Toast
+   */
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message,
@@ -33,6 +41,10 @@ export class UiService {
     toast.present();
   }
 
+  /**
+   * @description Muestra un mensaje de exito en formato Toast flotante
+   * @param message Texto a mostrar en el Toast
+   */
   async presentToastSucess(message: string) {
     const toast = await this.toastController.create({
       message,
@@ -43,6 +55,10 @@ export class UiService {
     toast.present();
   }
 
+  /**
+   * @description Muestra un mensaje de error en formato Toast flotante
+   * @param message Texto a mostrar en el Toast
+   */
   async presentToastError(message: string) {
     const toast = await this.toastController.create({
       message,
@@ -53,6 +69,10 @@ export class UiService {
     toast.present();
   }
 
+  /**
+   * @param message mensaje para mostrar en la carga
+   * @description presenta un mensaje mientras la vista de la interfaz gráfica carga
+   */
   async presentLoading(message: string) {
     const loading = await this.loadingController.create({
       message

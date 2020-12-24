@@ -16,6 +16,11 @@ export class ModalAuthComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * 
+   * @param component login o registro. Depende del botón selecionado por el usuario
+   * @description Redirecciona a la vista de registro o login
+   */
   async mostrarModal(component: string) {
     this.cerrar();
     switch (component) {

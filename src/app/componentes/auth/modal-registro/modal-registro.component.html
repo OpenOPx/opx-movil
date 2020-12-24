@@ -91,7 +91,7 @@
             <ion-col size="12">
               <ion-item lines="full">
                 <ion-select placeholder="Genero" name="genero" [(ngModel)]="nuevoUsuario.genero" required>
-                  <ion-select-option *ngFor="let gen of generos" [value]="gen.generoid">{{gen.nombre}}
+                  <ion-select-option *ngFor="let gen of generos" [value]="gen.gender_id">{{gen.gender_name}}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -130,7 +130,7 @@
             <ion-col size="12">
               <ion-item lines="full">
                 <ion-select placeholder="Barrio" name="barrio" [(ngModel)]="nuevoUsuario.barrio" required>
-                  <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.barrioid">{{barrio.nombre}}
+                  <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.neighb_id">{{barrio.neighb_name}}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -140,7 +140,7 @@
               <ion-item lines="full">
                 <ion-select placeholder="Nivel Educativo" name="niveleducativo"
                   [(ngModel)]="nuevoUsuario.niveleducativo" required>
-                  <ion-select-option *ngFor="let nivel of nivelesEducativos" [value]="nivel.nivelid">{{nivel.nombre}}
+                  <ion-select-option *ngFor="let nivel of nivelesEducativos" [value]="nivel.educlevel_id">{{nivel.educlevel_name}}
                   </ion-select-option>
                 </ion-select>
               </ion-item>

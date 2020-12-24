@@ -1,6 +1,7 @@
 <ion-header no-border>
   <ion-toolbar>
     <ion-text>
+      <!-- BEYCKER REVISAR-->
       <h3 class="ion-padding-horizontal" style="margin-bottom: 0px;"><b>Barrio
           {{barrioSeleccionado ? barrioSeleccionado.barrio : barrioUbicacion.barrio}}</b></h3>
       <ion-item lines="none">
@@ -53,6 +54,7 @@
   </ion-grid>
 
   <div *ngIf="!loadingBullets" class="ion-padding">
+    <!-- BEYCKER REVISAR-->
     <div *ngFor="let bullet of bulletCharts">
       <ion-label>{{bullet.title}}</ion-label>
       <jqxBulletChart width='95%' height='70px' barSize='50%' [showTooltip]='true' [title]='title'
@@ -60,7 +62,7 @@
         [target]='bullet.target' [ticks]='ticks'>
       </jqxBulletChart>
     </div>
-
+    
     <ion-chip *ngFor="let chip of ionchips" (click)="showHide(chip)" color="dark" [outline]="chip.check">
       <ion-icon name="water" mode="ios" [style]="chip.style | sanitizerStyle" [color]="chip.color"></ion-icon>
       <ion-label>{{chip.text}}</ion-label>

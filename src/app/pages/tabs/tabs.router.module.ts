@@ -21,6 +21,9 @@ const routes: Routes = [{
     path: 't/:id',
     loadChildren: () => import('../tareas/tarea/tarea.module').then(m => m.TareaPageModule)
   }, {
+    path: 'notificaciones',
+    loadChildren: () => import('../notificaciones/notificaciones.module').then(m => m.NotificacionesPageModule)
+  }, {
     path: '',
     redirectTo: '/tabs/explorar',
     pathMatch: 'full'

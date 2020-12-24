@@ -3,18 +3,18 @@
     <ion-text>
       <h5>
         <ion-text color="dark" class="ion-padding-end">
-          <b>{{tarea.taretipo | tipoTarea}}</b>
-        </ion-text> {{tarea.tarefechacreacion | date: 'yyyy/MM/d'}}
+          <b>{{tarea.task_type_id | tipoTarea}}</b>
+        </ion-text> {{tarea.task_creation_date | date: 'yyyy/MM/d'}}
       </h5>
     </ion-text>
     <ion-text color="dark">
-      <h3><b>{{tarea.tarenombre}}</b></h3>
+      <h3><b>{{tarea.task_name}}</b></h3>
     </ion-text>
   </ion-card-header>
 
   <ion-card-content>
     <ion-text>
-      <p>{{tarea.taredescripcion}}</p>
+      <p>{{tarea.task_description}}</p>
     </ion-text>
     <ion-progress-bar class="ion-margin-top" color="primary" [value]="(tarea.progreso || 0)/100">
     </ion-progress-bar>

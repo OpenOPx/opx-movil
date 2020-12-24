@@ -6,7 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TipoTareaPipe implements PipeTransform {
 
   /**
-   * Regresa un tipo de Tarea en `string` de acuerdo al tipo de tarea
+   * @description Retorna el tipo de una Tarea como cadena de 'string' de acuerdo al tipo de tarea
+   * @param taretipo 
    */
   transform(taretipo: number): string {
     if (taretipo === 1) {

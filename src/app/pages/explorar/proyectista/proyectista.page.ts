@@ -46,14 +46,19 @@ export class ProyectistaPage implements OnInit {
 
   ionViewDidEnter() {
     this.leafletMap();
-    if (this.territorioSeleccionado.proyid) {
-      this.detalleProyecto(this.proyectoSeleccionado.proyid);
+    if (this.territorioSeleccionado.proj_id) {
+      this.detalleProyecto(this.proyectoSeleccionado.proj_id);
     }
   }
 
+  /*
+  * Llena el atributo protectos con los proyectos actuales
+  */
   cargarProyectos() {
     this.proyectosService.listadoProyectos()
       .subscribe(resp => {
+        //BEYCKER REVISAR Aqui es resp.proyectos o resp.project
+        //Al solicitar peticion http get en environment.API_URL + '/proyectos' se revisa eso
         this.proyectos.push(...resp.proyectos);
         if (resp.paginator.currentPage !== resp.paginator.lastPage) {
           this.cargarProyectos();
@@ -72,20 +77,22 @@ export class ProyectistaPage implements OnInit {
       .subscribe(p => {
         const gjLayer = [];
         p.forEach(element => {
-          const geoJS = JSON.parse(element.geojson);
-          delete element.geojson;
+          //BEYCKER REVISAR: Se hace el parse o me llega directamente como json, y lo otro es el atributo
+          const geoJS = JSON.parse(element.dimension_geojson);
+          delete element.dimension_geojson;
           geoJS.properties = element;
           gjLayer.push(geoJS);
         });
 
         this.geoJSONDimensiones = geoJSON(gjLayer, {
           onEachFeature: (feature, layer) => {
-            if (feature.properties && feature.properties.nombre) {
-              layer.bindPopup(feature.properties.nombre);
+            //BEYCKER REVISAR: feature.properties.nombre o feature.properties. ??? pero es raro, porque segun yo, almacena el geojson y este no tiene atribito nombre
+            if (feature.properties && feature.properties.dimension_name) {
+              layer.bindPopup(feature.properties.dimension_name);
             }
             layer.on({
               click: () => {
-                this.nombreSeleccionado = feature.properties.nombre;
+                this.nombreSeleccionado = feature.properties.dimension_name;
                 this.territorioSeleccionado = feature.properties;
                 this.tareaSeleccionada = false;
               }
@@ -98,7 +105,8 @@ export class ProyectistaPage implements OnInit {
           .subscribe((pp: any) => {
             const gjLayerr = [];
             pp.tareas.forEach(t => {
-              const geoJS = JSON.parse(t.geojson_subconjunto);
+              //BEYCKER REVISAR -> Antes era JSON.parse(t.geojson_subconjunto) pero leonardo me dijo que me lo mandaria como json, por eso le quité el parse
+              const geoJS = t.geojson_subconjunto;
               geoJS.properties = t;
               gjLayerr.push(geoJS);
             });
@@ -106,12 +114,12 @@ export class ProyectistaPage implements OnInit {
             this.geoJSONTareas = geoJSON(gjLayerr, {
               onEachFeature: (feature, layer) => {
                 layer.setStyle(this.colorAleatorio());
-                if (feature.properties && feature.properties.tarenombre) {
-                  layer.bindPopup(feature.properties.tarenombre);
+                if (feature.properties && feature.properties.task_name) {
+                  layer.bindPopup(feature.properties.task_name);
                 }
                 layer.on({
                   click: () => {
-                    this.nombreSeleccionado = feature.properties.tarenombre;
+                    this.nombreSeleccionado = feature.properties.task_name;
                     this.territorioSeleccionado = feature.properties;
                     this.tareaSeleccionada = true;
                   }
@@ -142,7 +150,7 @@ export class ProyectistaPage implements OnInit {
 
           const q: any = Object.values(val)[0];
           this.proyectoSeleccionado = q.value;
-          this.detalleProyecto(this.proyectoSeleccionado.proyid);
+          this.detalleProyecto(this.proyectoSeleccionado.proj_id);
         }
       }],
       columns: this.getColumns(1, this.proyectos),
@@ -179,7 +187,7 @@ export class ProyectistaPage implements OnInit {
       inputs: [{
         name: 'number',
         type: 'number',
-        value: this.territorioSeleccionado.tarerestriccant,
+        value: this.territorioSeleccionado.task_restriction.task_quantity,
         min: 0
       }],
       buttons: [
@@ -190,7 +198,7 @@ export class ProyectistaPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (e) => {
-            this.territorioSeleccionado.tarerestriccant = e.number;
+            this.territorioSeleccionado.task_restriction.task_quantity = e.number;
             this.tareaService.editarTarea(this.territorioSeleccionado)
               .subscribe(r => {
                 this.uiService.presentToastSucess('Cantidad actualizada correctamente');
@@ -219,7 +227,7 @@ export class ProyectistaPage implements OnInit {
     const options = [];
     columnOptions.forEach(element => {
       options.push({
-        text: element.proynombre,
+        text: element.proj_name,
         value: element
       });
     });
@@ -231,7 +239,7 @@ export class ProyectistaPage implements OnInit {
       this.uiService.presentToast('Función disponible solo online');
       return;
     }
-    this.navCtrl.navigateForward(`/tabs/explorar/proyectista/decision/${decision}/${this.territorioSeleccionado.proyid}`);
+    this.navCtrl.navigateForward(`/tabs/explorar/proyectista/decision/${decision}/${this.territorioSeleccionado.proj_id}`);
   }
 
   colorAleatorio() {

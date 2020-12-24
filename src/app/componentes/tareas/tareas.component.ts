@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TareasComponent implements OnInit {
 
+  //Recibe de un padre las propiedades "tareas" y "cargando"
   @Input() tareas: [] = [];
   @Input() cargando = true;
 

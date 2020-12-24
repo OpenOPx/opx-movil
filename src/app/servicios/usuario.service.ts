@@ -29,8 +29,8 @@ export class UsuarioService {
   ) { }
 
   /**
-   * Obtiene información detallada de un usuario
-   * @param id identificación de un usuario
+   * @description Obtiene información detallada de un usuario a partir del id suministrado
+   * @param id id del usuario
    */
   detalleUsuario(id: string) {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
@@ -49,7 +49,8 @@ export class UsuarioService {
   }
 
   /**
-   * Actualiza la información de un usuario
+   * @description Actualiza la información de un usuario mediante una petición http.post. Además almacena el nuevo usario en el Storage local
+   * @param usuario Usuario enviado desde el perfil.page.ts
    * SOLO ONLINE
    */
   editarUsuario(usuario: User) {

@@ -24,7 +24,7 @@
         <ion-label color="primary" position="floating">Fecha de inicio</ion-label>
         <ion-icon slot="start" mode="md" name="hourglass"></ion-icon>
         <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="YYYY-MM-DD" placeholder="Inicio del proyecto"
-          name="proyfechainicio" [(ngModel)]="proyecto.proyfechainicio" required>
+          name="proyfechainicio" [(ngModel)]="proyecto.proj_start_date" required>
         </ion-datetime>
       </ion-item>
 
@@ -32,7 +32,7 @@
         <ion-label color="primary" position="floating">Fecha de cierre</ion-label>
         <ion-icon slot="start" mode="ios" name="hourglass"></ion-icon>
         <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="YYYY-MM-DD" placeholder="Fin del proyecto"
-          name="proyfechacierre" [(ngModel)]="proyecto.proyfechacierre" required>
+          name="proyfechacierre" [(ngModel)]="proyecto.proj_close_date" required>
         </ion-datetime>
       </ion-item>
 
@@ -52,7 +52,7 @@
         </ion-item-divider>
 
         <ion-item *ngFor="let item of equipoActual; let i=index">
-          <ion-label>{{item.userfullname}}</ion-label>
+          <ion-label>{{item.pers_name}} {{item.pers_lastname}}</ion-label>
           <ion-spinner *ngIf="item.eliminando" slot="end"></ion-spinner>
           <ion-icon *ngIf="!item.eliminando" slot="end" color="danger" name="remove-circle-outline"
             (click)="eliminarUsuario(item)"></ion-icon>
@@ -72,7 +72,7 @@
         </ion-item-divider>
 
         <ion-item *ngFor="let item of equipoDisponible; let i=index">
-          <ion-label>{{item.userfullname}}</ion-label>
+          <ion-label>{{item.pers_name}} {{item.pers_lastname}}</ion-label>
           <ion-spinner *ngIf="item.eliminando" slot="end"></ion-spinner>
           <ion-icon *ngIf="!item.eliminando" slot="end" color="secondary" name="person-add"
             (click)="agregarUsuario(item)"></ion-icon>

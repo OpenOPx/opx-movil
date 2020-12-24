@@ -12,7 +12,7 @@
           </h1>
         </ion-text>
         <ion-text class="ion-text-center" color="medium">
-          <h3><b>{{usuario.rolname | uppercase }}</b></h3>
+          <h3><b>{{usuario.role_name | uppercase }}</b></h3>
         </ion-text>
       </ion-label>
     </ion-item>
@@ -34,8 +34,8 @@
       <ion-icon slot="start" name="transgender"></ion-icon>
       <ion-label>Genero</ion-label>
       <ion-select slot="end" [disabled]="!profileEdit" placeholder="Genero" name="generoid"
-        [(ngModel)]="usuario.generoid" required>
-        <ion-select-option *ngFor="let genero of generos" [value]="genero.generoid">{{genero.nombre | titlecase}}
+        [(ngModel)]="usuario.gender_id" required>
+        <ion-select-option *ngFor="let genero of generos" [value]="genero.gender_id">{{genero.gender_name | titlecase}}
         </ion-select-option>
       </ion-select>
     </ion-item>
@@ -44,7 +44,7 @@
       <ion-icon slot="start" name="calendar"></ion-icon>
       <ion-label>Fecha nacimiento</ion-label>
       <ion-datetime displayFormat="YYYY-MM-DD" [disabled]="!profileEdit" name="fecha_nacimiento"
-        [(ngModel)]="usuario.fecha_nacimiento">
+        [(ngModel)]="usuario.pers_birthdate">
       </ion-datetime>
     </ion-item>
 
@@ -52,8 +52,8 @@
       <ion-icon slot="start" name="book"></ion-icon>
       <ion-label>Nivel Educativo</ion-label>
       <ion-select slot="end" [disabled]="!profileEdit" placeholder="Nivel Educativo" name="nivel_educativo_id"
-        [(ngModel)]="usuario.nivel_educativo_id" required>
-        <ion-select-option *ngFor="let nivel of nivelesEducativos" [value]="nivel.nivelid">{{nivel.nombre | titlecase}}
+        [(ngModel)]="usuario.education_level_id" required>
+        <ion-select-option *ngFor="let nivel of nivelesEducativos" [value]="nivel.educlevel_id">{{nivel.educlevel_name | titlecase}}
         </ion-select-option>
       </ion-select>
     </ion-item>
@@ -62,8 +62,8 @@
       <ion-icon slot="start" name="home"></ion-icon>
       <ion-label>Barrio</ion-label>
       <ion-select slot="end" [disabled]="!profileEdit" placeholder="Barrio" name="barrioid"
-        [(ngModel)]="usuario.barrioid" required>
-        <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.barrioid">{{barrio.nombre | titlecase}}
+        [(ngModel)]="usuario.neighborhood_id" required>
+        <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.neighb_id">{{barrio.neighb_name | titlecase}}
         </ion-select-option>
       </ion-select>
     </ion-item>
@@ -71,7 +71,7 @@
     <ion-item lines="full">
       <ion-icon slot="start" name="phone-portrait"></ion-icon>
       <ion-label>Telefono</ion-label>
-      <ion-input slot="end" type="tel" [disabled]="!profileEdit" name="telefono" [(ngModel)]="usuario.telefono">
+      <ion-input slot="end" type="tel" [disabled]="!profileEdit" name="telefono" [(ngModel)]="usuario.pers_telephone">
       </ion-input>
     </ion-item>
 

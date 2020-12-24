@@ -68,6 +68,7 @@ export class ProyectosService {
 
       return this.http.get(`${URL}/detail/${proyid}`, { headers })
         .pipe(map((resp: any) => {
+          //BEYCKER REVISAR -> Revisar si este endpoint me retorna resp.detaail.proyecto o project
           resp.detail.proyecto.proyid = proyid;
           this.dataLocalService.guardarDetalleProyecto(resp.detail);
           return resp.detail;

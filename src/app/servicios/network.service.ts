@@ -30,6 +30,9 @@ export class NetworkService {
     });
   }
 
+  /**
+   * @description variable status = ConnectionStatus.Offline cuando se pierde la conexión a Internet. variable status = ConnectionStatus.Online cuando se establece la conexión a Internet
+   */
   public initializeNetworkEvents() {
 
     this.network.onDisconnect().subscribe(() => {

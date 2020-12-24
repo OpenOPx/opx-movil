@@ -29,6 +29,11 @@ export class ModalLoginComponent implements OnInit {
 
   ngOnInit() { }
 
+  /**
+   * 
+   * @param form formulario con los campos de este en el html
+   * @description valida los datos usuario y contraseña para ingresar o rechazar en caso de incosistencia
+   */
   async login(form: NgForm) {
     if (form.invalid) {
       return;
@@ -50,6 +55,9 @@ export class ModalLoginComponent implements OnInit {
       });
   }
 
+  /**
+   * @description redirecciona al sitio para resetear la contraseña
+   */
   abrirLink() {
     this.iab.create(`${URL}/auth/password-reset/`, '_system');
   }
@@ -59,6 +67,9 @@ export class ModalLoginComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
+  /**
+   * @description redirecciona al sitio para registrar nuevo usuario
+   */
   async mostrarModalRegistro() {
     this.cerrar();
     const modalR = await this.modalCtrl.create({

@@ -9,7 +9,9 @@ export class SanitizerStylePipe implements PipeTransform {
   constructor(private domSanitizer: DomSanitizer) { }
 
   /**
-   * DOM para estilos seguros
+   * @description DOM para estilos seguros
+   * bypassSecurityTrustStyle(url) Omite la seguridad y confía en que el valor dado es un valor de estilo seguro (CSS).
+   * @param url cadena con texto en formato CSS
    */
   transform(url: string): any {
     return this.domSanitizer.bypassSecurityTrustStyle(url);

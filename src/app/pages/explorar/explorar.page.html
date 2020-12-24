@@ -9,7 +9,8 @@
 
   <!-- Botón flotante del proyectista -->
   <div *ngIf="authService.user">
-    <ion-fab *ngIf="authService.user.rol === 'Proyectista' || authService.user.rol === 'Super Administrador'"
+    <!-- BEYCKER REVISAR, es role_id o role_name?? -->
+    <ion-fab *ngIf="authService.user.role_name === 'Proyectista' || authService.user.role_name === 'Super Administrador'"
       vertical="bottom" horizontal="start" slot="fixed">
       <ion-fab-button color="light" routerLink="proyectista">
         <ion-icon color="primary" name="add"></ion-icon>
@@ -32,6 +33,13 @@
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="light" (click)="actualizaUbicacion()">
       <ion-icon color="primary" name="locate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Botón flotante para las notificaciones -->
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" (click)="verNotificaciones()">
+      <ion-icon color="primary" name="notifications-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 

@@ -1,7 +1,8 @@
 {
   "name": "opc-app",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

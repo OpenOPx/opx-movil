@@ -34,6 +34,7 @@ export class DecisionPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    //No tengo ni idea de que hace esto
     this.activatedRoute.params.subscribe(params => this.tipo = params.tipo);
     this.activatedRoute.params.subscribe(params => this.detalleProyecto(params.proyecto));
 
@@ -43,8 +44,9 @@ export class DecisionPage implements OnInit {
     this.proyectosService.detalleProyecto(proyid)
       .subscribe(resp => {
         if (resp !== undefined) {
+          //Revisar si el resp me trae el nombre proyecto o project
           this.proyecto = resp.proyecto;
-          this.proyecto.proyid = proyid;
+          this.proyecto.proj_id = proyid;
           this.cargando = false;
           if (this.tipo === 'equipos') {
             this.cargarEquipos(proyid);
@@ -74,12 +76,12 @@ export class DecisionPage implements OnInit {
 
   actualizarProyecto() {
 
-    const date = new Date(this.proyecto.proyfechainicio);
+    const date = new Date(this.proyecto.proj_start_date);
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString();
     const day = date.getDate().toString();
 
-    const date2 = new Date(this.proyecto.proyfechacierre);
+    const date2 = new Date(this.proyecto.proj_close_date);
     const year2 = date2.getFullYear().toString();
     const month2 = (date2.getMonth() + 1).toString();
     const day2 = date2.getDate().toString();
@@ -90,12 +92,12 @@ export class DecisionPage implements OnInit {
     }
 
     const pro = {
-      proynombre: this.proyecto.proynombre,
-      proydescripcion: this.proyecto.proydescripcion,
-      proyfechainicio: `${year}-${month}-${day}`,
-      proyfechacierre: `${year2}-${month2}-${day2}`,
-      proyestado: this.proyecto.proyestado,
-      proyid: this.proyecto.proyid
+      proj_name: this.proyecto.proj_name,
+      proj_description: this.proyecto.proj_description,
+      proj_start_date: `${year}-${month}-${day}`,
+      proj_close_date: `${year2}-${month2}-${day2}`,
+      isactive: this.proyecto.isactive,
+      proj_id: this.proyecto.proj_id
     };
 
     this.proyectosService.actualizarProyecto(pro)
@@ -108,17 +110,18 @@ export class DecisionPage implements OnInit {
 
   agregarUsuario(user) {
     user.eliminando = true;
-    this.equiposService.agregarUsuarioProyecto(this.proyecto.proyid, user.userid)
+    this.equiposService.agregarUsuarioProyecto(this.proyecto.proj_id, user.pers_id)
       .subscribe(() => {
-        this.cargarEquipos(this.proyecto.proyid);
+        this.cargarEquipos(this.proyecto.proj_id);
       });
   }
 
   eliminarUsuario(user) {
     user.eliminando = true;
-    this.equiposService.eliminarUsuarioProyecto(user.equid)
+    //BEYCKER REVISAR, antes tenia equid y se susituye por team_id
+    this.equiposService.eliminarUsuarioProyecto(user.team_id)
       .subscribe(() => {
-        this.cargarEquipos(this.proyecto.proyid);
+        this.cargarEquipos(this.proyecto.proj_id);
       });
   }
 

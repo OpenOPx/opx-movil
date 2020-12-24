@@ -48,6 +48,9 @@ export class PerfilPage implements OnInit {
     this.cargarUtilidades();
   }
 
+  /**
+   * @description verifica si el el token corresponde al de un usuario para mostrar su información, si el token es null, despliega el modal de login de usuario
+   */
   async ionViewDidEnter() {
     if (!this.authService.token) {
       const modal = await this.modalCtrl.create({
@@ -59,15 +62,23 @@ export class PerfilPage implements OnInit {
     }
   }
 
+  /**
+   * @description Hace uso del servicio detalleUsuario para almacenar en las variables definidas en esta page la información del usuario
+   * loading = false para que se muestre la información de usuario en la interfaz gráfica HTML
+   */
   detalleUsuario() {
-    this.usuarioService.detalleUsuario(this.authService.user.userid)
+    this.usuarioService.detalleUsuario(this.authService.user.pers_id)
       .subscribe((u: User) => {
         this.usuario = u;
-        this.name = u.userfullname;
+        this.name = u.pers_name + ' ' + u.pers_lastname;
+        this.usuario.userfullname = this.name;
         this.loading = false;
       });
   }
 
+  /**
+   * @description Carga el listado de generos, niveles educativos y barrios del servidor (en caso de estar online) o del listado local del storage, y los asigna a los atributos generos, nivelesEducativos y barrios
+   */
   cargarUtilidades() {
     Promise.all([
       this.utilidadesService.listaGeneros().toPromise(),
@@ -84,6 +95,10 @@ export class PerfilPage implements OnInit {
     this.authService.logout();
   }
 
+  /**
+   * @description Hace un cambio de valor de la variable profileEdit (De true a False o Viceversa) y cambia el icono de creación y guardar
+   * Cuando se le da click para grabar los cambios profileEdit = false y llama el método guardarUsuario()
+   */
   hideShowEdit() {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
       this.uiService.presentToast('Función disponible solo online');
@@ -99,11 +114,14 @@ export class PerfilPage implements OnInit {
 
   }
 
+  /**
+   * @description Toma los nuevos valores de los campos y los envia al servicio editarUsuario de usuarioService
+   */
   async guardarUsuario() {
 
     this.loader = await this.uiService.presentLoading('Guardando...');
 
-    const date = new Date(this.usuario.fecha_nacimiento);
+    const date = new Date(this.usuario.pers_birthdate);
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString();
     const day = date.getDate().toString();
@@ -111,18 +129,19 @@ export class PerfilPage implements OnInit {
     const usuario = {
       useremail: this.usuario.useremail,
       password: this.authService.user.password,
-      rolid: this.usuario.rolid,
-      userfullname: this.usuario.userfullname,
-      fecha_nacimiento: `${year}-${month}-${day}`,
-      generoid: this.usuario.generoid,
-      barrioid: this.usuario.barrioid,
-      telefono: this.usuario.telefono,
-      nivel_educativo_id: this.usuario.nivel_educativo_id
+      role_id: this.usuario.rolid,
+      pers_name: this.usuario.pers_name,
+      pers_lastname: this.usuario.pers_lastname,
+      pers_birthdate: `${year}-${month}-${day}`,
+      gender_id: this.usuario.gender_id,
+      neighborhood_id: this.usuario.neighborhood_id,
+      pers_telephone: this.usuario.pers_telephone,
+      education_level_id: this.usuario.education_level_id
     };
 
     this.usuarioService.editarUsuario(usuario)
       .subscribe(() => {
-        this.name = this.usuario.userfullname;
+        this.name = this.usuario.pers_name + ' ' + this.usuario.pers_lastname;
         this.uiService.presentToastSucess('Actualizado correctamente.');
         this.loader.dismiss();
       }, (error => {

@@ -22,6 +22,14 @@ export class DataLocalService {
     this.uiService.presentToast('Función disponible online');
   }
 
+  guardarTokenMovil(token: string) {
+    this.storage.set('tokenmovil', token);
+  }
+
+  obtenerTokenMovil() {
+    return this.storage.get('tokenmovil');
+  }
+
   /**
    * Función que guarda localmente los proyectos que se consultaron cuando había conexión a internet.
    */
@@ -287,6 +295,10 @@ export class DataLocalService {
     return user;
   }
 
+  /**
+   * @description Retorna la lista de generos del STORAGE
+   * @param generos listado de generos que se asignaran al STORAGE
+   */
   async generos(generos?) {
     if (generos) {
       return this.storage.set('generos', generos);
@@ -295,6 +307,10 @@ export class DataLocalService {
     return await this.storage.get('generos');
   }
 
+  /**
+   * @description Retorna la lista de niveles educativos del STORAGE
+   * @param niveles listado de niveles educativos que se asignaran al STORAGE
+   */
   async nivelesEducativos(niveles?) {
     if (niveles) {
       return this.storage.set('nivelesEdu', niveles);
@@ -302,6 +318,10 @@ export class DataLocalService {
     return await this.storage.get('nivelesEdu');
   }
 
+  /**
+   * @description Retorna la lista de barrios del STORAGE
+   * @param barrios listado de barrios que se asignarán al STORAGE
+   */
   async barrios(barrios?) {
     if (barrios) {
       return this.storage.set('barrios', barrios);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 
 import { Map, latLng, tileLayer, marker, geoJSON } from 'leaflet';
 import * as leafletPip from '@mapbox/leaflet-pip';
@@ -32,6 +32,7 @@ export class ExplorarPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
+    private navCtrl: NavController,
     private ubicacionService: UbicacionService,
     private contextoService: ContextosService,
     public authService: AuthService
@@ -95,6 +96,7 @@ export class ExplorarPage implements OnInit {
       component: InfoContextoComponent,
       cssClass: 'my-custom-modal-css',
       componentProps: {
+        //Aqui envia los atributos barrioUbicacion y barrioSeleccionado para que pueda usarlo InfoContextoComponent por medio de Input() 
         barrioUbicacion: this.barrioUbicacion,
         barrioSeleccionado: this.barrioSeleccionado
       }
@@ -180,6 +182,16 @@ export class ExplorarPage implements OnInit {
 
   ionViewWillLeave() {
     this.map.remove();
+  }
+
+  verNotificaciones(){
+    /*
+    const modal = await this.modalController.create({
+      component: ModalLoginComponent
+    });
+    modal.present();
+    */
+    this.navCtrl.navigateForward(`/tabs/notificaciones`);
   }
 
 }

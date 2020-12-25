@@ -31,35 +31,37 @@
         <ion-card>
           <ion-card-header style="padding-left: 0px;">
             <ion-item lines="none">
-              <div slot="start" class="circle">{{proyecto.proyectista | iniciales}}</div>
+              <div slot="start" class="circle">{{proyecto.proj_owner_id | iniciales}}</div>
               <ion-label>
                 <ion-grid class="ion-no-padding">
                   <ion-row>
                     <ion-col size="7">
                       <p>
-                        <b>{{proyecto.proyectista}}</b>
+                        <b>{{proyecto.proj_owner_id}}</b>
                       </p>
                     </ion-col>
                     <ion-col size="5">
                       <p>
                         <ion-text class="ion-padding-start" color="medium">
-                          {{proyecto.proyfechacreacion | date: 'yyyy/MM/d'}} </ion-text>
+                          {{proyecto.proj_creation_date | date: 'yyyy/MM/d'}} </ion-text>
                       </p>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-label>
             </ion-item>
-            <ion-card-title class="ion-padding-start" color="dark">{{proyecto.proynombre}}</ion-card-title>
+            <ion-card-title class="ion-padding-start" color="dark">{{proyecto.proj_name}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{proyecto.proydescripcion}}
+            {{proyecto.proj_description}}
 
             <ion-progress-bar class="ion-margin-top" color="danger" value="0.5"></ion-progress-bar>
 
             <ion-grid>
               <ion-row>
                 <ion-col class="ion-padding-top">
+                  <!-- BEYCKER REVISAR, Que putas es reportes? -->
+                  <!-- Hay algo en proyetos.py llamado reportes, debe ser eso -->
                   <ion-text color="primary"><b>{{proyecto.reportes  ['progreso-proyecto']}}%</b> </ion-text>
                   <ion-text color="medium">
                     <b> Tareas</b>

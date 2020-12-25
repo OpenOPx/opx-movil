@@ -71,6 +71,9 @@ export class ProyectistaPage implements OnInit {
       }));
   }
 
+  /*
+  * id: id del proyecto a buscar
+  */
   detalleProyecto(id: string) {
 
     this.proyectosService.dimensionesTerritoriales(id)

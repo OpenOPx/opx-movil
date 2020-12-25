@@ -68,17 +68,17 @@ export class TareaPage implements OnInit {
         if (resp) {
           this.cargando = false;
           this.tarea = resp;
-          this.tarea.tareid = id;
+          this.tarea.task_id = id;
 
-          if (this.tarea.taretipo === 1) {
-            const res = await this.instrumentosServices.verificarImplementacion(this.tarea.instrid);
+          if (this.tarea.task_type_id === 1) {
+            const res = await this.instrumentosServices.verificarImplementacion(this.tarea.instrument_id);
             this.implementado = res;
 
             // Instrucción realizada con el fin de almacenar anticipadamente en localStorage, la URL.
-            this.instrumentosServices.enlaceFormularioKoboToolbox(this.tarea.tareid).subscribe();
+            this.instrumentosServices.enlaceFormularioKoboToolbox(this.tarea.task_id).subscribe();
           } else {
             // Instrucción realizada con el fin de almacenar anticipadamente en localStorage, la URL.
-            this.instrumentosServices.detalleMapeo(this.tarea.tareid).subscribe();
+            this.instrumentosServices.detalleMapeo(this.tarea.task_id).subscribe();
           }
 
           this.geoJS = geoJSON(JSON.parse(this.tarea.geojson_subconjunto)).addTo(this.map);
@@ -130,7 +130,7 @@ export class TareaPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: EncuestaComponent,
       componentProps: {
-        id: this.tarea.tareid,
+        id: this.tarea.task_id,
       }
     });
     modal.present();
@@ -151,10 +151,10 @@ export class TareaPage implements OnInit {
   }
 
   validar() {
-    this.instrumentosServices.informacionInstrumento(this.tarea.tareid)
+    this.instrumentosServices.informacionInstrumento(this.tarea.task_id)
       .subscribe(async r => {
 
-        if (this.tarea.taretipo === 1) {
+        if (this.tarea.task_type_id === 1) {
           const filter = [];
           r.campos.filter(c => c.type !== 'start' && c.type !== 'end')
             .forEach(element => {
@@ -166,13 +166,14 @@ export class TareaPage implements OnInit {
 
           const encuestas = [];
           r.info.forEach(data => {
+            //BEYCKER REVISAR. Estos atributos estan en el back en views.py def informacionInstrumento(request, id): y los deje igual
             const tmp = {
               encuestaid: data.encuestaid,
               estado: data.estado,
               observacion: data.observacion,
               formulario: []
             };
-
+            //BEYCKER REVISAR. Esta parte del label y respuesta tampoco la toqué
             filter.forEach(pregunta => {
               tmp.formulario.push({
                 label: pregunta.label,
@@ -190,7 +191,7 @@ export class TareaPage implements OnInit {
             }
           });
           await modal.present();
-        } else if (this.tarea.taretipo === 2) {
+        } else if (this.tarea.task_type_id === 2) {
           const modal = await this.modalCtrl.create({
             component: MapeoComponent,
             componentProps: {

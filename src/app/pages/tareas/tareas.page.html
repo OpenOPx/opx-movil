@@ -10,12 +10,13 @@
   <ion-grid class="ion-padding-top" *ngIf="!cargando">
     <ion-row>
       <ion-col size="6" class="ion-padding-horizontal">
-        <round-progress [current]="usuario.puntaje || 0" [max]="usuario.promocion.puntaje" [rounded]="true"
+        <!-- BEYCKER REVISAR, usuario.promocion ya creo que lo quitan -->
+        <round-progress [current]="usuario.pers_score || 0" [max]="usuario.promocion.puntaje" [rounded]="true"
           [responsive]="true" [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0">
         </round-progress>
         <ion-label class="card-title ion-text-center">
           <ion-text color="success">
-            <h1 style="font-size: 34px;"><b>{{usuario.puntaje || 0}}</b></h1>
+            <h1 style="font-size: 34px;"><b>{{usuario.pers_score || 0}}</b></h1>
           </ion-text>
           <ion-text color="dark">
             <h2><b>Pts.</b></h2>
@@ -28,7 +29,7 @@
           <p class="ion-no-margin"><b>TU RANKING ES</b></p>
         </ion-text>
         <ion-text>
-          <h4 class="ion-no-margin ion-text-uppercase"><b>{{authService.user.rol}}</b></h4>
+          <h4 class="ion-no-margin ion-text-uppercase"><b>{{authService.user.role_name}}</b></h4>
         </ion-text>
       </ion-col>
     </ion-row>

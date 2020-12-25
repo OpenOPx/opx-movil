@@ -14,20 +14,20 @@
     <ion-row>
       <ion-col size="12">
         <ion-item class="ion-no-padding" lines="none">
-          <div class="circle">{{proyecto.proyectista | iniciales}}</div>
+          <div class="circle">{{proyecto.proj_owner_id | iniciales}}</div>
           <ion-label>
             <ion-text>
               <ion-grid>
                 <ion-row>
                   <ion-col size="7">
                     <h5>
-                      <b>{{proyecto.proyectista}}</b>
+                      <b>{{proyecto.proj_owner_id}}</b>
                     </h5>
                   </ion-col>
                   <ion-col size="5">
                     <h5>
                       <ion-text color="medium">
-                        {{proyecto.proyfechacreacion | date: 'yyyy/MM/d'}} </ion-text>
+                        {{proyecto.proj_creation_date | date: 'yyyy/MM/d'}} </ion-text>
                     </h5>
                   </ion-col>
                 </ion-row>
@@ -36,10 +36,10 @@
           </ion-label>
         </ion-item>
         <ion-text color="dark">
-          <h1><b>{{proyecto.proynombre}}</b></h1>
+          <h1><b>{{proyecto.proj_name}}</b></h1>
         </ion-text>
         <ion-text color="medium">
-          <p>{{proyecto.proydescripcion}}</p>
+          <p>{{proyecto.proj_description}}</p>
         </ion-text>
       </ion-col>
     </ion-row>
@@ -102,15 +102,17 @@
   <div *ngIf="segmentoTareas">
     <app-peticion-login mensaje="Para contribuir a este proyecto debes iniciar sesión." back="true"
       *ngIf="!authService.token && !cargando"></app-peticion-login>
+      <!-- BEYCKER REVISAR Aqui le está pasando a app-tareas al atributo tareas, las tareas que tiene esta pagina-->
     <app-tareas *ngIf="authService.token" [cargando]="cargando" [tareas]="tareas"></app-tareas>
   </div>
 
   <div *ngIf="segmentoValidar">
     <div *ngIf="authService.token">
-      <app-tareas *ngIf="authService.user.rol === 'Validador' || authService.user.rol === 'Proyectista'"
+      <!-- BEYCKER REVISAR, cambie .rol por .role_name -->
+      <app-tareas *ngIf="authService.user.role_name === 'Validador' || authService.user.role_name === 'Proyectista'"
         [cargando]="cargando" [tareas]="tareasCompletadas"></app-tareas>
       <ion-text
-        *ngIf="!(authService.user.rol === 'Validador' || authService.user.rol === 'Proyectista' || authService.user.rol === 'Super Administrador')"
+        *ngIf="!(authService.user.role_name === 'Validador' || authService.user.role_name === 'Proyectista' || authService.user.role_name === 'Super Administrador')"
         class="ion-text-center ion-padding-horizontal">
         <h3>No tienes el ranking suficiente para realizar validaciones</h3>
       </ion-text>

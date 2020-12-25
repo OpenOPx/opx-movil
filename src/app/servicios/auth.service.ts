@@ -52,6 +52,8 @@ export class AuthService {
         await this.removeItems();
         await this.saveToken(resp.token);
         resp.user.password = password;
+        //BEYCKER REVISAR
+        //resp.user segun lo que veo tiene los atributos: userid, userfullname, useremail, rol, puntaje
         await this.saveUser(resp.user);
       }), catchError(this.handleError));
   }

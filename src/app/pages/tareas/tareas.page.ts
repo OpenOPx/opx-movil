@@ -34,7 +34,7 @@ export class TareasPage {
   async ionViewDidEnter() {
     this.cargando = true;
     if (this.authService.token) {
-      this.usuario = await this.usuarioService.detalleUsuario(this.authService.user.userid).toPromise();
+      this.usuario = await this.usuarioService.detalleUsuario(this.authService.user.pers_id).toPromise();
     }
     this.tareas = [];
     this.tareasCompletadas = [];

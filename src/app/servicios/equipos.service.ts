@@ -28,6 +28,9 @@ export class EquiposService {
     return this.http.get(`${URL}/list/${proyid}`, { headers })
       .pipe(map((resp: any) => {
         return resp.equipo;
+        //BEYCKER REVISAR
+        //Creo que retorna el equipo, es decir, todos los usarios del Proyecto cuyo ID sea el que se le pasa por parametro
+        //Decirle a Leonanardo que pruebe que retorna esta peticion
       }), catchError(e => this.errorService.handleError(e)));
   }
 
@@ -40,6 +43,7 @@ export class EquiposService {
     return this.http.get(`${URL}/${proyid}/usuarios-disponibles/`, { headers })
       .pipe(map((resp: any) => {
         //BEYCKER REVISAR - Que devuelve esto? Usuarios que atributos tiene
+        //Preguntarle a Leonardo que me devuelve esta peticion
         return resp.usuarios;
       }), catchError(e => this.errorService.handleError(e)));
   }

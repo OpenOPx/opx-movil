@@ -60,6 +60,7 @@ export class DecisionPage implements OnInit {
 
   }
 
+  //BEYCKER REVISAR
   cargarEquipos(proyid: string) {
     this.cargandoEquipos = true;
     this.equiposService.equiposPorProyecto(proyid)
@@ -118,7 +119,7 @@ export class DecisionPage implements OnInit {
 
   eliminarUsuario(user) {
     user.eliminando = true;
-    //BEYCKER REVISAR, antes tenia equid y se susituye por team_id
+    //BEYCKER REVISAR, antes tenia equid y se susituye por team_id, pero ni idea porque un usuario normalmente no tiene un team_id
     this.equiposService.eliminarUsuarioProyecto(user.team_id)
       .subscribe(() => {
         this.cargarEquipos(this.proyecto.proj_id);

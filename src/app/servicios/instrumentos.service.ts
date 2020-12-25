@@ -129,6 +129,28 @@ export class InstrumentosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarInformacionInstrumento(tareid, resp.info);
           return resp.info;
+          /**
+           * La respuesta es asi para instrumentos tipo 1 (Encuesta):
+           * data = {
+                    'status': 'success',
+                    'code': 200,
+                    'info': {
+                        'campos': informacion['campos'],
+                        'info': encuestas,
+                        'tipoInstrumento': instrumento.instrtipo
+                    },
+                    'instrumento': model_to_dict(instrumento)
+                }
+
+            O así para instrumentos tipo 2 (Cartografico):
+                data = {
+                    'status': 'success',
+                    'code': 200,
+                    'info': informacion,
+                    'geojson': geojson,
+                    'instrumento': model_to_dict(instrumento)
+                }
+           */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }

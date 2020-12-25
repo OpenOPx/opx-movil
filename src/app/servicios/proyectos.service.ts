@@ -53,6 +53,26 @@ export class ProyectosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarProyectos(resp.proyectos);
           return resp;
+          /*
+          La respuesta es así
+          data = {
+                'code': 200,
+                'proyectos': listadoProyectos,
+                'status': 'success'
+            }
+            o asi
+            data = {
+                'code': 200,
+                'paginator': {
+                    'currentPage': int(page),
+                    'perPage': paginator.per_page,
+                    'lastPage': paginator.num_pages,
+                    'total': paginator.count
+                },
+                'proyectos': proyectos,
+                'status': 'success',
+            }
+          */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
@@ -72,6 +92,17 @@ export class ProyectosService {
           resp.detail.proyecto.proyid = proyid;
           this.dataLocalService.guardarDetalleProyecto(resp.detail);
           return resp.detail;
+          //El detail contiene el proyecto cuyo id se trajo y las tareas asociadas
+          /**
+           * data = {
+                    'code': 200,
+                    'detail':{
+                      'proyecto': proyecto[0],
+                      'tareas': list(tareas)
+                    },
+                    'status': 'success'
+                }
+           */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
@@ -88,7 +119,7 @@ export class ProyectosService {
 
     const querystring = this.authService.querystring(proyecto);
 
-    return this.http.post(`${URL}/${proyecto.proyid}`, querystring, { headers })
+    return this.http.post(`${URL}/${proyecto.proj_id}`, querystring, { headers })
       .pipe(map((resp: any) => {
         console.log(resp);
         return resp;
@@ -108,6 +139,19 @@ export class ProyectosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarDimensionesTerritoriales(proyid, resp.dimensionesTerritoriales);
           return resp.dimensionesTerritoriales;
+          /**
+           * data = {
+            'code': 200,
+            'dimensionesTerritoriales': list(dimensionesTerritoriales) {
+                          dimensionid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+                          proyid = models.UUIDField(null=True)
+                          nombre = models.CharField(max_length=255, null=True)
+                          geojson = models.CharField(max_length=1000, null=True)
+                          estado = models.IntegerField(default=1)
+                   }
+            'status': 'success'
+            }
+           */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }

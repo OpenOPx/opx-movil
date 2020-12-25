@@ -32,6 +32,30 @@ export class ContextosService {
 
   /**
    * Obtiene del backend, todos los contextos almacenados en el sistema.
+
+   /**
+   * Obtiene del backend, todos los contextos almacenados en el sistema.
+   * El return de este metodo es un json así:
+   data = {
+        'code': 200,
+        'contextos': [Contextos es una lista de elementos asi] {
+                    'contextoid': c.contextoid,
+                    'contexto': c.descripcion,
+                    'datos': list(datosContexto.values()) Esa lista de contextos tiene por cada elemento estos atributos:
+                          {
+                            dataid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+                            hdxtag = models.CharField(max_length = 100)
+                            datavalor = models.CharField(max_length = 100)
+                            datatipe = models.CharField(max_length=100)
+                            contextoid = models.UUIDField()
+                            descripcion = models.CharField(max_length=500, null=True)
+                            geojson = models.CharField(max_length=3000, null=True)
+                            fecha = models.DateField(null=True, blank=True)
+                            hora = models.TimeField(null=True, blank=True)
+                          }
+                }
+        'status': 'success'
+    }
    */
   listadoContextos() {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {

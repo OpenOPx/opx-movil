@@ -152,8 +152,9 @@ export class ExplorarPage implements OnInit {
         const gjLayer = [];
         areasMedicion.forEach(a => {
           a.datos.forEach(d => {
-            const geoJS = JSON.parse(d.geojson);
-            delete d.geojson;
+            //BEYCKER REVISAR, se cambio gejson por data_geojson, ademas se hace un parse
+            const geoJS = JSON.parse(d.data_geojson);
+            delete d.data_geojson;
             geoJS.features[0].properties = d;
             gjLayer.push(geoJS, { style: this.colorAleatorio() });
           });
@@ -162,8 +163,8 @@ export class ExplorarPage implements OnInit {
         this.geoJS = geoJSON(gjLayer, {
           onEachFeature: (feature, layer) => {
             feature.style = this.colorAleatorio();
-            if (feature.properties && feature.properties.descripcion) {
-              layer.bindPopup(feature.properties.descripcion);
+            if (feature.properties && feature.properties.data_description) {
+              layer.bindPopup(feature.properties.data_description);
             }
           }
         }).addTo(this.map);

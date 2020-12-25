@@ -42,7 +42,7 @@ export class TareasService {
     });
     const querystring = this.authService.querystring(tarea);
 
-    return this.http.post(`${URL}/${tarea.tareid}`, querystring, { headers })
+    return this.http.post(`${URL}/${tarea.task_id}`, querystring, { headers })
       .pipe(map((resp: any) => {
         return resp.tarea;
         // this.dataLocalService.guardarDetalleProyecto(resp.tarea);

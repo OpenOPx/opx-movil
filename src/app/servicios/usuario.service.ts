@@ -39,7 +39,8 @@ export class UsuarioService {
       const headers = new HttpHeaders({ Authorization: this.authService.token });
       return this.http.get(`${URL}/detail/${id}`, { headers })
         .pipe(map((resp: any) => {
-          if (this.authService.getUser().rolname !== resp.usuario.rol) {
+          //BEYCKER REVISAR. Se cambio resp.usuario.rol por resp.usuario.role_name y getUser().role_name 
+          if (this.authService.getUser().role_name !== resp.usuario.role_name) {
             this.authService.logout();
           }
           this.dataLocalService.usuario(resp.usuario);
@@ -59,10 +60,12 @@ export class UsuarioService {
       'Content-Type': 'application/x-www-form-urlencoded'
     });
     const querystring = this.authService.querystring(usuario);
-    return this.http.post(`${URL}/${this.authService.user.userid}`, querystring, { headers })
+    return this.http.post(`${URL}/${this.authService.user.pers_id}`, querystring, { headers })
       .pipe(map(async (resp: any) => {
         let user = this.authService.getUser();
-        user.userfullname = resp.usuario.fields.userfullname;
+        //BEYCKER REVISAR; esta linea aparecia antes y se cambio por las dos siguientes: user.userfullname = resp.usuario.fields.userfullname;
+        user.pers_name = resp.usuario.fields.pers_name;
+        user.pers_lastname = resp.usuario.fields.pers_lastname;
         this.authService.saveUser(user);
       }), catchError(e => this.errorService.handleError(e)));
   }

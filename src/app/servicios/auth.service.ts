@@ -54,6 +54,20 @@ export class AuthService {
         resp.user.password = password;
         //BEYCKER REVISAR
         //resp.user segun lo que veo tiene los atributos: userid, userfullname, useremail, rol, puntaje
+        //OJO con el rol, siempre lo cambie a role_name
+        /**
+         * data = {
+                    'token': str(refresh.access_token),
+                    'user': {
+                        'userid':       user.userid,
+                        'userfullname': user.userfullname,
+                        'useremail':    user.useremail,
+                        'rol':          rol.rolname,
+                        'puntaje':      user.puntaje
+                    },
+                    'code': 200
+                }
+         */
         await this.saveUser(resp.user);
       }), catchError(this.handleError));
   }

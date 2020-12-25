@@ -11,6 +11,7 @@ import { UiService } from 'src/app/servicios/ui.service';
 })
 export class ValidarComponent implements OnInit {
 
+  //Recibe encuestas de tarea.page.ts
   @Input() encuestas: any[];
   @ViewChild('slidePrincipal', { static: true }) slides: IonSlides;
 

@@ -42,7 +42,7 @@ export class DataLocalService {
   async guardarProyecto(proyecto: Proyecto) {
 
     const proyectos: Proyecto[] = await this.storage.get('proyectos') || [];
-    const i = proyectos.findIndex(p => p.proyid === proyecto.proyid);
+    const i = proyectos.findIndex(p => p.proj_id === proyecto.proj_id);
 
     if (i >= 0) {
       proyectos[i] = proyecto;
@@ -57,7 +57,7 @@ export class DataLocalService {
    * Función que guarda localmente los proyectos en detalle que se consultaron cuando había conexión a internet.
    */
   async guardarDetalleProyecto(resp: ProyectoBackend) {
-    return this.guardarStorage('proyectos-detalle', resp.proyecto.proyid, resp);
+    return this.guardarStorage('proyectos-detalle', resp.proyecto.proj_id, resp);
   }
 
   /**
@@ -78,7 +78,7 @@ export class DataLocalService {
 
     if (search) {
       proyectos = proyectos
-        .filter(p => p.proynombre.toLowerCase().indexOf(search.toLowerCase()) > -1);
+        .filter(p => p.proj_name.toLowerCase().indexOf(search.toLowerCase()) > -1);
     }
 
     return {
@@ -103,7 +103,7 @@ export class DataLocalService {
   async guardarTarea(tarea: Tarea) {
 
     const tareas: Tarea[] = await this.storage.get('tareas') || [];
-    const i = tareas.findIndex(t => t.tareid === tarea.tareid);
+    const i = tareas.findIndex(t => t.task_id === tarea.task_id);
 
     if (i >= 0) {
       tareas[i] = tarea;
@@ -124,7 +124,7 @@ export class DataLocalService {
 
     if (search) {
       tareas = tareas
-        .filter(t => t.tarenombre.toLowerCase().indexOf(search.toLowerCase()) > -1);
+        .filter(t => t.task_name.toLowerCase().indexOf(search.toLowerCase()) > -1);
     }
 
     return {

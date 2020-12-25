@@ -46,6 +46,7 @@
 
         <ion-item lines="none" *ngFor="let item of encuesta.formulario">
           <ion-label>
+            <!-- Ese label y respuesta se asignan en tarea,page.ts tambien -->
             <b>{{item.label}}</b>
             <ion-text>
               <p>{{item.respuesta }}</p>

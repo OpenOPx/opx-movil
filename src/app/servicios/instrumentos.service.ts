@@ -38,6 +38,7 @@ export class InstrumentosService {
       return new Promise((resolve) => {
         this.http.get(`${URL}/${id}/verificar-implementacion/`, { headers })
           .subscribe((resp: any) => {
+            //El nombre implementación se dejó tal cual en el back
             this.dataLocalService.guardarVerificarImplementacion(id, resp.implementacion);
             resolve(resp.implementacion);
           }, (err => {
@@ -60,6 +61,14 @@ export class InstrumentosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarEnlaceFormularioKoboToolbox(id, resp.enlace);
           return resp.enlace;
+          /**
+           * Se deja enlace como enlace, no se le modifica el nombre
+           * data = {
+                            'code': 200,
+                            'enlace': enlace,
+                            'status': 'success'
+                        }
+           */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
@@ -102,6 +111,15 @@ export class InstrumentosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarDetalleCartografia(tareid, resp.geojson);
           return resp.geojson;
+          //BEYCKER REVISAR - El geojson se dejo tal cual como en el back, es decir, no se hizo cambios
+          //Preguntarle a Leonardo que retorna esto
+          /**
+           * response = {
+                    'code': 200,
+                    'geojson': json.dumps(geojson),
+                    'status': 'success'
+                }
+           */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
@@ -165,6 +183,7 @@ export class InstrumentosService {
       Authorization: this.authService.token,
       'Content-Type': 'application/x-www-form-urlencoded'
     });
+    //BEYCKER REVISAR, se dejaron los nombres identicos, idEncuesta, que recibe el back como encuestaid, pero no afecta, y estado y observacion, quedan idencticos en back y front
     const data = this.authService.querystring({ estado, observacion });
     return this.http.post(`${URL}/revisar-encuesta/${idEncuesta}`, data, { headers })
       .pipe(catchError(e => this.errorService.handleError(e)));

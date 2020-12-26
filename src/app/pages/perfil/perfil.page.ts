@@ -130,7 +130,8 @@ export class PerfilPage implements OnInit {
     const usuario = {
       useremail: this.usuario.useremail,
       password: this.authService.user.password,
-      role_id: this.usuario.rolid,
+      //BEYCKER REVISAR, aqui antes aparecia this.usuario.rolid
+      role_id: this.usuario.role_id,
       pers_name: this.usuario.pers_name,
       pers_lastname: this.usuario.pers_lastname,
       pers_birthdate: `${year}-${month}-${day}`,

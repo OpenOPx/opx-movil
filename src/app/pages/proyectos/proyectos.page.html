@@ -26,8 +26,8 @@
         </ion-item>
       </ion-col>
 
-
-      <ion-col size="12" *ngFor="let proyecto of proyectos" (click)="irProyecto(proyecto.proyid)">
+      <!-- BEYCKER REVISAR, se cambio proyecto.proyid por proyecto. -->
+      <ion-col size="12" *ngFor="let proyecto of proyectos" (click)="irProyecto(proyecto.proj_id)">
         <ion-card>
           <ion-card-header style="padding-left: 0px;">
             <ion-item lines="none">

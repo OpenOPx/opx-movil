@@ -52,7 +52,7 @@
         </ion-item-divider>
 
         <ion-item *ngFor="let item of equipoActual; let i=index">
-          <ion-label>{{item.pers_name}} {{item.pers_lastname}}</ion-label>
+          <ion-label>{{item.userfullname}}</ion-label>
           <ion-spinner *ngIf="item.eliminando" slot="end"></ion-spinner>
           <ion-icon *ngIf="!item.eliminando" slot="end" color="danger" name="remove-circle-outline"
             (click)="eliminarUsuario(item)"></ion-icon>
@@ -72,7 +72,7 @@
         </ion-item-divider>
 
         <ion-item *ngFor="let item of equipoDisponible; let i=index">
-          <ion-label>{{item.pers_name}} {{item.pers_lastname}}</ion-label>
+          <ion-label>{{item.userfullname}}</ion-label>
           <ion-spinner *ngIf="item.eliminando" slot="end"></ion-spinner>
           <ion-icon *ngIf="!item.eliminando" slot="end" color="secondary" name="person-add"
             (click)="agregarUsuario(item)"></ion-icon>

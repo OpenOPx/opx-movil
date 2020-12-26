@@ -63,9 +63,11 @@ export class UsuarioService {
     return this.http.post(`${URL}/${this.authService.user.pers_id}`, querystring, { headers })
       .pipe(map(async (resp: any) => {
         let user = this.authService.getUser();
-        //BEYCKER REVISAR; esta linea aparecia antes y se cambio por las dos siguientes: user.userfullname = resp.usuario.fields.userfullname;
-        user.pers_name = resp.usuario.fields.pers_name;
-        user.pers_lastname = resp.usuario.fields.pers_lastname;
+        //BEYCKER REVISAR PRIORIDAD; esta linea aparecia antes y se cambio por las dos siguientes: user.userfullname = resp.usuario.fields.userfullname;
+        //Quizas no fields no retorne pers_name y pers_lastname
+        user.userfullname = resp.usuario.fields.pers_name + ' ' + resp.usuario.fields.pers_lastname;
+        //user.pers_name = resp.usuario.fields.pers_name;
+        //user.pers_lastname = resp.usuario.fields.pers_lastname;
         this.authService.saveUser(user);
       }), catchError(e => this.errorService.handleError(e)));
   }

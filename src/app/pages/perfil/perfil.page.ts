@@ -67,11 +67,12 @@ export class PerfilPage implements OnInit {
    * loading = false para que se muestre la información de usuario en la interfaz gráfica HTML
    */
   detalleUsuario() {
+    //BEYCKER REVISAR pers_id o userid
     this.usuarioService.detalleUsuario(this.authService.user.pers_id)
       .subscribe((u: User) => {
         this.usuario = u;
+        //BEYCKER REVISAR, antes estaba como: this.name = u.userfullname;
         this.name = u.pers_name + ' ' + u.pers_lastname;
-        this.usuario.userfullname = this.name;
         this.loading = false;
       });
   }

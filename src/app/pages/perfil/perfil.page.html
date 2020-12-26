@@ -12,6 +12,7 @@
           </h1>
         </ion-text>
         <ion-text class="ion-text-center" color="medium">
+          <!-- BEYCKER REVISAR, se puede hacer usario.role_name por el inner join en la consulta del back -->
           <h3><b>{{usuario.role_name | uppercase }}</b></h3>
         </ion-text>
       </ion-label>
@@ -25,9 +26,16 @@
 
     <ion-item>
       <ion-icon slot="start" name="contact"></ion-icon>
-      <ion-label>Nombre Completo</ion-label>
-      <ion-input slot="end" type="text" autocapitalize [disabled]="!profileEdit" name="userfullname"
-        [(ngModel)]="usuario.userfullname"></ion-input>
+      <ion-label>Nombre</ion-label>
+      <ion-input slot="end" type="text" autocapitalize [disabled]="!profileEdit" name="pers_name"
+        [(ngModel)]="usuario.pers_name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="contact"></ion-icon>
+      <ion-label>Apellido</ion-label>
+      <ion-input slot="end" type="text" autocapitalize [disabled]="!profileEdit" name="pers_lastname"
+        [(ngModel)]="usuario.pers_lastname"></ion-input>
     </ion-item>
 
     <ion-item>

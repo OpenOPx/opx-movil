@@ -7,6 +7,8 @@ import { timer } from 'rxjs';
 import { AuthService } from './servicios/auth.service';
 import { ModalAuthComponent } from './componentes/auth/modal-auth/modal-auth.component';
 
+import { FcmService } from './servicios/fcm.service';
+
 @Component({
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
@@ -22,7 +24,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private fcmService: FcmService
   ) {
     this.initializeApp();
   }

@@ -11,6 +11,7 @@ import { MapeoComponent } from './mapeo/mapeo.component';
 import { ValidarComponent } from './encuesta/validar/validar.component';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { UbicacionService } from 'src/app/servicios/ubicacion.service';
+import { ProyectosService } from 'src/app/servicios/proyectos.service';
 
 @Component({
   selector: 'app-tarea',
@@ -26,9 +27,13 @@ export class TareaPage implements OnInit {
   cargando = true;
   implementado = false;
 
+  cargandogeojs = true;
+
   map: Map;
   geoJS: any;
   marker: marker;
+
+  geojscontent: any;  
 
   constructor(
     private instrumentosServices: InstrumentosService,
@@ -38,7 +43,8 @@ export class TareaPage implements OnInit {
     private tareasService: TareasService,
     private modalCtrl: ModalController,
     public authService: AuthService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public proyectoService: ProyectosService
   ) { }
 
   ngOnInit() {
@@ -69,9 +75,9 @@ export class TareaPage implements OnInit {
           this.cargando = false;
           this.tarea = resp;
           this.tarea.task_id = id;
-
-          if (this.tarea.task_type_id === 1) {
-            const res = await this.instrumentosServices.verificarImplementacion(this.tarea.instrument_id);
+          console.log(this.tarea)
+          if (this.tarea.task_type === 1) {
+            const res = await this.instrumentosServices.verificarImplementacion(this.tarea.instrument);
             this.implementado = res;
 
             // Instrucción realizada con el fin de almacenar anticipadamente en localStorage, la URL.
@@ -81,8 +87,16 @@ export class TareaPage implements OnInit {
             this.instrumentosServices.detalleMapeo(this.tarea.task_id).subscribe();
           }
 
-          this.geoJS = geoJSON(JSON.parse(this.tarea.geojson_subconjunto)).addTo(this.map);
-          this.map.fitBounds(this.geoJS.getBounds());
+          this.proyectoService.detalleProyecto(this.tarea.project).subscribe(resp => {
+            var cosatemp = resp.tareas.find(element => element.task_id === this.tarea.task_id);
+            console.log(cosatemp)
+            this.geojscontent = cosatemp.dimension_geojson
+            console.log(this.geojscontent)
+            this.geoJS = geoJSON(JSON.parse(this.geojscontent)).addTo(this.map);
+            this.map.fitBounds(this.geoJS.getBounds());
+            this.cargandogeojs = false;
+          })
+          
         } else {
           this.tarea = undefined;
           this.navCtrl.back();
@@ -153,8 +167,8 @@ export class TareaPage implements OnInit {
   validar() {
     this.instrumentosServices.informacionInstrumento(this.tarea.task_id)
       .subscribe(async r => {
-
-        if (this.tarea.task_type_id === 1) {
+        console.log('R: ' + JSON.stringify(r))
+        if (this.tarea.task_type === 1) {
           const filter = [];
           r.campos.filter(c => c.type !== 'start' && c.type !== 'end')
             .forEach(element => {
@@ -163,7 +177,7 @@ export class TareaPage implements OnInit {
                 label: element.label[0]
               });
             });
-
+          console.log('filter: '+ JSON.stringify(filter))
           const encuestas = [];
           r.info.forEach(data => {
             //BEYCKER REVISAR. Estos atributos estan en el back en views.py def informacionInstrumento(request, id): y los deje igual
@@ -183,7 +197,7 @@ export class TareaPage implements OnInit {
 
             encuestas.push(tmp);
           });
-
+          
           const modal = await this.modalCtrl.create({
             component: ValidarComponent,
             componentProps: {
@@ -191,7 +205,7 @@ export class TareaPage implements OnInit {
             }
           });
           await modal.present();
-        } else if (this.tarea.task_type_id === 2) {
+        } else if (this.tarea.task_type === 2) {
           const modal = await this.modalCtrl.create({
             component: MapeoComponent,
             componentProps: {

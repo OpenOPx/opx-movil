@@ -1,5 +1,6 @@
 export interface User {
-    pers_id?: string;
+    //pers_id?: string;
+    userid?: string;
     userfullname?: string;
     pers_name?: string;
     pers_lastname?: string;

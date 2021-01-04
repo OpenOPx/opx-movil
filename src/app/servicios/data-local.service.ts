@@ -22,12 +22,12 @@ export class DataLocalService {
     this.uiService.presentToast('Función disponible online');
   }
 
-  guardarTokenMovil(token: string) {
-    this.storage.set('tokenmovil', token);
+  async guardarTokenMovil(token: string) {
+    await this.storage.set('tokenmovil', token);
   }
 
-  obtenerTokenMovil() {
-    return this.storage.get('tokenmovil');
+  async obtenerTokenMovil() {
+    return await this.storage.get('tokenmovil');
   }
 
   /**
@@ -51,6 +51,35 @@ export class DataLocalService {
     }
 
     await this.storage.set('proyectos', proyectos);
+  }
+
+  async guardarNotificaciones(notificaciones: any[]) {
+    for (const n of notificaciones) {
+      await this.guardarNotificacion(n);
+    }
+  }
+
+  async guardarNotificacion(notificacion: any) {
+
+    const notificaciones: any[] = await this.storage.get('notificaciones') || [];
+    const i = notificaciones.findIndex(n => n.id_notificacion === notificacion.id_notificacion);
+
+    if (i >= 0) {
+      notificaciones[i] = notificacion;
+    } else {
+      notificaciones.push(notificacion);
+    }
+
+    await this.storage.set('notificaciones', notificaciones);
+  }
+
+  async vaciarNotificaciones() {
+
+    await this.storage.set('notificaciones', []);
+  }
+
+  async listarNotificaciones() {
+    let notificaciones: any[] = await this.storage.get('notificaciones') || [];
   }
 
   /**

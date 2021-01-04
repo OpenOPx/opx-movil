@@ -8,5 +8,174 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+       <!-- <ion-col size="12" *ngFor="let notificacion of notificaciones"> -->
+      <ion-col size="12">
+
+        <ion-card>
+          <ion-card-header style="padding-left: 0px;">
+            <ion-item lines="none">
+              <!--
+              <div *ngIf="notificacion.notification_type===1" slot="start" class="circle">CD</div>
+              <div *ngIf="notificacion.notification_type===2" slot="start" class="circle">CT</div>
+              <div *ngIf="notificacion.notification_type===3" slot="start" class="circle">CE</div>
+              <div *ngIf="notificacion.notification_type===4" slot="start" class="circle">CP</div>
+              -->
+              <div slot="start" class="circle">CE</div>
+              <ion-label>
+                <ion-grid class="ion-no-padding">
+                  <ion-row>
+                    <ion-col size="7">
+                      <p>
+                        <!--
+                        <b *ngIf="notificacion.notification_type===1">Cambio de Dimensión/b>
+                        <b *ngIf="notificacion.notification_type===2">Cambio de fecha de Tarea</b>
+                        <b *ngIf="notificacion.notification_type===3">Cambio de Equipo</b>
+                        <b *ngIf="notificacion.notification_type===4">Cambio de fecha de Proyecto</b>
+                        -->
+                        <b >Cambio de equipo</b>
+                      </p>
+                    </ion-col>
+                    <ion-col size="5">
+                      <p>
+                        <!--<ion-text class="ion-padding-start" color="medium">{{notificacion.fecha}}</ion-text>-->
+                        <ion-text class="ion-padding-start" color="medium">26/12/2020</ion-text>
+                      </p>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-label>
+            </ion-item>
+            <!--<ion-card-title class="ion-padding-start" color="dark" style="font-size: 16px;">Proyecto: {{notificacion.project_name}}</ion-card-title>-->
+            <ion-card-title class="ion-padding-start" color="dark" style="font-size: 16px;">Proyecto: nombre del proyecto</ion-card-title>
+          </ion-card-header>
+          <ion-card-content style="color: #222;">
+            <!--<b>Tarea: {{notificacion.task_name}}</b> -->
+            <b>Tarea: Nombre de tarea</b> 
+
+            <ion-progress-bar class="ion-margin-top" color="danger" value="0"></ion-progress-bar>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-padding-top">
+                  <!--
+                  <i *ngIf="notificacion.description.type==='agregado'">{{notificacion.description.message}}</i>
+                  <i *ngIf="notificacion.description.type==='eliminado'">{{notificacion.description.message}}</i>
+                  <i *ngIf="notificacion.description.type==='territorio'">{{notificacion.description.message}}</i>
+                  <i *ngIf="notificacion.description.type==='tarea'">
+                    Nueva fecha de inicio de tarea {{notificacion.description.body.start_date}} <br>
+                    Nueva fecha de fin de tarea {{notificacion.description.body.end_date}} <br>
+                    Nueva hora de inicio de tarea {{notificacion.description.body.start_time}} <br>
+                    Nueva hora de fin de tarea {{notificacion.description.body.end_time}} <br>
+                  </i>
+                  <i *ngIf="notificacion.description.type==='proyecto'">
+                    Nueva fecha de inicio de proyecto{{notificacion.description.body.start_date}} <br>
+                    Nueva fecha de fin de proyecto {{notificacion.description.body.end_date}} <br>
+                  </i>
+                  -->
+                  <i>Ya no haces parte de este proyecto</i>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+
+      <ion-col size="12">
+
+        <ion-card>
+          <ion-card-header style="padding-left: 0px;">
+            <ion-item lines="none">
+              <div slot="start" class="circle">CE</div>
+              <ion-label>
+                <ion-grid class="ion-no-padding">
+                  <ion-row>
+                    <ion-col size="7">
+                      <p>
+                        <b>Cambio de territorio</b>
+                      </p>
+                    </ion-col>
+                    <ion-col size="5">
+                      <p>
+                        <ion-text class="ion-padding-start" color="medium">26/12/2020</ion-text>
+                      </p>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-label>
+            </ion-item>
+            <ion-card-title class="ion-padding-start" color="dark" style="font-size: 16px;">Proyecto: nombre del proyecto</ion-card-title>
+          </ion-card-header>
+          <ion-card-content style="color: #222;">
+            <b>Tarea: Nombre de tarea</b> 
+
+            <ion-progress-bar class="ion-margin-top" color="danger" value="0"></ion-progress-bar>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-padding-top">
+                  <i>Revisa en la tarea el cambio</i>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+
+      <ion-col size="12">
+
+        <ion-card>
+          <ion-card-header style="padding-left: 0px;">
+            <ion-item lines="none">
+              <div slot="start" class="circle">CF</div>
+              <ion-label>
+                <ion-grid class="ion-no-padding">
+                  <ion-row>
+                    <ion-col size="7">
+                      <p>
+                        <b>Cambio de fecha</b>
+                      </p>
+                    </ion-col>
+                    <ion-col size="5">
+                      <p>
+                        <ion-text class="ion-padding-start" color="medium">26/12/2020</ion-text>
+                      </p>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-label>
+            </ion-item>
+            <ion-card-title class="ion-padding-start" color="dark" style="font-size: 16px;">Proyecto: nombre del proyecto</ion-card-title>
+          </ion-card-header>
+          <ion-card-content style="color: #222;">
+            <b>Tarea: Nombre de tarea</b> 
+
+            <ion-progress-bar class="ion-margin-top" color="danger" value="0"></ion-progress-bar>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-padding-top">
+                  <i>Nueva fecha de terminación: 26/12/2020</i>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-button color="danger" (click)="vaciar()">
+        Vaciar<br>Listado
+      </ion-button>
+    </ion-fab>
+
   
 </ion-content>

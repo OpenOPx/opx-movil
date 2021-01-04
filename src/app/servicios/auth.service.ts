@@ -41,10 +41,12 @@ export class AuthService {
    * @param email correo del usuario
    * @param password contraseña del usuario
    */
-  login(email: string, password: string) {
+  login(email: string, password: string, fcm_token: string, type_device: string) {
+  //login(email: string, password: string) {
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-    const querystring = this.querystring({ username: email, password });
+    const querystring = this.querystring({ username: email, password, fcm_token, type_device });
+    //const querystring = this.querystring({ username: email, password });
     //opx.variamos.com/login/?username=test@opx.com&password=12345678
 
     return this.http.post(URL + '/login/', querystring, { headers })
@@ -114,7 +116,7 @@ export class AuthService {
    * En caso de no tenerlo, se redirige a la página principal
    */
   getUser() {
-    if (!this.user.pers_id) {
+    if (!this.user.userid) {
       this.checkToken();
     }
     return { ...this.user };

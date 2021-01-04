@@ -8,6 +8,8 @@ import { FcmService } from 'src/app/servicios/fcm.service';
 import { DataLocalService } from 'src/app/servicios/data-local.service';
 import { UtilidadesService } from 'src/app/servicios/utilidades.service';
 
+import { Platform } from '@ionic/angular';
+
 // ID para el rol del voluntario
 const ROLID = '0be58d4e-6735-481a-8740-739a73c3be86';
 
@@ -31,6 +33,10 @@ export class ModalRegistroComponent implements OnInit {
 
   nuevoUsuario: any = {};
 
+  type_device;
+
+  //tokenmovil: string = '';
+
   @ViewChild('slidePrincipal', { static: true }) slides: IonSlides;
   @ViewChild('inputEmail', { static: true }) inputEmail: IonInput;
 
@@ -40,10 +46,28 @@ export class ModalRegistroComponent implements OnInit {
     private authService: AuthService,
     private uiService: UiService,
     private fcmService: FcmService,
-    private datalocalservice: DataLocalService
-  ) { }
+    private datalocalservice: DataLocalService,
+    public platform: Platform
+  ) {
+    if (this.platform.is('ios')) {
+      // This will only print when on iOS
+      this.type_device = 'ios'
+      //console.log('I am an iOS device!');
+     }
+     if (this.platform.is('android')) {
+      // This will only print when on Android
+      this.type_device = 'android'
+      //console.log('I am an android device!');
+     }
+     if (this.platform.is('desktop')) {
+      // This will only print when on Web
+      this.type_device = 'web'
+      //console.log('I am an android device!');
+     }
+   }
 
   ngOnInit() {
+    this.fcmService.initPush();
     this.cargarUtilidades();
   }
 
@@ -73,62 +97,70 @@ export class ModalRegistroComponent implements OnInit {
    */
   async registro() {
 
-    this.fcmService.initPush();
+    
     this.loading = await this.uiService.presentLoading('Registrando...');
+    //var toktemp
+    //BEYCKER REVISAR Ojo que el tokenmovil retorna es una promesa
+    this.datalocalservice.obtenerTokenMovil().then(resp =>{
+      //console.log('El token es:' + resp)
+      //toktemp = resp + '';
+      const date = new Date(this.nuevoUsuario.fecha_nacimiento);
+      const year = date.getFullYear().toString();
+      const month = (date.getMonth() + 1).toString();
+      const day = date.getDate().toString();
 
-    const tokenmovil = this.datalocalservice.obtenerTokenMovil();
-    const date = new Date(this.nuevoUsuario.fecha_nacimiento);
-    const year = date.getFullYear().toString();
-    const month = (date.getMonth() + 1).toString();
-    const day = date.getDate().toString();
+      //BEYCKER: Revisar si estos son los nombres de atributos correctos
+      console.log('token antes de entrar al form')
+      const form = {
+        useremail: this.nuevoUsuario.useremail,
+        password: this.nuevoUsuario.userpassword,
+        role_id: ROLID,
+        pers_birthdate: `${year}-${month}-${day}`,
+        gender_id: this.nuevoUsuario.genero,
+        //userfullname: `${this.nuevoUsuario.nombre} ${this.nuevoUsuario.apellido}`,
+        pers_name: this.nuevoUsuario.nombre,
+        pers_lastname: this.nuevoUsuario.apellido,
+        neighborhood_id: this.nuevoUsuario.barrio,
+        education_level_id: this.nuevoUsuario.niveleducativo,
+        pers_telephone: this.nuevoUsuario.telefono,
+        fcm_token: resp,
+        type_device: this.type_device
+        //Se agrego el nuevo atributo tokenmovil, se debe agregar como un nuevo atributo en el modelo de base de datos y quizas en la nterface user
+      };
 
-    //BEYCKER: Revisar si estos son los nombres de atributos correctos
-    const form = {
-      useremail: this.nuevoUsuario.useremail,
-      password: this.nuevoUsuario.userpassword,
-      role_id: ROLID,
-      pers_birthdate: `${year}-${month}-${day}`,
-      gender_id: this.nuevoUsuario.genero,
-      //userfullname: `${this.nuevoUsuario.nombre} ${this.nuevoUsuario.apellido}`,
-      pers_name: this.nuevoUsuario.nombre,
-      pers_lastname: this.nuevoUsuario.apellido,
-      neighborhood_id: this.nuevoUsuario.barrio,
-      education_level_id: this.nuevoUsuario.niveleducativo,
-      pers_telephone: this.nuevoUsuario.telefono,
-      fcm_token: tokenmovil
-      //Se agrego el nuevo atributo tokenmovil, se debe agregar como un nuevo atributo en el modelo de base de datos y quizas en la nterface user
-    };
+      this.authService.registro(form)
+        .subscribe(async () => {
 
-    this.authService.registro(form)
-      .subscribe(async () => {
+          await this.loading.dismiss();
+          this.uiService.presentToastSucess('Registrado correctamente.');
 
-        await this.loading.dismiss();
-        this.uiService.presentToastSucess('Registrado correctamente.');
-
-        this.cerrar();
-        const modal = await this.modalCtrl.create({
-          component: ModalLoginComponent
-        });
-        modal.present();
-
-      }, async (error: any) => {
-        await this.loading.dismiss();
-        if (error.code === 400) {
-          this.uiService.presentToastError('Verifique su correo.');
-
-          this.slides.lockSwipes(false);
-          this.slides.slideTo(3);
-          this.slides.lockSwipes(true);
-
-          setTimeout(() => {
-            this.inputEmail.setFocus();
-          }, 500);
-
-        } else {
-          this.uiService.presentToastError('Ha ocurrido un error. Por favor intenta de nuevo!');
           this.cerrar();
-        }
-      });
+          const modal = await this.modalCtrl.create({
+            component: ModalLoginComponent
+          });
+          modal.present();
+
+        }, async (error: any) => {
+          await this.loading.dismiss();
+          if (error.code === 400) {
+            this.uiService.presentToastError('Verifique su correo.');
+
+            this.slides.lockSwipes(false);
+            this.slides.slideTo(3);
+            this.slides.lockSwipes(true);
+
+            setTimeout(() => {
+              this.inputEmail.setFocus();
+            }, 500);
+
+          } else {
+            this.uiService.presentToastError('Ha ocurrido un error. Por favor intenta de nuevo!');
+            this.cerrar();
+          }
+        });
+    });
+
+    
     this.loading.dismiss();
   }
 

@@ -68,7 +68,7 @@ export class PerfilPage implements OnInit {
    */
   detalleUsuario() {
     //BEYCKER REVISAR pers_id o userid
-    this.usuarioService.detalleUsuario(this.authService.user.pers_id)
+    this.usuarioService.detalleUsuario(this.authService.user.userid)
       .subscribe((u: User) => {
         this.usuario = u;
         //BEYCKER REVISAR, antes estaba como: this.name = u.userfullname;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataLocalService } from './data-local.service';
+import { NavController } from '@ionic/angular';
 
 import {
   Plugins,
@@ -8,7 +9,7 @@ import {
   PushNotificationActionPerformed,
   Capacitor
 } from '@capacitor/core';
-import { Router } from '@angular/router';
+//import { Router } from '@angular/router';
  
 const { PushNotifications } = Plugins;
 
@@ -20,7 +21,8 @@ export class FcmService {
   tokenbey;
 
   constructor(
-    private router: Router,
+    //private router: Router,
+    private navCtrl: NavController,
     private datalocalservice: DataLocalService
     ) { }
 
@@ -58,6 +60,9 @@ export class FcmService {
         this.datalocalservice.guardarTokenMovil(token.value);
         this.tokenbey = token.value;
         console.log('My token: ' + JSON.stringify(token));
+        this.datalocalservice.obtenerTokenMovil().then(resp => {
+          console.log('token guardado en datalocal' + resp)
+        })
         //alert('Push registration success, token: ' + token.value);
         //El método JSON.stringify() convierte un objeto o valor de JavaScript en una cadena de texto JSON
       }
@@ -81,11 +86,15 @@ export class FcmService {
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
       async (notification: PushNotificationActionPerformed) => {
+        console.log(notification);
+        this.navCtrl.navigateForward(`/tabs/notificaciones`);
+        /*
         const data = notification.notification.data;
         console.log('Action performed: ' + JSON.stringify(notification.notification));
         if (data.detailsId) {
           this.router.navigateByUrl(`/home/${data.detailsId}`);
         }
+        */
       }
     );
   }

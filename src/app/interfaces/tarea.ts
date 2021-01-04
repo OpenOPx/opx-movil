@@ -1,13 +1,18 @@
+import { NumberSymbol } from "@angular/common";
+
 export interface Tarea {
     task_id: string;
     task_name: string;
     task_type_id: number;
+    task_type: number;
     isactive: number;
+    instrument: string;
     task_observation: string;
     //tarerestricgeo: any; //NO SE QUE SEA ESTE VALOR
     progreso: number; //Antes era progreso
     //RESTRICCIONES
-    task_restriction: any,
+    task_restriction: any;
+    project: any;
     //tareafechadeejecucion
     //task_quantity: number; 
     //Nos llegan los demas atributos de task restriction

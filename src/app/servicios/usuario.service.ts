@@ -60,7 +60,7 @@ export class UsuarioService {
       'Content-Type': 'application/x-www-form-urlencoded'
     });
     const querystring = this.authService.querystring(usuario);
-    return this.http.post(`${URL}/${this.authService.user.pers_id}`, querystring, { headers })
+    return this.http.post(`${URL}/${this.authService.user.userid}`, querystring, { headers })
       .pipe(map(async (resp: any) => {
         let user = this.authService.getUser();
         //BEYCKER REVISAR PRIORIDAD; esta linea aparecia antes y se cambio por las dos siguientes: user.userfullname = resp.usuario.fields.userfullname;

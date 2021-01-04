@@ -33,6 +33,7 @@ export class ProyectosPage {
     this.search = event.detail.value;
     this.proyectosService.listadoProyectos(this.search, true)
       .subscribe((resp: any) => {
+        
         this.proyectos = resp.proyectos;
         this.cargando = false;
       });
@@ -48,6 +49,9 @@ export class ProyectosPage {
   incoming(event?, pull: boolean = false) {
     this.proyectosService.listadoProyectos(this.search, pull)
       .subscribe(resp => {
+        console.log('AQUIIIIIIIIIIIIIIIIIIII')
+        //console.log(resp.proyectos[0].reportes['cantidad-integrantes'][0].count)
+        console.log(resp)
         this.proyectos.push(...resp.proyectos);
 
         this.proyectosTotales = resp.paginator.total;

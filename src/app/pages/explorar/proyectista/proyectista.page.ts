@@ -109,6 +109,7 @@ export class ProyectistaPage implements OnInit {
             const gjLayerr = [];
             pp.tareas.forEach(t => {
               //BEYCKER REVISAR -> Antes era JSON.parse(t.geojson_subconjunto) pero leonardo me dijo que me lo mandaria como json, por eso le quité el parse
+              //Revisa si mandan geojson_subconjunto o dimension_geojson
               const geoJS = t.geojson_subconjunto;
               geoJS.properties = t;
               gjLayerr.push(geoJS);

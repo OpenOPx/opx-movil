@@ -8,6 +8,10 @@ import { UiService } from 'src/app/servicios/ui.service';
 import { ModalRegistroComponent } from '../modal-registro/modal-registro.component';
 import { environment } from 'src/environments/environment';
 
+import { Platform } from '@ionic/angular';
+import { FcmService } from 'src/app/servicios/fcm.service';
+import { DataLocalService } from 'src/app/servicios/data-local.service';
+
 const URL = environment.API_URL;
 
 @Component({
@@ -18,16 +22,39 @@ const URL = environment.API_URL;
 export class ModalLoginComponent implements OnInit {
 
   loading;
+  type_device;
+  //tokenmovil: string;
 
   constructor(
     private modalCtrl: ModalController,
     private authService: AuthService,
     private navCtrl: NavController,
     private uiService: UiService,
-    private iab: InAppBrowser
-  ) { }
+    private iab: InAppBrowser,
+    public platform: Platform,
+    private fcmService: FcmService,
+    private datalocalservice: DataLocalService
+  ) { 
+    if (this.platform.is('ios')) {
+      // This will only print when on iOS
+      this.type_device = 'ios'
+      //console.log('I am an iOS device!');
+     }
+     if (this.platform.is('android')) {
+      // This will only print when on Android
+      this.type_device = 'android'
+      //console.log('I am an android device!');
+     }
+     if (this.platform.is('desktop')) {
+      // This will only print when on Web
+      this.type_device = 'web'
+      //console.log('I am an android device!');
+     }
+  }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.fcmService.initPush();
+  }
 
   /**
    * 
@@ -38,10 +65,13 @@ export class ModalLoginComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-
+    
     this.loading = await this.uiService.presentLoading('Ingresando...');
-
-    this.authService.login(form.value.email, form.value.password)
+    
+    //BEYCKER REVISAR: Tengo que revisar si este tokenmovil lo puedo asignar asi, porque retorna una promesa
+    this.datalocalservice.obtenerTokenMovil().then(resp => {
+      //this.tokenmovil = resp;
+      this.authService.login(form.value.email, form.value.password, resp, this.type_device)
       .subscribe(async () => {
         await this.loading.dismiss();
         this.cerrar();
@@ -53,6 +83,8 @@ export class ModalLoginComponent implements OnInit {
           this.uiService.presentToastError('Ha ocurrido un error. Por favor intenta de nuevo!');
         }
       });
+    });
+    
   }
 
   /**

@@ -18,7 +18,7 @@
         <ion-text>
           <h5>
             <ion-text color="dark" class="ion-padding-end">
-              <b>{{tarea.task_type_id | tipoTarea}}</b>
+              <b>{{tarea.task_type | tipoTarea}}</b>
             </ion-text> {{tarea.task_creation_date | date: 'yyyy/MM/d'}}
           </h5>
         </ion-text>
@@ -44,12 +44,12 @@
           </ion-label>
         </ion-item>
 
-        <ion-button *ngIf="implementado && tarea.task_type_id === 1" class="ion-text-uppercase" color="primary"
+        <ion-button *ngIf="implementado && tarea.task_type === 1 && !cargandogeojs" class="ion-text-uppercase" color="primary"
           expand="block" (click)="encuesta()">
           Realizar encuesta
         </ion-button>
 
-        <ion-button *ngIf="tarea.task_type_id === 2" class="ion-text-uppercase" color="primary" expand="block"
+        <ion-button *ngIf="tarea.task_type === 2" class="ion-text-uppercase" color="primary" expand="block"
           (click)="mapeo()">
           Realizar mapeo
         </ion-button>

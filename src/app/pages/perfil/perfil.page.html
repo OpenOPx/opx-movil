@@ -1,4 +1,17 @@
 <ion-content *ngIf="authService.token">
+  <ion-grid *ngIf="loading">
+    <ion-item lines="none" class="ion-padding-top">
+      <div class="circulo">
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-spinner name="crescent"></ion-spinner>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-item>
+
+    
+  </ion-grid>
 
   <div *ngIf="!loading">
     <ion-item lines="none" class="ion-padding-top">

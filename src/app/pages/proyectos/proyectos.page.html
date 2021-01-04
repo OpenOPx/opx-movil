@@ -31,13 +31,13 @@
         <ion-card>
           <ion-card-header style="padding-left: 0px;">
             <ion-item lines="none">
-              <div slot="start" class="circle">{{proyecto.proj_owner_id | iniciales}}</div>
+              <div slot="start" class="circle">{{proyecto.proyectista | iniciales}}</div>
               <ion-label>
                 <ion-grid class="ion-no-padding">
                   <ion-row>
                     <ion-col size="7">
                       <p>
-                        <b>{{proyecto.proj_owner_id}}</b>
+                        <b>{{proyecto.proyectista}}</b>
                       </p>
                     </ion-col>
                     <ion-col size="5">
@@ -62,7 +62,7 @@
                 <ion-col class="ion-padding-top">
                   <!-- BEYCKER REVISAR, Que putas es reportes? -->
                   <!-- Hay algo en proyetos.py llamado reportes, debe ser eso -->
-                  <ion-text color="primary"><b>{{proyecto.reportes  ['progreso-proyecto']}}%</b> </ion-text>
+                  <ion-text color="primary"><b>{{proyecto.reportes['progreso-proyecto']}}%</b> </ion-text>
                   <ion-text color="medium">
                     <b> Tareas</b>
                   </ion-text>
@@ -78,7 +78,7 @@
                     <ion-icon style="margin-right: 5px;margin-bottom: 5px;
                     margin-top: 0px;" slot="start" name="people"></ion-icon>
                     <ion-text style="margin-bottom: 4px" color="medium">
-                      <b> {{proyecto.reportes['cantidad-integrantes']}}</b>
+                      <b> {{ proyecto.reportes['cantidad-integrantes'][0].count}} </b>
                     </ion-text>
                   </ion-item>
                 </ion-col>

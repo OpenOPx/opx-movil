@@ -112,7 +112,7 @@ export class DecisionPage implements OnInit {
   agregarUsuario(user) {
     user.eliminando = true;
     //BEYCKER REVISAR PRIORIDAD - user.pers_id? o user.userid
-    this.equiposService.agregarUsuarioProyecto(this.proyecto.proj_id, user.pers_id)
+    this.equiposService.agregarUsuarioProyecto(this.proyecto.proj_id, user.userid)
       .subscribe(() => {
         this.cargarEquipos(this.proyecto.proj_id);
       });

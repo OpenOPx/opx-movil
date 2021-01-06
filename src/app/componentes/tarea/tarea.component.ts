@@ -14,7 +14,9 @@ export class TareaComponent implements OnInit {
 
   constructor(private navCtrl: NavController) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    console.log(this.tarea)
+  }
 
   click() {
     /**

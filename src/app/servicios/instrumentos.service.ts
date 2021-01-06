@@ -27,6 +27,16 @@ export class InstrumentosService {
   ) { }
 
   /**
+   * Requerido para enviar objetos en el body de una petición HTTP
+   */
+  querystring(obj: object): string {
+    return Object.keys(obj)
+      .map(key => {
+        return key + '=' + obj[key];
+      }).join('&');
+  }
+
+  /**
    * Verifica si una encuesta se encuentra habilitada para ser llenada
    * @param id Identificación del instrumento de tipo encuesta.
    */
@@ -187,6 +197,37 @@ export class InstrumentosService {
     const data = this.authService.querystring({ estado, observacion });
     return this.http.post(`${URL}/revisar-encuesta/${idEncuesta}`, data, { headers })
       .pipe(catchError(e => this.errorService.handleError(e)));
+  }
+
+
+
+  obtenerCantidadRespuestaFormularios(tareid: string) {
+    if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
+      //return from(this.dataLocalService.cargarInformacionInstrumento(tareid));
+    } else {
+      const headers = new HttpHeaders({ Authorization: this.authService.token });
+      return this.http.get(`${URL}/kobo-submissions/${tareid}`, { headers })
+        .pipe(map((resp: any) => {
+          this.dataLocalService.guardarCantidadActualEncuestas(resp.submissions_quantity); //HACER EL AMBIENTE DE ALMACENAMIENTO (TRAE EN EL DATA submissions_quantity que es un entero)
+          return resp.submissions_quantity;
+        }), catchError(e => this.errorService.handleError(e)));
+    }
+  }
+
+  almacenarEncuesta(tareid: string) {
+    if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
+      //return from(this.dataLocalService.cargarInformacionInstrumento(tareid));
+    } else {
+      const querystring = this.querystring({ tareaid: tareid });
+      console.log("Este es el querystring" + querystring);
+      const headers = new HttpHeaders({ Authorization: this.authService.token, 'Content-Type': 'application/x-www-form-urlencoded' });
+      return this.http.post(`${URL}/encuesta/store/`, querystring, { headers })
+        .pipe(map((resp: any) => {
+          console.log('Esta es la respuesta de almacenar encuesta: ' + resp)
+          //this.dataLocalService.guardarInformacionInstrumento(tareid, resp.info); //HACER EL AMBIENTE DE ALMACENAMIENTO (TRAE EN EL DATA submissions_quantity que es un entero)
+          return resp;
+        }), catchError(e => this.errorService.handleError(e)));
+    }
   }
 
 }

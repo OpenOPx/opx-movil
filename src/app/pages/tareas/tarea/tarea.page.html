@@ -28,18 +28,24 @@
         <ion-text color="medium">
           <p>{{tarea.task_description}}</p>
         </ion-text>
-        <ion-progress-bar class="ion-margin-top" color="warning" [value]="(tarea.progreso || 0)/100">
+        <ion-text>
+          <p>Restricción fecha de inicio: {{tarea.task_start_date}} - {{tarea.start_time}}</p>
+        </ion-text>
+        <ion-text>
+          <p>Restricción fecha de fin: {{tarea.task_end_date}} - {{tarea.end_time}}</p>
+        </ion-text>
+        <ion-progress-bar class="ion-margin-top" color="warning" [value]="(tarea.task_completness || 0)/100">
         </ion-progress-bar>
         <ion-item class="ion-no-padding" lines="none">
           <ion-label slot="start">
-            <ion-text color="primary"><b>{{tarea.progreso || 0 | number: '1.0'}}%</b></ion-text>
+            <ion-text color="primary"><b>{{tarea.task_completness || 0 | number: '1.0'}}%</b></ion-text>
             <ion-text color="medium">
               <b> Progreso</b>
             </ion-text>
           </ion-label>
           <ion-label slot="end">
             <ion-text color="medium">
-              <b>{{tarea.progreso || 0 | number: '1.0'}}/100</b>
+              <b>T: {{tarea.task_quantity}} </b>
             </ion-text>
           </ion-label>
         </ion-item>

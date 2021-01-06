@@ -26,6 +26,11 @@ export interface Tarea {
     task_creation_date: Date; //CREO QUE ESTA ES task_creation_date
     //tarefechaejecucion: Date; //CREO QUE ES task_start_date
     task_description: string;
+
+    task_start_date: any;
+    task_end_date: any;
+    start_time: any;
+    end_time: any;
 }
 
 /*

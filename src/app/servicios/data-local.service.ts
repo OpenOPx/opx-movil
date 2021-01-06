@@ -30,6 +30,14 @@ export class DataLocalService {
     return await this.storage.get('tokenmovil');
   }
 
+  async guardarCantidadActualEncuestas(cantidad: number){
+    await this.storage.set('cantidadencuestas', cantidad);
+  }
+
+  async obtenerCantidadActualEncuestas(){
+    return await this.storage.get('cantidadencuestas');
+  }
+
   /**
    * Función que guarda localmente los proyectos que se consultaron cuando había conexión a internet.
    */

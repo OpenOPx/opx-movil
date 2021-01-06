@@ -22,6 +22,8 @@ export class ProyectoPage implements OnInit {
 
   cargando = true;
 
+  proyectista = '';
+
   constructor(
     private proyectosService: ProyectosService,
     private activatedRoute: ActivatedRoute,
@@ -38,6 +40,8 @@ export class ProyectoPage implements OnInit {
       .subscribe(resp => {
         if (resp !== undefined) {
           this.proyecto = resp.proyecto;
+          this.proyectista = resp.proyecto.pers_name + ' ' + resp.proyecto.pers_lastname
+          console.log(this.proyecto)
           this.tareas = resp.tareas;
           this.tareasCompletadas = this.tareas.filter(t => t.progreso === 100);
         } else {

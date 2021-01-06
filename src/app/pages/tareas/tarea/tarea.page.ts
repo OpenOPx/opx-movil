@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { ModalController, NavController, AlertController } from '@ionic/angular';
 import { EncuestaComponent } from './encuesta/encuesta.component';
 import { ActivatedRoute } from '@angular/router';
@@ -18,7 +18,7 @@ import { ProyectosService } from 'src/app/servicios/proyectos.service';
   templateUrl: './tarea.page.html',
   styleUrls: ['./tarea.page.scss'],
 })
-export class TareaPage implements OnInit {
+export class TareaPage implements OnInit, AfterViewInit {
 
   @Input() id;
   @ViewChild('mapa', { static: true }) mapa;
@@ -51,6 +51,16 @@ export class TareaPage implements OnInit {
     this.ubicacionService.obtenerUbicacionActual();
   }
 
+  ngAfterViewInit(){
+    console.log("Tarea en el ngAfterViw")
+    console.log(this.tarea)
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    console.log(date)
+    console.log(time)
+  }
+
   async ionViewDidEnter() {
 
     this.map = new Map(this.mapa.nativeElement).setView([3.4376309, -76.5429797], 12);
@@ -75,6 +85,7 @@ export class TareaPage implements OnInit {
           this.cargando = false;
           this.tarea = resp;
           this.tarea.task_id = id;
+          console.log("Tarea que llega con detalletarea")
           console.log(this.tarea)
           if (this.tarea.task_type === 1) {
             const res = await this.instrumentosServices.verificarImplementacion(this.tarea.instrument);
@@ -102,6 +113,8 @@ export class TareaPage implements OnInit {
           this.navCtrl.back();
         }
       });
+      console.log("Tarea despues de salir del suscribe")
+      console.log(this.tarea)
   }
 
   actualizaUbicacion() {
@@ -140,7 +153,55 @@ export class TareaPage implements OnInit {
       await this.presentAlert();
       return;
     }
+    /*
+    var splitDateStart = this.tarea.task_start_date.split('-');
+    var splitDateEnd = this.tarea.task_end_date.split('-');
 
+    var splitTimeStart = this.tarea.start_time.split(':');
+    var splitTimeEnd = this.tarea.end_time.split(':');
+
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var day = today.getDate();
+
+    var hour = today.getHours()
+    var minutes = today.getMinutes()
+    //Fecha actual
+    var fechaString: string = month + '/' + day + '/' + year + ' ' + hour + ':' + minutes
+    var fechaActual = new Date(fechaString);
+    //console.log(fechaActual)
+
+    var restrYearStart = parseInt(splitDateStart[0]);
+    var restrMonthStart = parseInt(splitDateStart[1]);
+    var restrDayStart = parseInt(splitDateStart[2]);
+
+    var restrYearEnd = parseInt(splitDateEnd[0]);
+    var restrMonthEnd = parseInt(splitDateEnd[1]);
+    var restrDayEnd = parseInt(splitDateEnd[2]);
+
+    var restrHourStart = parseInt(splitTimeStart[0]);
+    var restrMinutesStart = parseInt(splitTimeStart[1]);
+
+    var restrHourEnd = parseInt(splitTimeEnd[0]);
+    var restrMinutesEnd = parseInt(splitTimeEnd[1]);
+
+    //Restriccion dia inicio
+    var restriccionFechaInicio = new Date(restrMonthStart + '/' + restrDayStart + '/' + restrYearStart + ' ' + restrHourStart + ':' +  restrMinutesStart);
+    //Restriccion dia fin
+    var restriccionFechaFin = new Date(restrMonthEnd + '/' + restrDayEnd + '/' + restrYearEnd + ' ' + restrHourEnd + ':' +  restrMinutesEnd);
+
+    //VARIABLES DE PRUEBA
+    //var restriccionFechaInicio = new Date('1/5/2021 19:13');
+    //var restriccionFechaFin = new Date('1/12/2021 05:12');
+
+    if(fechaActual <= restriccionFechaInicio || fechaActual >= restriccionFechaFin){
+      await this.presentAlertDayTime();
+      return;
+    }
+    */
+    this.instrumentosServices.obtenerCantidadRespuestaFormularios(this.tarea.task_id)
+    
     const modal = await this.modalCtrl.create({
       component: EncuestaComponent,
       componentProps: {
@@ -155,6 +216,8 @@ export class TareaPage implements OnInit {
       await this.presentAlert();
       return;
     }
+    
+    
     const modal = await this.modalCtrl.create({
       component: MapeoComponent,
       componentProps: {
@@ -222,6 +285,16 @@ export class TareaPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Lo sentimos',
       message: 'Para continuar debes encontrarte dentro del territorio de la tarea.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertDayTime() {
+    const alert = await this.alertController.create({
+      header: 'Lo sentimos',
+      message: 'Para continuar debes encontrarte dentro del rango de días y horas correspondientes',
       buttons: ['OK']
     });
 

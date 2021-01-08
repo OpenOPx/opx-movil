@@ -11,7 +11,7 @@
 
   <ion-list>
 
-    <ion-list-header *ngIf="tipo === 'tiempo'">
+    <ion-list-header *ngIf="tipo === 'tiempo' || tipo === 'tiempo tarea'">
       <ion-label class="ion-text-uppercase">
         <ion-text color="medium">
           <h4><b>Decisión - {{tipo}}</b></h4>
@@ -52,10 +52,10 @@
         </ion-item-divider>
 
         <ion-item *ngFor="let item of equipoActual; let i=index">
-          <ion-label>{{item.userfullname}}</ion-label>
+          <ion-label>{{item.team_name}}</ion-label>
           <ion-spinner *ngIf="item.eliminando" slot="end"></ion-spinner>
           <ion-icon *ngIf="!item.eliminando" slot="end" color="danger" name="remove-circle-outline"
-            (click)="eliminarUsuario(item)"></ion-icon>
+            (click)="eliminarEquipo(item)"></ion-icon>
         </ion-item>
 
         <ion-item *ngIf="equipoActual.length === 0 && !cargandoEquipos" lines="none">
@@ -72,10 +72,10 @@
         </ion-item-divider>
 
         <ion-item *ngFor="let item of equipoDisponible; let i=index">
-          <ion-label>{{item.userfullname}}</ion-label>
+          <ion-label>{{item.team_name}}</ion-label>
           <ion-spinner *ngIf="item.eliminando" slot="end"></ion-spinner>
           <ion-icon *ngIf="!item.eliminando" slot="end" color="secondary" name="person-add"
-            (click)="agregarUsuario(item)"></ion-icon>
+            (click)="agregarEquipo(item)"></ion-icon>
         </ion-item>
 
         <ion-item *ngIf="equipoDisponible.length === 0 && !cargandoEquipos" lines="none">
@@ -84,6 +84,41 @@
 
       </ion-item-group>
     </div>
+
+    <form *ngIf="tipo === 'tiempo tarea'" #form="ngForm" (ngSubmit)="actualizarTarea()">
+      <ion-item lines="none">
+        <ion-label color="primary" position="floating">Fecha de inicio</ion-label>
+        <ion-icon slot="start" mode="md" name="hourglass"></ion-icon>
+        <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="YYYY-MM-DD" placeholder="Inicio de la tarea"
+          name="task_start_date" [(ngModel)]="tarea.task_start_date" required>
+        </ion-datetime>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="primary" position="floating">Fecha de cierre</ion-label>
+        <ion-icon slot="start" mode="ios" name="hourglass"></ion-icon>
+        <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="YYYY-MM-DD" placeholder="Fin de la tarea"
+          name="task_end_date" [(ngModel)]="tarea.task_end_date" required>
+        </ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Hora inicio</ion-label>
+        <ion-icon slot="start" mode="ios" name="clock"></ion-icon>
+        <ion-datetime displayFormat="HH:mm" [(ngModel)]="tarea.start_time" name="start_time" required></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Hora fin</ion-label>
+        <ion-icon slot="start" mode="ios" name="alarm"></ion-icon>
+        <ion-datetime displayFormat="HH:mm" [(ngModel)]="tarea.end_time" name="end_time" required></ion-datetime>
+      </ion-item>
+
+      <ion-button class="ion-padding-vertical" class="ion-text-uppercase" color="primary" [disabled]="form.invalid"
+        expand="block" type="submit">
+        Actualizar tiempos
+      </ion-button>
+    </form>
   </ion-list>
 </ion-content>
 

@@ -128,6 +128,22 @@ export class ProyectosService {
 
   }
 
+  actualizarProyectoMovil(proyecto: Proyecto) {
+    const headers = new HttpHeaders({
+      Authorization: this.authService.token,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    const querystring = this.authService.querystring(proyecto);
+
+    return this.http.post(`${URL}/movil/${proyecto.proj_id}`, querystring, { headers })
+      .pipe(map((resp: any) => {
+        console.log(resp);
+        return resp;
+      }), catchError(e => this.errorService.handleError(e)));
+
+  }
+
   /**
    * Obtiene las dimensiones territoriales por proyecto
    */

@@ -51,6 +51,25 @@ export class TareasService {
   }
 
   /**
+   * Guarda los cambios de una tarea.
+   * SOLO ONLINE
+   */
+  editarTareaProyectista(form: any) {
+    const headers = new HttpHeaders({
+      Authorization: this.authService.token,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    const querystring = this.authService.querystring(form);
+
+    return this.http.post(`${URL}/${form.task_id}`, querystring, { headers })
+      .pipe(map((resp: any) => {
+        return resp.tarea;
+        // this.dataLocalService.guardarDetalleProyecto(resp.tarea);
+      }), catchError(e => this.errorService.handleError(e)));
+
+  }
+
+  /**
    * Obtiene una tarea en detalle
    */
   detalleTarea(tareid: string) {

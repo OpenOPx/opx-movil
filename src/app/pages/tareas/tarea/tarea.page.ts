@@ -153,7 +153,7 @@ export class TareaPage implements OnInit, AfterViewInit {
       await this.presentAlert();
       return;
     }
-    /*
+    
     var splitDateStart = this.tarea.task_start_date.split('-');
     var splitDateEnd = this.tarea.task_end_date.split('-');
 
@@ -168,9 +168,9 @@ export class TareaPage implements OnInit, AfterViewInit {
     var hour = today.getHours()
     var minutes = today.getMinutes()
     //Fecha actual
-    var fechaString: string = month + '/' + day + '/' + year + ' ' + hour + ':' + minutes
-    var fechaActual = new Date(fechaString);
-    //console.log(fechaActual)
+    var fechaActualString: string = month + '/' + day + '/' + year + ' ' + hour + ':' + minutes
+    var fechaActual = new Date(fechaActualString);
+    console.log("Fecha actual " + fechaActual)
 
     var restrYearStart = parseInt(splitDateStart[0]);
     var restrMonthStart = parseInt(splitDateStart[1]);
@@ -187,9 +187,13 @@ export class TareaPage implements OnInit, AfterViewInit {
     var restrMinutesEnd = parseInt(splitTimeEnd[1]);
 
     //Restriccion dia inicio
-    var restriccionFechaInicio = new Date(restrMonthStart + '/' + restrDayStart + '/' + restrYearStart + ' ' + restrHourStart + ':' +  restrMinutesStart);
+    var fechaInicioString: string = restrMonthStart + '/' + restrDayStart + '/' + restrYearStart + ' ' + restrHourStart + ':' +  restrMinutesStart;
+    var restriccionFechaInicio = new Date(fechaInicioString);
+    console.log("Fecha inicio " + restriccionFechaInicio)
     //Restriccion dia fin
-    var restriccionFechaFin = new Date(restrMonthEnd + '/' + restrDayEnd + '/' + restrYearEnd + ' ' + restrHourEnd + ':' +  restrMinutesEnd);
+    var fechaInicioString: string = restrMonthEnd + '/' + restrDayEnd + '/' + restrYearEnd + ' ' + restrHourEnd + ':' +  restrMinutesEnd
+    var restriccionFechaFin = new Date(fechaInicioString);
+    console.log("Fecha fin " + restriccionFechaFin)
 
     //VARIABLES DE PRUEBA
     //var restriccionFechaInicio = new Date('1/5/2021 19:13');
@@ -199,7 +203,7 @@ export class TareaPage implements OnInit, AfterViewInit {
       await this.presentAlertDayTime();
       return;
     }
-    */
+    
     this.instrumentosServices.obtenerCantidadRespuestaFormularios(this.tarea.task_id)
     
     const modal = await this.modalCtrl.create({

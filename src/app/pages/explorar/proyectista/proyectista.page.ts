@@ -47,6 +47,7 @@ export class ProyectistaPage implements OnInit {
   ionViewDidEnter() {
     this.leafletMap();
     if (this.territorioSeleccionado.proj_id) {
+      console.log("Entro al if de territorio")
       this.detalleProyecto(this.proyectoSeleccionado.proj_id);
     }
   }
@@ -78,13 +79,16 @@ export class ProyectistaPage implements OnInit {
 
     this.proyectosService.dimensionesTerritoriales(id)
       .subscribe(p => {
+        console.log(p)
         const gjLayer = [];
         p.forEach(element => {
           //BEYCKER REVISAR: Se hace el parse o me llega directamente como json, y lo otro es el atributo
           const geoJS = JSON.parse(element.dimension_geojson);
+          console.log(geoJS)
           delete element.dimension_geojson;
           geoJS.properties = element;
           gjLayer.push(geoJS);
+          console.log(gjLayer)
         });
 
         this.geoJSONDimensiones = geoJSON(gjLayer, {
@@ -96,7 +100,7 @@ export class ProyectistaPage implements OnInit {
             layer.on({
               click: () => {
                 this.nombreSeleccionado = feature.properties.dimension_name;
-                this.territorioSeleccionado = feature.properties;
+                this.territorioSeleccionado = feature.properties; //El feature.properties tiene: dimension_id, dimension_name, dimension_type_id, isactive, neighborhood_id, preloaded
                 this.tareaSeleccionada = false;
               }
             });
@@ -107,10 +111,12 @@ export class ProyectistaPage implements OnInit {
         this.proyectosService.detalleProyecto(id)
           .subscribe((pp: any) => {
             const gjLayerr = [];
+            console.log("Tareas")
+            console.log(pp.tareas)
             pp.tareas.forEach(t => {
               //BEYCKER REVISAR -> Antes era JSON.parse(t.geojson_subconjunto) pero leonardo me dijo que me lo mandaria como json, por eso le quité el parse
               //Revisa si mandan geojson_subconjunto o dimension_geojson
-              const geoJS = t.geojson_subconjunto;
+              const geoJS = JSON.parse(t.dimension_geojson);
               geoJS.properties = t;
               gjLayerr.push(geoJS);
             });
@@ -154,6 +160,9 @@ export class ProyectistaPage implements OnInit {
 
           const q: any = Object.values(val)[0];
           this.proyectoSeleccionado = q.value;
+          console.log("proyecto seleccionado")
+          console.log(this.proyectoSeleccionado)
+          //console.log("this.proyectoSeleccionado.proj_id: " + this.proyectoSeleccionado.proj_id) //ESTA SUPER
           this.detalleProyecto(this.proyectoSeleccionado.proj_id);
         }
       }],
@@ -185,13 +194,14 @@ export class ProyectistaPage implements OnInit {
       this.uiService.presentToast('Función disponible solo online');
       return;
     }
-
+    console.log('Territorio selecionado:')
+    console.log(this.territorioSeleccionado)
     const alert = await this.alertController.create({
-      header: 'Ingresa una nueva cantidad',
+      header: 'Ingresa una nueva cantidad de encuestas',
       inputs: [{
         name: 'number',
         type: 'number',
-        value: this.territorioSeleccionado.task_restriction.task_quantity,
+        value: this.territorioSeleccionado.task_quantity,
         min: 0
       }],
       buttons: [
@@ -202,8 +212,31 @@ export class ProyectistaPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (e) => {
-            this.territorioSeleccionado.task_restriction.task_quantity = e.number;
-            this.tareaService.editarTarea(this.territorioSeleccionado)
+            this.territorioSeleccionado.task_quantity = e.number;
+
+            const form = {
+              dimension_geojson: this.territorioSeleccionado.dimension_geojson,
+              instrument_id: this.territorioSeleccionado.instrument_id,
+              proj_dimension_id: this.territorioSeleccionado.proj_dimension_id,
+              project_id: this.territorioSeleccionado.project_id,
+              restriction_id: this.territorioSeleccionado.restriction_id,
+              task_completness: this.territorioSeleccionado.task_completness,
+              task_creation_date: this.territorioSeleccionado.task_creation_date,
+              task_description: this.territorioSeleccionado.task_description,
+              task_id: this.territorioSeleccionado.task_id,
+              task_name: this.territorioSeleccionado.task_name,
+              task_priority_id: this.territorioSeleccionado.task_priority_id,
+              task_quantity: this.territorioSeleccionado.task_quantity,
+              task_restriction_id: this.territorioSeleccionado.task_restriction_id,
+              task_type_id: this.territorioSeleccionado.task_type_id,
+              task_type_name: this.territorioSeleccionado.task_type_name,
+              territorial_dimension_id: this.territorioSeleccionado.territorial_dimension_id,
+              tarfechainicio: this.territorioSeleccionado.task_start_date,
+              tarfechacierre: this.territorioSeleccionado.task_end_date,
+              HoraInicio: this.territorioSeleccionado.start_time,
+              HoraCierre: this.territorioSeleccionado.end_time,
+            };
+            this.tareaService.editarTareaProyectista(form)
               .subscribe(r => {
                 this.uiService.presentToastSucess('Cantidad actualizada correctamente');
               }, () => {
@@ -243,7 +276,14 @@ export class ProyectistaPage implements OnInit {
       this.uiService.presentToast('Función disponible solo online');
       return;
     }
-    this.navCtrl.navigateForward(`/tabs/explorar/proyectista/decision/${decision}/${this.territorioSeleccionado.proj_id}`);
+    console.log(decision)
+    console.log(this.territorioSeleccionado)
+    if(decision == 'tiempo tarea'){
+      this.navCtrl.navigateForward(`/tabs/explorar/proyectista/decision/${decision}/${this.territorioSeleccionado.task_id}`);
+    }else{
+      this.navCtrl.navigateForward(`/tabs/explorar/proyectista/decision/${decision}/${this.proyectoSeleccionado.proj_id}`);
+    }
+    
   }
 
   colorAleatorio() {

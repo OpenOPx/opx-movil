@@ -27,6 +27,10 @@
         <ion-fab-button>
           <ion-icon (click)="presentAlertPrompt()" color="medium" name="clipboard"></ion-icon>
         </ion-fab-button>
+
+        <ion-fab-button>
+          <ion-icon (click)="irDecision('tiempo tarea')" color="medium" name="time"></ion-icon>
+        </ion-fab-button>
       </ion-fab-list>
 
       <ion-fab-list side="top" *ngIf="!tareaSeleccionada">

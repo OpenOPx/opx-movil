@@ -27,6 +27,8 @@ export class EquiposService {
 
     return this.http.get(`${URL}/list/${proyid}`, { headers })
       .pipe(map((resp: any) => {
+        console.log("Respuesta del listado de equipos asociados al proyecto")
+        console.log(resp)
         return resp.equipo;
         //BEYCKER REVISAR
         //Creo que retorna el equipo, es decir, todos los usarios del Proyecto cuyo ID sea el que se le pasa por parametro
@@ -40,11 +42,13 @@ export class EquiposService {
    */
   usuariosDisponibles(proyid: string) {
     const headers = new HttpHeaders({ Authorization: this.authService.token });
-    return this.http.get(`${URL}/${proyid}/usuarios-disponibles/`, { headers })
+    return this.http.get(`${URL}/${proyid}/equipos-disponibles/`, { headers })
       .pipe(map((resp: any) => {
         //BEYCKER REVISAR - Que devuelve esto? Usuarios que atributos tiene
         //Preguntarle a Leonardo que me devuelve esta peticion
-        return resp.usuarios;
+        console.log("Respuesta del listado de equipos que pueden ser asociados al proyecto")
+        console.log(resp)
+        return resp.equipo;
       }), catchError(e => this.errorService.handleError(e)));
   }
 
@@ -52,13 +56,13 @@ export class EquiposService {
    * Método que se encarga de asignar un usuario a un proyecto
    * Solo realizado por Proyectista
    */
-  agregarUsuarioProyecto(proyid: string, userid: string) {
+  agregarEquipoProyecto(proyectoId: string, equipoId: string) {
 
     const headers = new HttpHeaders({
       Authorization: this.authService.token,
       'Content-Type': 'application/x-www-form-urlencoded'
     });
-    const querystring = this.authService.querystring({ userid, proyid });
+    const querystring = this.authService.querystring({ equipoId, proyectoId });
     return this.http.post(`${URL}/store/`, querystring, { headers })
       .pipe(catchError(e => this.errorService.handleError(e)));
   }
@@ -66,7 +70,7 @@ export class EquiposService {
   /**
    * Elimina un usuario de proyecto
    */
-  eliminarUsuarioProyecto(equid: string) {
+  eliminarEquipoProyecto(equid: string) {
     const headers = new HttpHeaders({ Authorization: this.authService.token });
     return this.http.delete(`${URL}/delete/${equid}`, { headers })
       .pipe(catchError(e => this.errorService.handleError(e)));

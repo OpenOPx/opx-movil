@@ -24,7 +24,7 @@
         <ion-label color="primary" position="floating">Fecha de inicio</ion-label>
         <ion-icon slot="start" mode="md" name="hourglass"></ion-icon>
         <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="YYYY-MM-DD" placeholder="Inicio del proyecto"
-          name="proyfechainicio" [(ngModel)]="proyecto.proj_start_date" required>
+          name="proj_start_date" [(ngModel)]="proyecto.proj_start_date" required>
         </ion-datetime>
       </ion-item>
 
@@ -32,7 +32,7 @@
         <ion-label color="primary" position="floating">Fecha de cierre</ion-label>
         <ion-icon slot="start" mode="ios" name="hourglass"></ion-icon>
         <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="YYYY-MM-DD" placeholder="Fin del proyecto"
-          name="proyfechacierre" [(ngModel)]="proyecto.proj_close_date" required>
+          name="proj_close_date" [(ngModel)]="proyecto.proj_close_date" required>
         </ion-datetime>
       </ion-item>
 

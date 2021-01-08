@@ -29,10 +29,13 @@
           <p>{{tarea.task_description}}</p>
         </ion-text>
         <ion-text>
-          <p>Restricción fecha de inicio: {{tarea.task_start_date}} - {{tarea.start_time}}</p>
+          <p>Fecha de inicio: {{tarea.task_start_date}}</p>
         </ion-text>
         <ion-text>
-          <p>Restricción fecha de fin: {{tarea.task_end_date}} - {{tarea.end_time}}</p>
+          <p>Fecha de finalización: {{tarea.task_end_date}}</p>
+        </ion-text>
+        <ion-text>
+          <p>Franja horaria: {{tarea.start_time}} a {{tarea.end_time}}</p>
         </ion-text>
         <ion-progress-bar class="ion-margin-top" color="warning" [value]="(tarea.task_completness || 0)/100">
         </ion-progress-bar>

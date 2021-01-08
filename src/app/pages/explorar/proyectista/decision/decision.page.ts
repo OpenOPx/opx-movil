@@ -95,6 +95,8 @@ export class DecisionPage implements OnInit {
 
   actualizarProyecto() {
 
+    this.cargando = true;
+
     const date = new Date(this.proyecto.proj_start_date);
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString();
@@ -121,6 +123,7 @@ export class DecisionPage implements OnInit {
 
     this.proyectosService.actualizarProyectoMovil(pro)
       .subscribe(r => {
+        this.cargando = false;
         this.uiService.presentToastSucess('Proyecto actualizado correctamente');
       }, () => {
         this.uiService.presentToastError('Error al actualizar proyecto');
@@ -128,6 +131,8 @@ export class DecisionPage implements OnInit {
   }
 
   actualizarTarea() {
+
+    this.cargando = true;
 
     const date = new Date(this.tarea.task_start_date);
     const year = date.getFullYear().toString();
@@ -164,6 +169,7 @@ export class DecisionPage implements OnInit {
 
     this.tareasService.editarTareaProyectista(tar)
     .subscribe(r => {
+      this.cargando = false;
       this.uiService.presentToastSucess('Restricciones de la tarea actualizadas correctamente');
     }, () => {
       this.uiService.presentToastError('Error al actualizar las restricciones');

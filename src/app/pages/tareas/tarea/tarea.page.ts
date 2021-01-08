@@ -168,10 +168,10 @@ export class TareaPage implements OnInit, AfterViewInit {
     var hour = today.getHours()
     var minutes = today.getMinutes()
     //Fecha actual
-    var fechaActualString: string = month + '/' + day + '/' + year + ' ' + hour + ':' + minutes
+    var fechaActualString: string = month + '/' + day + '/' + year;
     var fechaActual = new Date(fechaActualString);
     console.log("Fecha actual " + fechaActual)
-
+    
     var restrYearStart = parseInt(splitDateStart[0]);
     var restrMonthStart = parseInt(splitDateStart[1]);
     var restrDayStart = parseInt(splitDateStart[2]);
@@ -187,21 +187,58 @@ export class TareaPage implements OnInit, AfterViewInit {
     var restrMinutesEnd = parseInt(splitTimeEnd[1]);
 
     //Restriccion dia inicio
-    var fechaInicioString: string = restrMonthStart + '/' + restrDayStart + '/' + restrYearStart + ' ' + restrHourStart + ':' +  restrMinutesStart;
+    var fechaInicioString: string = restrMonthStart + '/' + restrDayStart + '/' + restrYearStart;
     var restriccionFechaInicio = new Date(fechaInicioString);
     console.log("Fecha inicio " + restriccionFechaInicio)
     //Restriccion dia fin
-    var fechaInicioString: string = restrMonthEnd + '/' + restrDayEnd + '/' + restrYearEnd + ' ' + restrHourEnd + ':' +  restrMinutesEnd
+    var fechaInicioString: string = restrMonthEnd + '/' + restrDayEnd + '/' + restrYearEnd;
     var restriccionFechaFin = new Date(fechaInicioString);
-    console.log("Fecha fin " + restriccionFechaFin)
+    //console.log("Fecha fin " + restriccionFechaFin)
 
     //VARIABLES DE PRUEBA
-    //var restriccionFechaInicio = new Date('1/5/2021 19:13');
-    //var restriccionFechaFin = new Date('1/12/2021 05:12');
-
+    //var restriccionFechaInicio = new Date('1/7/2021');
+    //var restriccionFechaFin = new Date('1/12/2021');
+    /*
     if(fechaActual <= restriccionFechaInicio || fechaActual >= restriccionFechaFin){
       await this.presentAlertDayTime();
       return;
+    }
+*/
+    if(fechaActual < restriccionFechaInicio || fechaActual > restriccionFechaFin){
+      await this.presentAlertDayTime();
+      return;
+    }else if(fechaActual <= restriccionFechaInicio){
+      //Aqui verificar la hora, si está en una hora en el rango de horas se la deja hacer
+      if(hour < restrHourStart || hour > restrHourEnd){
+        await this.presentAlertDayTime();
+        return;
+      }else if(hour == restrHourStart){
+        if(minutes < restrMinutesStart){
+          await this.presentAlertDayTime();
+          return;
+        }
+      }else if(hour == restrHourEnd){
+        if(minutes > restrMinutesEnd){
+          await this.presentAlertDayTime();
+          return;
+        }
+      }
+    }else if(fechaActual >= restriccionFechaFin){
+      //Aqui verificar la hora, si está en una hora en el rango de horas se la deja hacer
+      if(hour < restrHourStart || hour > restrHourEnd){
+        await this.presentAlertDayTime();
+        return;
+      }else if(hour == restrHourStart){
+        if(minutes < restrMinutesStart){
+          await this.presentAlertDayTime();
+          return;
+        }
+      }else if(hour == restrHourEnd){
+        if(minutes > restrMinutesEnd){
+          await this.presentAlertDayTime();
+          return;
+        }
+      }
     }
     
     this.instrumentosServices.obtenerCantidadRespuestaFormularios(this.tarea.task_id)

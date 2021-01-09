@@ -32,13 +32,14 @@ export class NotificacionesService {
    */
   listarNotificaciones() {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
+      console.log("Entro a la red")
       return from(this.dataLocalService.listarNotificaciones());
     } else {
       const headers = new HttpHeaders({ Authorization: this.authService.token });
       return this.http.get(`${URL}/list/`, { headers })
         .pipe(map((resp: any) => {
-          this.dataLocalService.guardarNotificaciones(resp.notificaciones);
-          return resp.notificaciones;
+          this.dataLocalService.guardarNotificaciones(resp.data);
+          return resp.data;
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
@@ -50,7 +51,7 @@ export class NotificacionesService {
   eliminarNotificaciones() {
     const headers = new HttpHeaders({ Authorization: this.authService.token });
     //Eliminar no sé que tipo de solicitud envia
-    return this.http.get(`${URL}/delete`, { headers })
+    return this.http.delete(`${URL}/delete/`, { headers })
       .pipe(map((resp: any) => {
         this.dataLocalService.vaciarNotificaciones();
         return resp.notificaciones

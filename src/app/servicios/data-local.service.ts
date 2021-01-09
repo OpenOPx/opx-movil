@@ -70,7 +70,7 @@ export class DataLocalService {
   async guardarNotificacion(notificacion: any) {
 
     const notificaciones: any[] = await this.storage.get('notificaciones') || [];
-    const i = notificaciones.findIndex(n => n.id_notificacion === notificacion.id_notificacion);
+    const i = notificaciones.findIndex(n => n.notification_id === notificacion.notification_id);
 
     if (i >= 0) {
       notificaciones[i] = notificacion;
@@ -88,6 +88,7 @@ export class DataLocalService {
 
   async listarNotificaciones() {
     let notificaciones: any[] = await this.storage.get('notificaciones') || [];
+    return notificaciones;
   }
 
   /**

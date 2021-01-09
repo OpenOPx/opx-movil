@@ -11,7 +11,7 @@ import { NotificacionesService } from 'src/app/servicios/notificaciones.service'
 export class NotificacionesPage implements OnInit {
 
   cargando = true;
-  notificaciones: any[] = [];
+  notificaciones = [];
 
   constructor(
     private navCtrl: NavController,
@@ -33,25 +33,32 @@ export class NotificacionesPage implements OnInit {
     })
   }
 */
-  listar(){
+  async listar(){
+    console.log(this.cargando)
     this.notificacionesService.listarNotificaciones()
     .subscribe(resp => {
       this.notificaciones.push(resp);
+      this.notificaciones = this.notificaciones[0]
+      console.log(this.notificaciones)
       this.cargando = false;
     })
+    
     //Intento de foreach para fecha:
+    /*
     this.notificaciones.forEach(element => {
       var cadenaseparacion = element.notification_date.split('T');
       element.fecha = cadenaseparacion[0];
       element.hora = cadenaseparacion[1];
     })
+    */
   }
 
   vaciar(){
-    
+    this.cargando = true;
     this.notificacionesService.eliminarNotificaciones()
     .subscribe(resp => {
-      this.notificaciones.push(resp);
+      this.notificaciones = []
+      console.log(resp)
       this.cargando = false;
     })
     

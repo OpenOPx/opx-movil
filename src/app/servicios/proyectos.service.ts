@@ -136,7 +136,7 @@ export class ProyectosService {
 
     const querystring = this.authService.querystring(proyecto);
 
-    return this.http.post(`${URL}/movil/${proyecto.proj_id}`, querystring, { headers })
+    return this.http.post(`${URL}/basic-update/${proyecto.proj_id}`, querystring, { headers })
       .pipe(map((resp: any) => {
         console.log(resp);
         return resp;

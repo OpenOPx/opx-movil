@@ -67,7 +67,7 @@ export class ModalRegistroComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.fcmService.initPush();
+    //this.fcmService.initPush();
     this.cargarUtilidades();
   }
 

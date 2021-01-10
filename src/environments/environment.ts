@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   //API_URL: 'http://167.99.11.184:90'
   //API_URL: 'http://104.155.149.1:8000'
-  //API_URL: 'http://opx.variamos.com'
-  API_URL: 'http://192.168.0.199:8000'
+  API_URL: 'http://opx.variamos.com'
+  //API_URL: 'http://192.168.0.199:8000'
   //API_URL: 'http://192.168.1.55:8000'
 };
 

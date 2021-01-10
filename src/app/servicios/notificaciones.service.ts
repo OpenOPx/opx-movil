@@ -31,8 +31,9 @@ export class NotificacionesService {
    * @description Lista las notificaciones del usuario
    */
   listarNotificaciones() {
+
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
-      console.log("Entro a la red")
+      //console.log("NOTIFICACIONES - Entro a la red")
       return from(this.dataLocalService.listarNotificaciones());
     } else {
       const headers = new HttpHeaders({ Authorization: this.authService.token });
@@ -42,6 +43,7 @@ export class NotificacionesService {
           return resp.data;
         }), catchError(e => this.errorService.handleError(e)));
     }
+    
   }
 
   /**

@@ -1,8 +1,11 @@
 <ion-header no-border>
   <ion-toolbar>
-    <!--<ion-buttons slot="start">
-      <button (click)="cerrar()"></button>
-    </ion-buttons>-->
+    <!--
+    <ion-buttons slot="end" (click)="cerrar()"> 
+        <ion-icon name="close-circle-outline"></ion-icon>
+    </ion-buttons>
+    -->
+    <ion-button slot="end" color="danger" (click)="cerrar()">X</ion-button>
     <ion-title>Notificaciones</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -17,7 +20,7 @@
           <ion-label color="medium">No hay notificaciones disponibles</ion-label>
         </ion-item>
       </ion-col>
-
+      
       <ion-col #notificacionesDisponibles size="12" *ngFor="let notificacion of notificaciones"> 
       <!--<ion-col size="12">-->
 
@@ -29,23 +32,23 @@
               <div *ngIf="notificacion.notification_type===2" slot="start" class="circle">CT</div>
               <div *ngIf="notificacion.notification_type===3" slot="start" class="circle">CE</div>
               <div *ngIf="notificacion.notification_type===4" slot="start" class="circle">CP</div>
+              <div *ngIf="notificacion.notification_type===5" slot="start" class="circle">CE</div>
               <!--<div slot="start" class="circle">CE</div>-->
               <ion-label>
                 <ion-grid class="ion-no-padding">
                   <ion-row>
-                    <ion-col size="7">
+                    <ion-col size="12">
+                      <p>
+                        <ion-text class="" color="medium">{{notificacion.fecha}} - {{notificacion.hora}}</ion-text>  
+                        <!--<ion-text class="ion-padding-start" color="medium">26/12/2020</ion-text>-->
+                      </p>
                       <p>
                         <b *ngIf="notificacion.notification_type===1">Cambio de Dimensión Territorial</b>
                         <b *ngIf="notificacion.notification_type===2">Cambio de fecha de Tarea</b>
-                        <b *ngIf="notificacion.notification_type===3">Cambio de Equipo</b>
+                        <b *ngIf="notificacion.notification_type===3">Cambio de Persona en Equipo</b>
                         <b *ngIf="notificacion.notification_type===4">Cambio de fecha de Proyecto</b>
+                        <b *ngIf="notificacion.notification_type===5">Cambio de Equipo en Proyecto</b>
                         <!--<b >Cambio de equipo</b>-->
-                      </p>
-                    </ion-col>
-                    <ion-col size="5">
-                      <p>
-                        <ion-text class="ion-padding-start" color="medium">{{notificacion.fecha}}</ion-text>
-                        <!--<ion-text class="ion-padding-start" color="medium">26/12/2020</ion-text>-->
                       </p>
                     </ion-col>
                   </ion-row>
@@ -67,6 +70,8 @@
                   
                   <i *ngIf="notificacion.description.type==='agregado'">{{notificacion.description.message}}</i>
                   <i *ngIf="notificacion.description.type==='eliminado'">{{notificacion.description.message}}</i>
+                  <i *ngIf="notificacion.description.type==='Equipo agregado'">{{notificacion.description.message}}</i>
+                  <i *ngIf="notificacion.description.type==='Equipo eliminado'">{{notificacion.description.message}}</i>
                   <i *ngIf="notificacion.description.type==='territorio'">{{notificacion.description.message}}</i>
                   <i *ngIf="notificacion.description.type==='tarea'">
                     Nueva fecha de inicio de tarea {{notificacion.description.body.start_date}} <br>
@@ -92,11 +97,16 @@
 
 
   <ion-fab *ngIf="notificaciones.length>0" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-button color="danger" (click)="vaciar()">
-      Vaciar<br>Listado
-    </ion-button>
+    <ion-fab-button color="light" (click)="vaciar()">
+      <ion-icon color="danger" name="trash"></ion-icon>
+    </ion-fab-button>
   </ion-fab>
 
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="light" (click)="listar()">
+      <ion-icon color="primary" name="refresh"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   
 
   

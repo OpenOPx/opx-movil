@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
 import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notificaciones',
@@ -14,6 +15,7 @@ export class NotificacionesPage implements OnInit {
   notificaciones = [];
 
   constructor(
+    private router: Router,
     private navCtrl: NavController,
     private notificacionesService: NotificacionesService
     ) { }
@@ -34,19 +36,29 @@ export class NotificacionesPage implements OnInit {
   }
 */
   async listar(){
-    console.log(this.cargando)
+    this.notificaciones = []
+    this.cargando = true
     this.notificacionesService.listarNotificaciones()
     .subscribe(resp => {
+      console.log(resp)
       this.notificaciones.push(resp);
-      this.notificaciones = this.notificaciones[0]
+      this.notificaciones = this.notificaciones[0];
       console.log(this.notificaciones)
+      for(let i = 0; i < this.notificaciones.length; i++){
+        var cadenaseparacion = this.notificaciones[i].notification_date.split('T');
+        this.notificaciones[i]['fecha'] = cadenaseparacion[0];
+        this.notificaciones[i]['hora'] = cadenaseparacion[1].substring(0,8);
+      }
       this.cargando = false;
     })
     
     //Intento de foreach para fecha:
+    
     /*
     this.notificaciones.forEach(element => {
+      console.log(element)
       var cadenaseparacion = element.notification_date.split('T');
+      console.log(cadenaseparacion)
       element.fecha = cadenaseparacion[0];
       element.hora = cadenaseparacion[1];
     })
@@ -58,16 +70,13 @@ export class NotificacionesPage implements OnInit {
     this.notificacionesService.eliminarNotificaciones()
     .subscribe(resp => {
       this.notificaciones = []
-      console.log(resp)
       this.cargando = false;
     })
     
-   console.log("Se dio click")
   }
 
   cerrar(){
-    this.navCtrl.pop();
-    console.log('deberia cerrar')
+    this.router.navigateByUrl(`/tabs/explorar`);
   }
 
 }

@@ -192,7 +192,8 @@ export class ExplorarPage implements OnInit {
     });
     modal.present();
     */
-    this.navCtrl.navigateForward(`/tabs/notificaciones`);
+    //this.navCtrl.navigateForward(`/tabs/notificaciones`);
+    //this.router.navigateByUrl(`/tabs/notificaciones`);
   }
 
 }

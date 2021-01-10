@@ -61,6 +61,10 @@ export class DataLocalService {
     await this.storage.set('proyectos', proyectos);
   }
 
+  async guardarUnicaNotificacion(notificacion: any[]){
+    await this.storage.set('notificaciones', notificacion);
+  }
+
   async guardarNotificaciones(notificaciones: any[]) {
     for (const n of notificaciones) {
       await this.guardarNotificacion(n);

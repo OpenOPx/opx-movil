@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataLocalService } from './data-local.service';
-import { NavController } from '@ionic/angular';
+import { TextoVozService } from './texto-voz.service';
 
 import {
   Plugins,
@@ -9,7 +9,7 @@ import {
   PushNotificationActionPerformed,
   Capacitor
 } from '@capacitor/core';
-//import { Router } from '@angular/router';
+import { Router } from '@angular/router';
  
 const { PushNotifications } = Plugins;
 
@@ -21,9 +21,9 @@ export class FcmService {
   tokenbey;
 
   constructor(
-    //private router: Router,
-    private navCtrl: NavController,
-    private datalocalservice: DataLocalService
+    private router: Router,
+    private datalocalservice: DataLocalService,
+    private textovoz: TextoVozService
     ) { }
 
   public initPush() {
@@ -79,6 +79,7 @@ export class FcmService {
       'pushNotificationReceived',
       async (notification: PushNotification) => {
         console.log('Push received: ' + JSON.stringify(notification));
+        this.textovoz.interpretar('Nueva notificación')
       }
     );
  
@@ -86,8 +87,10 @@ export class FcmService {
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
       async (notification: PushNotificationActionPerformed) => {
-        console.log(notification);
-        this.navCtrl.navigateForward(`/tabs/notificaciones`);
+        
+        //this.datalocalservice.guardarUnicaNotificacion([notification.notification.data]);
+        console.log(notification)
+        this.router.navigateByUrl(`/notificaciones`);
         /*
         const data = notification.notification.data;
         console.log('Action performed: ' + JSON.stringify(notification.notification));

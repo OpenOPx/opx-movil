@@ -61,7 +61,7 @@ export class TareasService {
     });
     const querystring = this.authService.querystring(form);
 
-    return this.http.post(`${URL}/${form.task_id}`, querystring, { headers })
+    return this.http.post(`${URL}/gestion-cambios/${form.task_id}`, querystring, { headers })
       .pipe(map((resp: any) => {
         return resp.tarea;
         // this.dataLocalService.guardarDetalleProyecto(resp.tarea);

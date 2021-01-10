@@ -53,7 +53,7 @@ export class ModalLoginComponent implements OnInit {
   }
 
   ngOnInit() { 
-    this.fcmService.initPush();
+    //this.fcmService.initPush();
   }
 
   /**

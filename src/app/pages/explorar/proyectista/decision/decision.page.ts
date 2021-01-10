@@ -161,10 +161,10 @@ export class DecisionPage implements OnInit {
       task_description: this.tarea.task_description,
       task_id: this.tarea.task_id,
 
-      tarfechainicio: `${year}-${month}-${day}`,
-      tarfechacierre: `${year2}-${month2}-${day2}`,
-      HoraInicio: this.tarea.start_time,
-      HoraCierre: this.tarea.end_time
+      task_start_date: `${year}-${month}-${day}`,
+      task_end_date: `${year2}-${month2}-${day2}`,
+      start_time: this.tarea.start_time,
+      end_time: this.tarea.end_time
     };
 
     this.tareasService.editarTareaProyectista(tar)

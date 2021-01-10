@@ -231,10 +231,10 @@ export class ProyectistaPage implements OnInit {
               task_type_id: this.territorioSeleccionado.task_type_id,
               task_type_name: this.territorioSeleccionado.task_type_name,
               territorial_dimension_id: this.territorioSeleccionado.territorial_dimension_id,
-              tarfechainicio: this.territorioSeleccionado.task_start_date,
-              tarfechacierre: this.territorioSeleccionado.task_end_date,
-              HoraInicio: this.territorioSeleccionado.start_time,
-              HoraCierre: this.territorioSeleccionado.end_time,
+              task_start_date: this.territorioSeleccionado.task_start_date,
+              task_end_date: this.territorioSeleccionado.task_end_date,
+              start_time: this.territorioSeleccionado.start_time,
+              end_time: this.territorioSeleccionado.end_time,
             };
             this.tareaService.editarTareaProyectista(form)
               .subscribe(r => {

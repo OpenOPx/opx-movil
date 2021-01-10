@@ -15,6 +15,9 @@ const routes: Routes = [{
 }, {
   path: 'proyectista',
   loadChildren: () => import('./proyectista/proyectista.module').then(m => m.ProyectistaPageModule)
+}, {
+  path: 'notificaciones',
+  loadChildren: () => import('../notificaciones/notificaciones.module').then(m => m.NotificacionesPageModule)
 }];
 
 @NgModule({

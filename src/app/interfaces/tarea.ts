@@ -14,7 +14,7 @@ export interface Tarea {
     task_restriction: any;
     project: any;
     //tareafechadeejecucion
-    //task_quantity: number; 
+    task_quantity: number; 
     //Nos llegan los demas atributos de task restriction
     //- MUERE tarerestrictime: any; //NO SE QUE SEA
     instrument_id: string; //PUEDE LLEGAR EL ID DEL INSTRUMENTO, O EL OBJETO INSTRUMENTO
@@ -26,7 +26,7 @@ export interface Tarea {
     task_creation_date: Date; //CREO QUE ESTA ES task_creation_date
     //tarefechaejecucion: Date; //CREO QUE ES task_start_date
     task_description: string;
-
+    task_completness: number;
     task_start_date: any;
     task_end_date: any;
     start_time: any;

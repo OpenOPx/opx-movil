@@ -15,13 +15,14 @@
 
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col class="sin-proyectos" size="12" *ngIf="notificaciones.length===0; else notificacionesDisponibles">
+      <ion-col class="sin-proyectos" size="12" *ngIf="notificaciones.length===0">
         <ion-item lines="none">
           <ion-label color="medium">No hay notificaciones disponibles</ion-label>
         </ion-item>
       </ion-col>
       
-      <ion-col #notificacionesDisponibles size="12" *ngFor="let notificacion of notificaciones"> 
+      <div *ngIf="notificaciones.length>0">
+      <ion-col size="12" *ngFor="let notificacion of notificaciones"> 
       <!--<ion-col size="12">-->
 
         <ion-card>
@@ -91,6 +92,7 @@
         </ion-card>
 
       </ion-col>
+      </div>
 
     </ion-row>
   </ion-grid>

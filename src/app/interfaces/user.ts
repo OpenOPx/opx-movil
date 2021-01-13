@@ -1,5 +1,4 @@
 export interface User {
-    //pers_id?: string;
     userid?: string;
     userfullname?: string;
     pers_name?: string;
@@ -14,10 +13,11 @@ export interface User {
     pers_birthdate?: string;
     gender_id?: string;
     pers_telephone?: string;
-    promocion?: any; //OJO CON PROMOCION
+    promocion?: any;
     fcm_token?: any;
 }
 
+//Propiedades antes definidas por el equipo Neuromedia
 /*
 export interface User {
     userid?: string;

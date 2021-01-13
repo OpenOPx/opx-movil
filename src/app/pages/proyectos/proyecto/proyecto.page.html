@@ -102,13 +102,11 @@
   <div *ngIf="segmentoTareas">
     <app-peticion-login mensaje="Para contribuir a este proyecto debes iniciar sesión." back="true"
       *ngIf="!authService.token && !cargando"></app-peticion-login>
-      <!-- BEYCKER REVISAR Aqui le está pasando a app-tareas al atributo tareas, las tareas que tiene esta pagina-->
     <app-tareas *ngIf="authService.token" [cargando]="cargando" [tareas]="tareas"></app-tareas>
   </div>
 
   <div *ngIf="segmentoValidar">
     <div *ngIf="authService.token">
-      <!-- BEYCKER REVISAR, cambie .rol por .role_name -->
       <app-tareas *ngIf="authService.user.role_name === 'Validador' || authService.user.role_name === 'Proyectista'"
         [cargando]="cargando" [tareas]="tareasCompletadas"></app-tareas>
       <ion-text

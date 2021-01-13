@@ -6,6 +6,7 @@ export interface ElementoOSM {
     osmelement_value: string;
 }
 
+//Propiedades antes definidas por el equipo Neuromedia
 /*
 export interface ElementoOSM {
     closed_way: number;

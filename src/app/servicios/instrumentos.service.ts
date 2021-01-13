@@ -27,7 +27,7 @@ export class InstrumentosService {
   ) { }
 
   /**
-   * Requerido para enviar objetos en el body de una petición HTTP
+   * @description Requerido para enviar objetos en el body de una petición HTTP
    */
   querystring(obj: object): string {
     return Object.keys(obj)
@@ -37,7 +37,7 @@ export class InstrumentosService {
   }
 
   /**
-   * Verifica si una encuesta se encuentra habilitada para ser llenada
+   * @description Verifica si una encuesta se encuentra habilitada para ser llenada
    * @param id Identificación del instrumento de tipo encuesta.
    */
   verificarImplementacion(id: string): any {
@@ -59,7 +59,7 @@ export class InstrumentosService {
   }
 
   /**
-   * Enlace usado en iFrame para visualizar la encuesta y poder ser llenada.
+   * @description Enlace usado en iFrame para visualizar la encuesta y poder ser llenada.
    * @param id id Identificación del instrumento de tipo encuesta.
    */
   enlaceFormularioKoboToolbox(id: string) {
@@ -71,20 +71,12 @@ export class InstrumentosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarEnlaceFormularioKoboToolbox(id, resp.enlace);
           return resp.enlace;
-          /**
-           * Se deja enlace como enlace, no se le modifica el nombre
-           * data = {
-                            'code': 200,
-                            'enlace': enlace,
-                            'status': 'success'
-                        }
-           */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
 
   /**
-   * Envía al servicio un nuevo mapeo en la cartografia.
+   * @description Envía al servicio un nuevo mapeo en la cartografia.
    * @param tareid id Identificación de la tarea de tipo mapa.
    * @param osmelement Tipo de elemento (casa, calle).
    * @param coordinates Coordenadas de mapeo realizado.
@@ -109,7 +101,7 @@ export class InstrumentosService {
   }
 
   /**
-   * Carga los elementos que ya fueron mapeados en un instrumento de tipo cartografía
+   * @description Carga los elementos que ya fueron mapeados en un instrumento de tipo cartografía
    * @param tareid id Identificación de la tarea.
    */
   detalleMapeo(tareid: string) {
@@ -121,21 +113,12 @@ export class InstrumentosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarDetalleCartografia(tareid, resp.geojson);
           return resp.geojson;
-          //BEYCKER REVISAR - El geojson se dejo tal cual como en el back, es decir, no se hizo cambios
-          //Preguntarle a Leonardo que retorna esto
-          /**
-           * response = {
-                    'code': 200,
-                    'geojson': json.dumps(geojson),
-                    'status': 'success'
-                }
-           */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
 
   /**
-   * Elimina una figura del mapa
+   * @description Elimina una figura del mapa
    * Usado en el perfil del validador
    */
   eliminarCartografia(id: string) {
@@ -145,7 +128,7 @@ export class InstrumentosService {
   }
 
   /**
-   * Trae información respecto de un instrumento por VALIDAR
+   * @description Trae información respecto de un instrumento por VALIDAR
    * Usado en el perfil del validador
    */
   informacionInstrumento(tareid: string) {
@@ -157,34 +140,12 @@ export class InstrumentosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarInformacionInstrumento(tareid, resp.info);
           return resp.info;
-          /**
-           * La respuesta es asi para instrumentos tipo 1 (Encuesta):
-           * data = {
-                    'status': 'success',
-                    'code': 200,
-                    'info': {
-                        'campos': informacion['campos'],
-                        'info': encuestas,
-                        'tipoInstrumento': instrumento.instrtipo
-                    },
-                    'instrumento': model_to_dict(instrumento)
-                }
-
-            O así para instrumentos tipo 2 (Cartografico):
-                data = {
-                    'status': 'success',
-                    'code': 200,
-                    'info': informacion,
-                    'geojson': geojson,
-                    'instrumento': model_to_dict(instrumento)
-                }
-           */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
 
   /**
-   * Proceso que actualiza el estado de una encuesta
+   * @description Proceso que actualiza el estado de una encuesta
    * @param estado 0= Sin Validar; 1 = Mala; 2 = Buena;
    * Usado en el perfil del validador
    */
@@ -193,7 +154,7 @@ export class InstrumentosService {
       Authorization: this.authService.token,
       'Content-Type': 'application/x-www-form-urlencoded'
     });
-    //BEYCKER REVISAR, se dejaron los nombres identicos, idEncuesta, que recibe el back como encuestaid, pero no afecta, y estado y observacion, quedan idencticos en back y front
+  
     const data = this.authService.querystring({ estado, observacion });
     return this.http.post(`${URL}/revisar-encuesta/${idEncuesta}`, data, { headers })
       .pipe(catchError(e => this.errorService.handleError(e)));
@@ -201,6 +162,10 @@ export class InstrumentosService {
 
 
 
+  /**
+   * @description Obtiene a cantidad de respuestas de un formulario determinado en Kobo
+   * @param tareid id de la tarea que contiene ese formulario
+   */
   obtenerCantidadRespuestaFormularios(tareid: string) {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
       //return from(this.dataLocalService.cargarInformacionInstrumento(tareid));
@@ -214,6 +179,10 @@ export class InstrumentosService {
     }
   }
 
+  /**
+   * @description Almacena la encuesta para poder calcular el nuevo progreso de la tarea y el proyecto
+   * @param tareid id de la tarea que contiene ese formulario
+   */
   almacenarEncuesta(tareid: string) {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
       //return from(this.dataLocalService.cargarInformacionInstrumento(tareid));

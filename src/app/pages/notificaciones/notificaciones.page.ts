@@ -25,16 +25,11 @@ export class NotificacionesPage implements OnInit {
     this.cargando = true
     this.notificaciones = []
     this.listar()
-    //this.pruebaDataLocalStorage();
   }
-/*
-  pruebaDataLocalStorage(){
-    this.datalocal.guardarTokenMovil('1234');
-    this.datalocal.obtenerTokenMovil().then(resp => {
-      console.log(resp)
-    })
-  }
-*/
+
+  /**
+   * @description Lista las notificaciones del usuario logeado
+   */
   async listar(){
     this.notificaciones = []
     this.cargando = true
@@ -52,19 +47,11 @@ export class NotificacionesPage implements OnInit {
       this.cargando = false;
     })
     
-    //Intento de foreach para fecha:
-    
-    /*
-    this.notificaciones.forEach(element => {
-      console.log(element)
-      var cadenaseparacion = element.notification_date.split('T');
-      console.log(cadenaseparacion)
-      element.fecha = cadenaseparacion[0];
-      element.hora = cadenaseparacion[1];
-    })
-    */
   }
 
+  /**
+   * @description Elimina todas las notificaciones actuales del usuario
+   */
   vaciar(){
     this.cargando = true;
     this.notificacionesService.eliminarNotificaciones()
@@ -75,6 +62,9 @@ export class NotificacionesPage implements OnInit {
     
   }
 
+  /**
+   * @description Cierra la vista de notificaciones y retorna a la vista principal del mapa
+   */
   cerrar(){
     this.router.navigateByUrl(`/tabs/explorar`);
   }

@@ -1,5 +1,5 @@
 {
-  "appId": "com.neuromedia.opc",
+  "appId": "com.icesi.opc",
   "appName": "OPC",
   "bundledWebRuntime": false,
   "npmClient": "npm",

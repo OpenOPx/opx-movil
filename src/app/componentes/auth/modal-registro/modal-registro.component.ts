@@ -35,8 +35,6 @@ export class ModalRegistroComponent implements OnInit {
 
   type_device;
 
-  //tokenmovil: string = '';
-
   @ViewChild('slidePrincipal', { static: true }) slides: IonSlides;
   @ViewChild('inputEmail', { static: true }) inputEmail: IonInput;
 
@@ -52,22 +50,18 @@ export class ModalRegistroComponent implements OnInit {
     if (this.platform.is('ios')) {
       // This will only print when on iOS
       this.type_device = 'ios'
-      //console.log('I am an iOS device!');
      }
      if (this.platform.is('android')) {
       // This will only print when on Android
       this.type_device = 'android'
-      //console.log('I am an android device!');
      }
      if (this.platform.is('desktop')) {
       // This will only print when on Web
       this.type_device = 'web'
-      //console.log('I am an android device!');
      }
    }
 
   ngOnInit() {
-    //this.fcmService.initPush();
     this.cargarUtilidades();
   }
 
@@ -99,17 +93,13 @@ export class ModalRegistroComponent implements OnInit {
 
     
     this.loading = await this.uiService.presentLoading('Registrando...');
-    //var toktemp
-    //BEYCKER REVISAR Ojo que el tokenmovil retorna es una promesa
     this.datalocalservice.obtenerTokenMovil().then(resp =>{
-      //console.log('El token es:' + resp)
-      //toktemp = resp + '';
+
       const date = new Date(this.nuevoUsuario.fecha_nacimiento);
       const year = date.getFullYear().toString();
       const month = (date.getMonth() + 1).toString();
       const day = date.getDate().toString();
 
-      //BEYCKER: Revisar si estos son los nombres de atributos correctos
       console.log('token antes de entrar al form')
       const form = {
         useremail: this.nuevoUsuario.useremail,
@@ -117,7 +107,6 @@ export class ModalRegistroComponent implements OnInit {
         role_id: ROLID,
         pers_birthdate: `${year}-${month}-${day}`,
         gender_id: this.nuevoUsuario.genero,
-        //userfullname: `${this.nuevoUsuario.nombre} ${this.nuevoUsuario.apellido}`,
         pers_name: this.nuevoUsuario.nombre,
         pers_lastname: this.nuevoUsuario.apellido,
         neighborhood_id: this.nuevoUsuario.barrio,
@@ -125,7 +114,6 @@ export class ModalRegistroComponent implements OnInit {
         pers_telephone: this.nuevoUsuario.telefono,
         fcm_token: resp,
         type_device: this.type_device
-        //Se agrego el nuevo atributo tokenmovil, se debe agregar como un nuevo atributo en el modelo de base de datos y quizas en la nterface user
       };
 
       this.authService.registro(form)

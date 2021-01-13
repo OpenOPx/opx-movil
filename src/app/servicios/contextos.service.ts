@@ -19,7 +19,7 @@ const URL = environment.API_URL + '/datos-contexto';
 export class ContextosService {
 
   /**
-   * Servicio que representa los contextos del sistema.
+   * @description Servicio que representa los contextos del sistema.
    */
   constructor(
     private http: HttpClient,
@@ -31,31 +31,7 @@ export class ContextosService {
   ) { }
 
   /**
-   * Obtiene del backend, todos los contextos almacenados en el sistema.
-
-   /**
-   * Obtiene del backend, todos los contextos almacenados en el sistema.
-   * El return de este metodo es un json así:
-   data = {
-        'code': 200,
-        'contextos': [Contextos es una lista de elementos asi] {
-                    'contextoid': c.contextoid,
-                    'contexto': c.descripcion,
-                    'datos': list(datosContexto.values()) Esa lista de contextos tiene por cada elemento estos atributos:
-                          {
-                            dataid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-                            hdxtag = models.CharField(max_length = 100)
-                            datavalor = models.CharField(max_length = 100)
-                            datatipe = models.CharField(max_length=100)
-                            contextoid = models.UUIDField()
-                            descripcion = models.CharField(max_length=500, null=True)
-                            geojson = models.CharField(max_length=3000, null=True)
-                            fecha = models.DateField(null=True, blank=True)
-                            hora = models.TimeField(null=True, blank=True)
-                          }
-                }
-        'status': 'success'
-    }
+   * @description Obtiene del backend, todos los contextos almacenados en el sistema.
    */
   listadoContextos() {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
@@ -71,7 +47,7 @@ export class ContextosService {
   }
 
   /**
-   * Obtiene datos de categorización
+   * @description Obtiene datos de categorización
    * @param barrioUbicacion Ubicación del dispocitivo movil
    * @param barrioSeleccion Barrio seleccionado
    * @param año Año por consultar
@@ -99,7 +75,7 @@ export class ContextosService {
   }
 
   /**
-   * Datos de contextualización
+   * @description Datos de contextualización
    */
   datosContextualización(
     labelX: string = 'todo',
@@ -128,7 +104,7 @@ export class ContextosService {
   }
 
   /**
-   * Servicio que convierte texto a voz audible
+   * @description Servicio que convierte texto a voz audible
    */
   reproducir(barrioUbicacion, barrioSeleccionado) {
     let txt = 'El indicador de paz para el barrio ';

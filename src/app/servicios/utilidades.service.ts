@@ -17,7 +17,7 @@ const URL = environment.API_URL;
 export class UtilidadesService {
 
   /**
-   * Servicio que carga utilidades que son comunes en la aplicación móvil.
+   * @description Servicio que carga utilidades que son comunes en la aplicación móvil.
    */
   constructor(
     private errorService: ErrorService,
@@ -87,20 +87,6 @@ export class UtilidadesService {
         .pipe(map((resp: any) => {
           this.dataLocalService.elementosOSM(resp.elementosOSM);
           return resp.elementosOSM;
-          /**
-           * Retorna un listado de elementosOsm
-           * response = {
-                  'code': 200,
-                  'elementosOSM': list(elementosOsm): {
-                                                elemosmid = models.UUIDField(editable=False, primary_key=True)
-                                                nombre = models.CharField(max_length=255)
-                                                llaveosm = models.CharField(max_length=255)
-                                                valorosm = models.CharField(max_length=255)
-                                                closed_way = models.IntegerField()
-                  }
-                  'status': 'success'
-              }
-           */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }

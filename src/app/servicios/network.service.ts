@@ -16,7 +16,7 @@ export class NetworkService {
   private status: BehaviorSubject<ConnectionStatus> = new BehaviorSubject(ConnectionStatus.Offline);
 
   /**
-   * Clase encargada de manejar los eventos relacionados con el estado de conexión a internet del dispositivo móvil
+   * @description Clase encargada de manejar los eventos relacionados con el estado de conexión a internet del dispositivo móvil
    */
   constructor(
     private network: Network,

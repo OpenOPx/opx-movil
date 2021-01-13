@@ -17,7 +17,7 @@ const URL = environment.API_URL + '/notificaciones';
 export class NotificacionesService {
 
   /**
-   * Servicio relacionado con la gestión del usuario logueado
+   * @description Servicio relacionado con la gestión de notificaciones del usuario logueado
    */
   constructor(
     private http: HttpClient,

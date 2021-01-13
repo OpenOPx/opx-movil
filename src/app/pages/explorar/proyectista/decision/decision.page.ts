@@ -37,12 +37,16 @@ export class DecisionPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    //No tengo ni idea de que hace esto
+    //Parametros recibiros por URL
     this.activatedRoute.params.subscribe(params => this.tipo = params.tipo);
     this.activatedRoute.params.subscribe(params => this.detalleProyecto(params.proyecto));
 
   }
 
+  /**
+   * @description Obtiene el detalle de un proyecto determinado
+   * @param proyid id del proyecto al que se le quiere obtener el detalle
+   */
   detalleProyecto(proyid: string) {
 
     if(this.tipo == 'tiempo tarea'){
@@ -78,7 +82,10 @@ export class DecisionPage implements OnInit {
 
   }
 
-  //BEYCKER REVISAR
+  /**
+   * @description Carga los equipos de un proyectista
+   * @param proyid id del proyecto del que se quieren obtener los esquipos disponibles y los equipos actuales asignados a ese proyecto
+   */
   cargarEquipos(proyid: string) {
     this.cargandoEquipos = true;
     this.equiposService.equiposPorProyecto(proyid)
@@ -93,6 +100,9 @@ export class DecisionPage implements OnInit {
       });
   }
 
+  /**
+   * @description Actualiza los cambios realizados al proyecto en la base de datos
+   */
   actualizarProyecto() {
 
     this.cargando = true;
@@ -130,6 +140,9 @@ export class DecisionPage implements OnInit {
       });
   }
 
+  /**
+   * @description Actualiza los cambios realizados a la tarea en la base de datos
+   */
   actualizarTarea() {
 
     this.cargando = true;
@@ -177,18 +190,24 @@ export class DecisionPage implements OnInit {
       
   }
 
+  /**
+   * @description Agrega un equipo a un proyecto determinado
+   * @param equipo equipo seleccionado por el usuario que va a asignar como participante al proyecto
+   */
   agregarEquipo(equipo) {
     equipo.eliminando = true;
-    //BEYCKER REVISAR PRIORIDAD - user.pers_id? o user.userid
     this.equiposService.agregarEquipoProyecto(this.proyecto.proj_id, equipo.team_id)
       .subscribe(() => {
         this.cargarEquipos(this.proyecto.proj_id);
       });
   }
 
+  /**
+   * @description Elimina un equipo de un proyecto determinado
+   * @param equipo equipo seleccionado por el usuario que va a eliminar del proyecto
+   */
   eliminarEquipo(equipo) {
     equipo.eliminando = true;
-    //BEYCKER REVISAR, antes tenia equid y se susituye por team_id, pero ni idea porque un usuario normalmente no tiene un team_id
     this.equiposService.eliminarEquipoProyecto(equipo.proj_team_id)
       .subscribe(() => {
         this.cargarEquipos(this.proyecto.proj_id);

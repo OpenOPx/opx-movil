@@ -49,7 +49,7 @@ export class ExplorarPage implements OnInit {
   }
 
   /**
-   * Inicializar mapa
+   * @description Inicialización del mapa
    */
   async leafletMap() {
     this.map = new Map('mapId').setView([3.4376309, -76.5429797], 16);
@@ -82,7 +82,7 @@ export class ExplorarPage implements OnInit {
   }
 
   /**
-   * Modal con información de poligono seleccionado
+   * @description Modal con información de poligono seleccionado
    */
   async openMyModal() {
     if (!this.barrioUbicacion) {
@@ -139,12 +139,18 @@ export class ExplorarPage implements OnInit {
       });
   }
 
+  /**
+   * @description Reproduce por voz la información del barrio seleccionado
+   */
   async reproducir() {
     this.cargaReproduccion = true;
     await this.contextoService.reproducir(this.barrioUbicacion, this.barrioSeleccionado);
     this.cargaReproduccion = false;
   }
 
+  /**
+   * @description Lista los contextos en el mapa
+   */
   listarContextos() {
     this.contextoService.listadoContextos()
       .subscribe((resp) => {
@@ -152,7 +158,7 @@ export class ExplorarPage implements OnInit {
         const gjLayer = [];
         areasMedicion.forEach(a => {
           a.datos.forEach(d => {
-            //BEYCKER REVISAR, se cambio gejson por data_geojson, ademas se hace un parse
+            
             const geoJS = JSON.parse(d.data_geojson);
             delete d.data_geojson;
             geoJS.features[0].properties = d;
@@ -183,17 +189,6 @@ export class ExplorarPage implements OnInit {
 
   ionViewWillLeave() {
     this.map.remove();
-  }
-
-  verNotificaciones(){
-    /*
-    const modal = await this.modalController.create({
-      component: ModalLoginComponent
-    });
-    modal.present();
-    */
-    //this.navCtrl.navigateForward(`/tabs/notificaciones`);
-    //this.router.navigateByUrl(`/tabs/notificaciones`);
   }
 
 }

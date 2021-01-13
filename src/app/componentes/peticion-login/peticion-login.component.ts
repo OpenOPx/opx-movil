@@ -21,6 +21,10 @@ export class PeticionLoginComponent implements OnInit {
 
   ngOnInit() { }
 
+  /**
+   * @description muestra el modal con los botones de iniciar sesión y registro
+   * @param component 
+   */
   async mostrarModal(component: string) {
     switch (component) {
       case 'login':

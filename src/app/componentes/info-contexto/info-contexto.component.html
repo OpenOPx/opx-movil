@@ -1,7 +1,6 @@
 <ion-header no-border>
   <ion-toolbar>
     <ion-text>
-      <!-- BEYCKER REVISAR-->
       <h3 class="ion-padding-horizontal" style="margin-bottom: 0px;"><b>Barrio
           {{barrioSeleccionado ? barrioSeleccionado.barrio : barrioUbicacion.barrio}}</b></h3>
       <ion-item lines="none">
@@ -54,7 +53,6 @@
   </ion-grid>
 
   <div *ngIf="!loadingBullets" class="ion-padding">
-    <!-- BEYCKER REVISAR-->
     <div *ngFor="let bullet of bulletCharts">
       <ion-label>{{bullet.title}}</ion-label>
       <jqxBulletChart width='95%' height='70px' barSize='50%' [showTooltip]='true' [title]='title'

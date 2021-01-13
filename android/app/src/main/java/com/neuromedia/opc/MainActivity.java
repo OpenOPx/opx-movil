@@ -1,4 +1,4 @@
-package com.neuromedia.opc;
+package com.icesi.opc;
 
 import android.os.Bundle;
 

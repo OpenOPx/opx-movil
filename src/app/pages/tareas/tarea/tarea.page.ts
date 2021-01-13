@@ -52,8 +52,6 @@ export class TareaPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(){
-    console.log("Tarea en el ngAfterViw")
-    console.log(this.tarea)
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -61,6 +59,9 @@ export class TareaPage implements OnInit, AfterViewInit {
     console.log(time)
   }
 
+  /**
+   * @description Carga el mapa mostrando el territorio de la tarea y la ubicación actual del usuario
+   */
   async ionViewDidEnter() {
 
     this.map = new Map(this.mapa.nativeElement).setView([3.4376309, -76.5429797], 12);
@@ -78,6 +79,10 @@ export class TareaPage implements OnInit, AfterViewInit {
     this.actualizaUbicacion();
   }
 
+  /**
+   * @description Carga el detalle de la tarea
+   * @param id id de a tarea a mostrar
+   */
   detalleTarea(id: string) {
     this.tareasService.detalleTarea(id)
       .subscribe(async resp => {
@@ -117,6 +122,9 @@ export class TareaPage implements OnInit, AfterViewInit {
       console.log(this.tarea)
   }
 
+  /**
+   * @description Actualiza la ubicación de usuario en el mapa
+   */
   actualizaUbicacion() {
     return this.ubicacionService.obtenerUbicacionActual()
       .then(async () => {
@@ -148,6 +156,9 @@ export class TareaPage implements OnInit, AfterViewInit {
       });
   }
 
+  /**
+   * @description Verifica si el usuario cumple las condiciones horarias y espaciales para realizar la encuesta, si es así, lo manda a la page de encuesta, de lo contrario le muestra el mensaje informativo
+   */
   async encuesta() {
     if (!this.ubicacionService.obtenerPoligono(this.geoJS).length) {
       await this.presentAlert();
@@ -193,17 +204,7 @@ export class TareaPage implements OnInit, AfterViewInit {
     //Restriccion dia fin
     var fechaInicioString: string = restrMonthEnd + '/' + restrDayEnd + '/' + restrYearEnd;
     var restriccionFechaFin = new Date(fechaInicioString);
-    //console.log("Fecha fin " + restriccionFechaFin)
 
-    //VARIABLES DE PRUEBA
-    //var restriccionFechaInicio = new Date('1/7/2021');
-    //var restriccionFechaFin = new Date('1/12/2021');
-    /*
-    if(fechaActual <= restriccionFechaInicio || fechaActual >= restriccionFechaFin){
-      await this.presentAlertDayTime();
-      return;
-    }
-*/
     if(fechaActual < restriccionFechaInicio || fechaActual > restriccionFechaFin){
       await this.presentAlertDayTime();
       return;
@@ -239,6 +240,19 @@ export class TareaPage implements OnInit, AfterViewInit {
           return;
         }
       }
+    }else if(hour < restrHourStart || hour > restrHourEnd){
+      await this.presentAlertDayTime();
+      return;
+    }else if(hour == restrHourStart){
+      if(minutes < restrMinutesStart){
+        await this.presentAlertDayTime();
+        return;
+      }
+    }else if(hour == restrHourEnd){
+      if(minutes > restrMinutesEnd){
+        await this.presentAlertDayTime();
+        return;
+      }
     }
     
     this.instrumentosServices.obtenerCantidadRespuestaFormularios(this.tarea.task_id)
@@ -252,6 +266,9 @@ export class TareaPage implements OnInit, AfterViewInit {
     modal.present();
   }
 
+  /**
+   * @description Verifica si el usuario cumple las condicines para realizar una tarea de tipo mapeo, si no las cumple, muestra un mensaje informativo
+   */
   async mapeo() {
     if (!this.ubicacionService.obtenerPoligono(this.geoJS).length) {
       await this.presentAlert();
@@ -268,6 +285,9 @@ export class TareaPage implements OnInit, AfterViewInit {
     modal.present();
   }
 
+  /**
+   * @description Opción validad unicamente para proyectistas y super administradores para validar las tareas realizadas.
+   */
   validar() {
     this.instrumentosServices.informacionInstrumento(this.tarea.task_id)
       .subscribe(async r => {
@@ -284,14 +304,12 @@ export class TareaPage implements OnInit, AfterViewInit {
           console.log('filter: '+ JSON.stringify(filter))
           const encuestas = [];
           r.info.forEach(data => {
-            //BEYCKER REVISAR. Estos atributos estan en el back en views.py def informacionInstrumento(request, id): y los deje igual
             const tmp = {
               encuestaid: data.encuestaid,
               estado: data.estado,
               observacion: data.observacion,
               formulario: []
             };
-            //BEYCKER REVISAR. Esta parte del label y respuesta tampoco la toqué
             filter.forEach(pregunta => {
               tmp.formulario.push({
                 label: pregunta.label,

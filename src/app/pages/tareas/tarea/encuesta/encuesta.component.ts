@@ -20,6 +20,9 @@ export class EncuestaComponent implements OnInit {
     private instrumentosServices: InstrumentosService,
     private datalocalservice: DataLocalService) { }
 
+  /**
+   * @description Obtiene el enlace de la encuesta en kobo para cargar la interfaz gráfica en el iframe
+   */
   ngOnInit() {
     this.instrumentosServices.enlaceFormularioKoboToolbox(this.id)
       .subscribe(enlace => {
@@ -28,6 +31,9 @@ export class EncuestaComponent implements OnInit {
       });
   }
 
+  /**
+   * @description Se activa al darle cerrar a la encuesta, su función permite saber si el usuario realizo o no la encuesta
+   */
   regresar() {
     this.modalCtrl.dismiss();
     console.log('Se activa al hacer x')

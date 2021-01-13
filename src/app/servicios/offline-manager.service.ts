@@ -23,7 +23,7 @@ interface StoredRequest {
 export class OfflineManagerService {
 
   /**
-   * Servicio encargado de gestionar las acciones realizadas en modo offline y sincronizarlas cuando exista una conexión a internet
+   * @description Servicio encargado de gestionar las acciones realizadas en modo offline y sincronizarlas cuando exista una conexión a internet
    */
   constructor(
     private storage: Storage,

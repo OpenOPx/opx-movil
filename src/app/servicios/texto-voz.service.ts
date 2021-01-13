@@ -7,14 +7,14 @@ import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 export class TextoVozService {
 
   /**
-   * Plugin que centraliza la función de convertir una cadena de texto a voz audible.
+   * @description Plugin que centraliza la función de convertir una cadena de texto a voz audible.
    */
   constructor(
     private tts: TextToSpeech
   ) { }
 
   /**
-   * Convierte texto a voz.
+   * @description Convierte texto a voz.
    */
   interpretar(text: string) {
     return this.tts.speak({

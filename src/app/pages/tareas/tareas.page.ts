@@ -35,7 +35,7 @@ export class TareasPage {
     this.cargando = true;
     if (this.authService.token) {
       this.usuario = await this.usuarioService.detalleUsuario(this.authService.user.userid).toPromise();
-      console.log(this.usuario)
+      
     }
     this.tareas = [];
     this.tareasCompletadas = [];
@@ -46,6 +46,10 @@ export class TareasPage {
     }
   }
 
+  /**
+   * @description Lista las tareas que conincida con el texto ingresado en el input de buscar
+   * @param event 
+   */
   buscar(event) {
     this.buscando = true;
     this.search = event.detail.value;
@@ -57,6 +61,11 @@ export class TareasPage {
       });
   }
 
+  /**
+   * @description Carga el listado de tareas del usuario logeado actualmente y las separa por tareas en progreso y completadas
+   * @param event 
+   * @param pull 
+   */
   incoming(event?, pull: boolean = false) {
     this.tareasService.listadoTareas(this.search, pull)
       .subscribe(resp => {
@@ -76,6 +85,9 @@ export class TareasPage {
       }));
   }
 
+  /**
+   * @description Hace un switch entre las tareas en progreso y las completadas
+   */
   segmentChanged() {
     this.segmentoCompletadas = !this.segmentoCompletadas;
     this.segmentoPendientes = !this.segmentoPendientes;

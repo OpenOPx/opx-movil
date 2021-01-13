@@ -8,23 +8,16 @@ export interface Tarea {
     isactive: number;
     instrument: string;
     task_observation: string;
-    //tarerestricgeo: any; //NO SE QUE SEA ESTE VALOR
     progreso: number; //Antes era progreso
-    //RESTRICCIONES
     task_restriction: any;
     project: any;
-    //tareafechadeejecucion
     task_quantity: number; 
-    //Nos llegan los demas atributos de task restriction
-    //- MUERE tarerestrictime: any; //NO SE QUE SEA
-    instrument_id: string; //PUEDE LLEGAR EL ID DEL INSTRUMENTO, O EL OBJETO INSTRUMENTO
-    proj_id: string; //Necesito el id del proyecto
-    instrument_name: string; //YA NO HAY INSTRUMENTO
+    instrument_id: string; 
+    proj_id: string; 
+    instrument_name: string; 
     territorial_dimension_id: string;
-    geojson_subconjunto: any; //YA ME MANDA UN JSON NO UN STRING, HAY QUE QUITARLE EL PARSE DE LOS ARCHIVOS QUE LO INVOCAN
-    //geoJS_subconjunto: Object; //MUERE MALDITO
-    task_creation_date: Date; //CREO QUE ESTA ES task_creation_date
-    //tarefechaejecucion: Date; //CREO QUE ES task_start_date
+    geojson_subconjunto: any; 
+    task_creation_date: Date; 
     task_description: string;
     task_completness: number;
     task_start_date: any;
@@ -33,6 +26,7 @@ export interface Tarea {
     end_time: any;
 }
 
+//Propiedades antes definidas por el equipo Neuromedia
 /*
 export interface Tarea {
     tareid: string;

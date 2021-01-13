@@ -18,7 +18,7 @@ export class AuthService {
   public user: User;
 
   /**
-   * Servicio que representa el registro, login de la aplicación movil.
+   * @description Servicio que representa el registro, login de la aplicación movil.
    */
   constructor(
     private http: HttpClient,
@@ -27,7 +27,7 @@ export class AuthService {
   ) { }
 
   /**
-   * Requerido para enviar objetos en el body de una petición HTTP
+   * @description Requerido para enviar objetos en el body de una petición HTTP
    */
   querystring(obj: object): string {
     return Object.keys(obj)
@@ -37,12 +37,11 @@ export class AuthService {
   }
 
   /**
-   * Autenticación de la plataforma
+   * @description Autenticación de la plataforma
    * @param email correo del usuario
    * @param password contraseña del usuario
    */
   login(email: string, password: string, fcm_token: string, type_device: string) {
-  //login(email: string, password: string) {
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const querystring = this.querystring({ username: email, password, fcm_token, type_device });
@@ -54,22 +53,7 @@ export class AuthService {
         await this.removeItems();
         await this.saveToken(resp.token);
         resp.user.password = password;
-        //BEYCKER REVISAR
-        //resp.user segun lo que veo tiene los atributos: userid, userfullname, useremail, rol, puntaje
-        //OJO con el rol, siempre lo cambie a role_name
-        /**
-         * data = {
-                    'token': str(refresh.access_token),
-                    'user': {
-                        'userid':       user.userid,
-                        'userfullname': user.userfullname,
-                        'useremail':    user.useremail,
-                        'rol':          rol.rolname,
-                        'puntaje':      user.puntaje
-                    },
-                    'code': 200
-                }
-         */
+        
         await this.saveUser(resp.user);
       }), catchError(this.handleError));
   }
@@ -101,7 +85,7 @@ export class AuthService {
   }
 
   /**
-   * Cierra sesión en la aplicación móvil.
+   * @description Cierra sesión en la aplicación móvil.
    * Se eliminan toda la información almaceneda en la memorial local y/o nativa.
    */
   logout() {
@@ -112,7 +96,7 @@ export class AuthService {
   }
 
   /**
-   * Obtiene el usuario actual
+   * @description Obtiene el usuario actual
    * En caso de no tenerlo, se redirige a la página principal
    */
   getUser() {
@@ -164,7 +148,7 @@ export class AuthService {
 
 
   /**
-   * Handles error
+   * @description Handles error
    * @param error type `HttpErrorResponse`
    * @returns throwError
    */

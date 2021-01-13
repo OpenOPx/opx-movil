@@ -10,14 +10,15 @@ export interface Proyecto {
     proj_start_date?: string;
     proj_external_id?: string;
     isactive?: number;
-    tasks?: Tarea[]; //Creo que se trae tasks o task, el nombre lo arreglo con leonardo
+    tasks?: Tarea[]; 
 }
-//HAY QUE MIRAR COMO SE MAPEA ESTO EN EL BACk
+
 export interface ProyectoBackend {
     proyecto: Proyecto;
     tareas: Tarea[];
 }
 
+//Propiedades antes definidas por el equipo Neuromedia
 /*
 export interface Proyecto {
     proyid?: string;

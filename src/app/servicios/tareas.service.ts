@@ -20,7 +20,7 @@ export class TareasService {
   pageTareas = 0;
 
   /**
-   * Servicio que se encarga de gestionar las tareas
+   * @description Servicio que se encarga de gestionar las tareas
    */
   constructor(
     private http: HttpClient,
@@ -32,7 +32,7 @@ export class TareasService {
 
 
   /**
-   * Guarda los cambios de una tarea.
+   * @description Guarda los cambios de una tarea.
    * SOLO ONLINE
    */
   editarTarea(tarea: Tarea) {
@@ -51,8 +51,9 @@ export class TareasService {
   }
 
   /**
-   * Guarda los cambios de una tarea.
+   * @description Guarda los cambios de una tarea.
    * SOLO ONLINE
+   * @param form objeto json con la información a actualizar
    */
   editarTareaProyectista(form: any) {
     const headers = new HttpHeaders({
@@ -70,7 +71,8 @@ export class TareasService {
   }
 
   /**
-   * Obtiene una tarea en detalle
+   * @description Obtiene una tarea en detalle
+   * @param tareid id de la tarea de la que se obtendrá el detalle
    */
   detalleTarea(tareid: string) {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
@@ -86,7 +88,7 @@ export class TareasService {
   }
 
   /**
-   * Carga la lista de tareas disponibles
+   * @description Carga la lista de tareas disponibles
    * @param search parametro de búsqueda
    */
   listadoTareas(search?: string, pull: boolean = false) {

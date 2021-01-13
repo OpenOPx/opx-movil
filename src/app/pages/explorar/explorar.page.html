@@ -9,7 +9,6 @@
 
   <!-- Botón flotante del proyectista -->
   <div *ngIf="authService.user">
-    <!-- BEYCKER REVISAR, es role_id o role_name o se va a quedar como rol?? Actualmente esta como rol en data y devuelve rolname-->
     <ion-fab *ngIf="authService.user.role_name === 'Proyectista' || authService.user.role_name === 'Super Administrador'"
       vertical="bottom" horizontal="start" slot="fixed">
       <ion-fab-button color="light" routerLink="proyectista">

@@ -32,9 +32,14 @@ export class ProyectoPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    //id del proyecto que se obtiene de la vista de proyectos
     this.activatedRoute.params.subscribe(params => this.detalleProyecto(params.id));
   }
 
+  /**
+   * @description Carga el detalle del proyecto para mostrar sus propiedades en pantalla
+   * @param proyid id del proyecto que se va a cargar en la vista
+   */
   detalleProyecto(proyid: string) {
     this.proyectosService.detalleProyecto(proyid)
       .subscribe(resp => {
@@ -52,6 +57,9 @@ export class ProyectoPage implements OnInit {
       });
   }
 
+  /**
+   * @description hace un swith al darle en el segmento de tareas o el de validar
+   */
   segmentChanged() {
     this.segmentoTareas = !this.segmentoTareas;
     this.segmentoValidar = !this.segmentoValidar;

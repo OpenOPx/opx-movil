@@ -26,7 +26,6 @@
         </ion-item>
       </ion-col>
 
-      <!-- BEYCKER REVISAR, se cambio proyecto.proyid por proyecto. -->
       <ion-col size="12" *ngFor="let proyecto of proyectos" (click)="irProyecto(proyecto.proj_id)">
         <ion-card>
           <ion-card-header style="padding-left: 0px;">
@@ -60,8 +59,6 @@
             <ion-grid>
               <ion-row>
                 <ion-col class="ion-padding-top">
-                  <!-- BEYCKER REVISAR, Que putas es reportes? -->
-                  <!-- Hay algo en proyetos.py llamado reportes, debe ser eso -->
                   <ion-text color="primary"><b>{{proyecto.proj_completness}}%</b> </ion-text>
                   <ion-text color="medium">
                     <b> Tareas</b>

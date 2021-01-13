@@ -10,7 +10,7 @@
   <ion-grid class="ion-padding-top" *ngIf="!cargando">
     <ion-row>
       <ion-col size="6" class="ion-padding-horizontal">
-        <!-- BEYCKER REVISAR, usuario.promocion ya creo que lo quitan. Antes renia despues del || 0" [max]="usuario.promocion.puntaje" -->
+        <!-- usuario.promocion lo quitan. Antes renia despues del || 0" [max]="usuario.promocion.puntaje" -->
         <round-progress [current]="usuario.pers_score || 0" [rounded]="true"
           [responsive]="true" [duration]="800" [animation]="'easeInOutQuart'" [animationDelay]="0">
         </round-progress>

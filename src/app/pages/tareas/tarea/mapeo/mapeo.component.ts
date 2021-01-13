@@ -77,9 +77,6 @@ export class MapeoComponent implements OnInit {
           geoJSON(JSON.parse(r), {
             onEachFeature: (feature, layer) => {
               feature.style = this.colorAleatorio();
-              //BEYCKER REVISAR. Este tipo no tengo ni idea a que hace referencia
-              //Preguntarle a Leonardo que puede estar trayendo
-              //Ese tipo parece crearlo en el metodo def detalleCartografia(tareid) del back en el archivo osm.py
               if (feature.properties && feature.properties.tipo) {
                 layer.bindPopup(feature.properties.tipo);
               }
@@ -99,7 +96,6 @@ export class MapeoComponent implements OnInit {
         this.cargando = false;
       });
 
-    //BEYCKER REVISAR. No le quité el JSON.parse, pero deberia porque Leonardo me dijo que ya me iba era a mandar el Json
     this.geoJS = geoJSON(JSON.parse(this.tarea.geojson_subconjunto)).addTo(this.map);
     this.map.fitBounds(this.geoJS.getBounds());
 
@@ -230,7 +226,7 @@ export class MapeoComponent implements OnInit {
    */
   async eliminarCartografia(layer) {
     this.loading = await this.uiService.presentLoading('Eliminando cartografía.');
-    //BEYCKER REVISAR. properties.id se dejó tal cual
+    
     this.instrumentosService.eliminarCartografia(layer.feature.properties.id)
       .subscribe(async () => {
         await this.loading.dismiss();

@@ -9,7 +9,7 @@ import { throwError } from 'rxjs';
 export class ErrorService {
 
   /**
-   * Clase que recibe los errores HTTP.
+   * @description Clase que recibe los errores HTTP.
    * Usada para administrar estos errores de manera centralizada.
    */
   constructor(
@@ -17,7 +17,7 @@ export class ErrorService {
   ) { }
 
   /**
-   * Handles error
+   * @description Handles error
    * @param error type `HttpErrorResponse`
    * @returns throwError
    */

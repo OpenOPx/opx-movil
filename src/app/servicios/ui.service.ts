@@ -7,7 +7,7 @@ import { ToastController, AlertController, LoadingController } from '@ionic/angu
 export class UiService {
 
   /**
-   * Servicio que centraliza y controla los mensajes emergentes de la aplicación móvil
+   * @description Servicio que centraliza y controla los mensajes emergentes de la aplicación móvil
    */
   constructor(
     private loadingController: LoadingController,

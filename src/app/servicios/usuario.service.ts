@@ -18,7 +18,7 @@ const URL = environment.API_URL + '/usuarios';
 export class UsuarioService {
 
   /**
-   * Servicio relacionado con la gestión del usuario logueado
+   * @description Servicio relacionado con la gestión del usuario logueado
    */
   constructor(
     private http: HttpClient,
@@ -39,7 +39,6 @@ export class UsuarioService {
       const headers = new HttpHeaders({ Authorization: this.authService.token });
       return this.http.get(`${URL}/detail/${id}`, { headers })
         .pipe(map((resp: any) => {
-          //BEYCKER REVISAR. Se cambio resp.usuario.rol por resp.usuario.role_name y getUser().role_name 
           if (this.authService.getUser().role_name !== resp.usuario.role_name) {
             this.authService.logout();
           }
@@ -63,11 +62,7 @@ export class UsuarioService {
     return this.http.post(`${URL}/${this.authService.user.userid}`, querystring, { headers })
       .pipe(map(async (resp: any) => {
         let user = this.authService.getUser();
-        //BEYCKER REVISAR PRIORIDAD; esta linea aparecia antes y se cambio por las dos siguientes: user.userfullname = resp.usuario.fields.userfullname;
-        //Quizas no fields no retorne pers_name y pers_lastname
         user.userfullname = resp.usuario.fields.pers_name + ' ' + resp.usuario.fields.pers_lastname;
-        //user.pers_name = resp.usuario.fields.pers_name;
-        //user.pers_lastname = resp.usuario.fields.pers_lastname;
         this.authService.saveUser(user);
       }), catchError(e => this.errorService.handleError(e)));
   }

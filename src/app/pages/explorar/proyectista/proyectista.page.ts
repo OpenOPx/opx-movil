@@ -47,19 +47,16 @@ export class ProyectistaPage implements OnInit {
   ionViewDidEnter() {
     this.leafletMap();
     if (this.territorioSeleccionado.proj_id) {
-      console.log("Entro al if de territorio")
       this.detalleProyecto(this.proyectoSeleccionado.proj_id);
     }
   }
 
-  /*
-  * Llena el atributo protectos con los proyectos actuales
-  */
+  /**
+   * @description Llena el atributo protectos con los proyectos actuales
+   */
   cargarProyectos() {
     this.proyectosService.listadoProyectos()
       .subscribe(resp => {
-        //BEYCKER REVISAR Aqui es resp.proyectos o resp.project
-        //Al solicitar peticion http get en environment.API_URL + '/proyectos' se revisa eso
         this.proyectos.push(...resp.proyectos);
         if (resp.paginator.currentPage !== resp.paginator.lastPage) {
           this.cargarProyectos();
@@ -72,8 +69,9 @@ export class ProyectistaPage implements OnInit {
       }));
   }
 
-  /*
-  * id: id del proyecto a buscar
+ /**
+  * @description Consulta las dimensiones territoriales de un proyecto
+  * @param id id del proyecto a buscar
   */
   detalleProyecto(id: string) {
 
@@ -82,7 +80,7 @@ export class ProyectistaPage implements OnInit {
         console.log(p)
         const gjLayer = [];
         p.forEach(element => {
-          //BEYCKER REVISAR: Se hace el parse o me llega directamente como json, y lo otro es el atributo
+          
           const geoJS = JSON.parse(element.dimension_geojson);
           console.log(geoJS)
           delete element.dimension_geojson;
@@ -93,7 +91,7 @@ export class ProyectistaPage implements OnInit {
 
         this.geoJSONDimensiones = geoJSON(gjLayer, {
           onEachFeature: (feature, layer) => {
-            //BEYCKER REVISAR: feature.properties.nombre o feature.properties. ??? pero es raro, porque segun yo, almacena el geojson y este no tiene atribito nombre
+            
             if (feature.properties && feature.properties.dimension_name) {
               layer.bindPopup(feature.properties.dimension_name);
             }
@@ -114,8 +112,7 @@ export class ProyectistaPage implements OnInit {
             console.log("Tareas")
             console.log(pp.tareas)
             pp.tareas.forEach(t => {
-              //BEYCKER REVISAR -> Antes era JSON.parse(t.geojson_subconjunto) pero leonardo me dijo que me lo mandaria como json, por eso le quité el parse
-              //Revisa si mandan geojson_subconjunto o dimension_geojson
+              
               const geoJS = JSON.parse(t.dimension_geojson);
               geoJS.properties = t;
               gjLayerr.push(geoJS);
@@ -142,6 +139,9 @@ export class ProyectistaPage implements OnInit {
 
   }
 
+  /**
+   * @description Abre el picker que permite seleccionar un proyecto determinado
+   */
   async presentPicker() {
     const picker = await this.pickerController.create({
       buttons: [{
@@ -160,9 +160,6 @@ export class ProyectistaPage implements OnInit {
 
           const q: any = Object.values(val)[0];
           this.proyectoSeleccionado = q.value;
-          console.log("proyecto seleccionado")
-          console.log(this.proyectoSeleccionado)
-          //console.log("this.proyectoSeleccionado.proj_id: " + this.proyectoSeleccionado.proj_id) //ESTA SUPER
           this.detalleProyecto(this.proyectoSeleccionado.proj_id);
         }
       }],
@@ -171,6 +168,9 @@ export class ProyectistaPage implements OnInit {
     picker.present();
   }
 
+  /**
+   * @description Muestra el mapa en pantalla
+   */
   async leafletMap() {
     this.map = new Map('mapPro').setView([3.4376309, -76.5429797], 13);
 
@@ -189,6 +189,9 @@ export class ProyectistaPage implements OnInit {
     });
   }
 
+  /**
+   * @description Abre el modal que permite editar la cantidad de encuestas
+   */
   async presentAlertPrompt() {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
       this.uiService.presentToast('Función disponible solo online');
@@ -260,6 +263,7 @@ export class ProyectistaPage implements OnInit {
     }
     return columns;
   }
+
   getColumnOptions(columnOptions) {
     const options = [];
     columnOptions.forEach(element => {
@@ -271,6 +275,10 @@ export class ProyectistaPage implements OnInit {
     return options;
   }
 
+  /**
+   * @description Envia a una interfaz que permite gestionar un cambio, sea de tiempo del proyecto, equipos o los tiempos de la tarea
+   * @param decision puede ser 'tiempo tarea', 'tiempo' o 'equipos'
+   */
   irDecision(decision) {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
       this.uiService.presentToast('Función disponible solo online');

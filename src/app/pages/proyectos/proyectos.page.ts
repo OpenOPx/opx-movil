@@ -28,6 +28,10 @@ export class ProyectosPage {
     this.incoming(null, true);
   }
 
+  /**
+   * Retorna los proyectos que coincidan con el texto ingresado en el input de busqueda
+   * @param event 
+   */
   buscar(event) {
     this.cargando = true;
     this.search = event.detail.value;
@@ -39,6 +43,9 @@ export class ProyectosPage {
       });
   }
 
+  /**
+   * @description Refresca para mostrar los nuevos proyectos listados
+   */
   refresh() {
     // tslint:disable-next-line: deprecation
     this.incoming(event, true);
@@ -46,12 +53,14 @@ export class ProyectosPage {
     this.proyectos = [];
   }
 
+  /**
+   * @description Carga el listado de los proyectos del usuario logeado
+   * @param event 
+   * @param pull 
+   */
   incoming(event?, pull: boolean = false) {
     this.proyectosService.listadoProyectos(this.search, pull)
       .subscribe(resp => {
-        console.log('AQUIIIIIIIIIIIIIIIIIIII')
-        //console.log(resp.proyectos[0].reportes['cantidad-integrantes'][0].count)
-        console.log(resp)
         this.proyectos.push(...resp.proyectos);
 
         this.proyectosTotales = resp.paginator.total;
@@ -68,6 +77,10 @@ export class ProyectosPage {
       }, (() => this.cargando = false));
   }
 
+  /**
+   * @description Metodo que se activa al darle tap a un card de proyecto, te redirecciona a la vista de detalle del proyecto
+   * @param proyid id del proyecto al que se le quiere ver el detalle
+   */
   irProyecto(proyid: string) {
     this.navCtrl.navigateForward(`/tabs/proyectos/p/${proyid}`);
   }

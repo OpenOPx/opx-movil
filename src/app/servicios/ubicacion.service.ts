@@ -20,7 +20,7 @@ export class UbicacionService {
   }
 
   /**
-   * Regresa la ubicación actual del dispositivo móvil
+   * @description Regresa la ubicación actual del dispositivo móvil
    */
   obtenerUbicacionActual() {
     return this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(resp => {
@@ -41,7 +41,7 @@ export class UbicacionService {
   }
 */
   /**
-   * Devuelve un arreglo de polígonos que contienen un punto.
+   * @description Devuelve un arreglo de polígonos que contienen un punto.
    */
   obtenerPoligono(geoJSON) {
     return leafletPip.pointInLayer([this.ubicacionActual.longitude, this.ubicacionActual.latitude], geoJSON);

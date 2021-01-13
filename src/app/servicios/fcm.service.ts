@@ -27,9 +27,8 @@ export class FcmService {
     ) { }
 
   public initPush() {
+   
     if (Capacitor.platform !== 'web') {
-      console.log('entro al initPush')
-      //this.token = 'Entro al if'
       this.registerPush();
     }
     console.log('no entro al initPush')
@@ -39,6 +38,9 @@ export class FcmService {
     return this.tokenbey;
   }
 
+  /**
+   * @description Verifica si hay permisos para enviar notificaciones push, permite obtener el token para las notificaciones y activa los listener de los diferentes eventos
+   */
   private registerPush() {
     // Request permission to use push notifications
     // iOS will prompt user and return if they granted permission or not

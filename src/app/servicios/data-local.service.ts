@@ -11,7 +11,7 @@ import { Proyecto, ProyectoBackend } from '../interfaces/proyecto';
 export class DataLocalService {
 
   /**
-   * Clase encargada de almacenar los recursos necesarios para ejecutar la aplicación cuando no haya conexión a internet.
+   * @description Clase encargada de almacenar los recursos necesarios para ejecutar la aplicación cuando no haya conexión a internet.
    */
   constructor(
     private storage: Storage,
@@ -39,7 +39,7 @@ export class DataLocalService {
   }
 
   /**
-   * Función que guarda localmente los proyectos que se consultaron cuando había conexión a internet.
+   * @description Función que guarda localmente los proyectos que se consultaron cuando había conexión a internet.
    */
   async guardarProyectos(proyectos: Proyecto[]) {
     for (const p of proyectos) {
@@ -96,14 +96,14 @@ export class DataLocalService {
   }
 
   /**
-   * Función que guarda localmente los proyectos en detalle que se consultaron cuando había conexión a internet.
+   * @description Función que guarda localmente los proyectos en detalle que se consultaron cuando había conexión a internet.
    */
   async guardarDetalleProyecto(resp: ProyectoBackend) {
     return this.guardarStorage('proyectos-detalle', resp.proyecto.proj_id, resp);
   }
 
   /**
-   * Carga del almacenamiento local un proyecto en detalle
+   * @description Carga del almacenamiento local un proyecto en detalle
    * @param proyid proyecto por cargar.
    */
   async detalleProyecto(proyid: string) {
@@ -111,7 +111,7 @@ export class DataLocalService {
   }
 
   /**
-   * Carga la lista de proyectos del almacenamiento local
+   * @description Carga la lista de proyectos del almacenamiento local
    * @param search opcional que permite filtrar la lista
    */
   async listarProyectos(search?: string) {
@@ -134,7 +134,7 @@ export class DataLocalService {
   }
 
   /**
-   * Guarda tareas en el almacenamiento local
+   * @description Guarda tareas en el almacenamiento local
    */
   async guardarTareas(tareas: Tarea[]) {
     for (const t of tareas) {
@@ -157,7 +157,7 @@ export class DataLocalService {
   }
 
   /**
-   * Carga la lista de tareas del almacenamiento local
+   * @description Carga la lista de tareas del almacenamiento local
    * @param search opcional que permite filtrar la lista
    */
   async listarTareas(search?: string) {
@@ -180,14 +180,14 @@ export class DataLocalService {
   }
 
   /**
-   * Función que guarda localmente las tarea en detalle que se consultaron cuando había conexión a internet.
+   * @description Función que guarda localmente las tarea en detalle que se consultaron cuando había conexión a internet.
    */
   guardarDetalleTarea(tareid: string, data: Tarea) {
     return this.guardarStorage('tareas-detalle', tareid, data);
   }
 
   /**
-   * Carga del almacenamiento local una tarea en detalle
+   * @description Carga del almacenamiento local una tarea en detalle
    * @param tareid tarea por cargar.
    */
   detalleTarea(tareid: string) {
@@ -195,7 +195,7 @@ export class DataLocalService {
   }
 
   /**
-   * Usado en la sección Explorar
+   * @description Usado en la sección Explorar
    */
   async contextos(contextos?) {
     if (contextos) {
@@ -379,7 +379,7 @@ export class DataLocalService {
   }
 
   /**
-   * Método genérico que carga los elemento almacenados en localStorage
+   * @description Método genérico que carga los elemento almacenados en localStorage
    * @param keyStorage Llave del campo
    * @param id del objeto por cargar
    */
@@ -395,7 +395,7 @@ export class DataLocalService {
   }
 
   /**
-   * Método genérico que guarda objetos en el localStorage del equipo
+   * @description Método genérico que guarda objetos en el localStorage del equipo
    * @param keyStorage Llave del campo
    * @param id del objeto por guardar
    * @param object elemento a guardar o actualizar

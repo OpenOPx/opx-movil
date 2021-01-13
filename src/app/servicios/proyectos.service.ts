@@ -20,7 +20,7 @@ export class ProyectosService {
   pageProyectos = 0;
 
   /**
-   * Servicio que gestiona los proyectos
+   * @description Servicio que gestiona los proyectos
    */
   constructor(
     private http: HttpClient,
@@ -31,7 +31,7 @@ export class ProyectosService {
   ) { }
 
   /**
-   * Carga la lista de proyectos.
+   * @description Carga la lista de proyectos.
    * Se está Online consulta en el servidor remoto, de lo contario hace una consulta local
    * @param search palabra clave
    * @param pull bandera para traer nueva página. Es usada solo en modo Online
@@ -53,32 +53,12 @@ export class ProyectosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarProyectos(resp.proyectos);
           return resp;
-          /*
-          La respuesta es así
-          data = {
-                'code': 200,
-                'proyectos': listadoProyectos,
-                'status': 'success'
-            }
-            o asi
-            data = {
-                'code': 200,
-                'paginator': {
-                    'currentPage': int(page),
-                    'perPage': paginator.per_page,
-                    'lastPage': paginator.num_pages,
-                    'total': paginator.count
-                },
-                'proyectos': proyectos,
-                'status': 'success',
-            }
-          */
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
 
   /**
-   * Carga un proyecto en detalle
+   * @description Carga el detalle de un proyecto
    */
   detalleProyecto(proyid: string) {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
@@ -88,28 +68,16 @@ export class ProyectosService {
 
       return this.http.get(`${URL}/detail/${proyid}`, { headers })
         .pipe(map((resp: any) => {
-          //BEYCKER REVISAR -> Revisar si este endpoint me retorna resp.detaail.proyecto o project
-          //se cambio proyecto.proyid por proj_id
           resp.detail.proyecto.proj_id = proyid;
           this.dataLocalService.guardarDetalleProyecto(resp.detail);
           return resp.detail;
-          //El detail contiene el proyecto cuyo id se trajo y las tareas asociadas
-          /**
-           * data = {
-                    'code': 200,
-                    'detail':{
-                      'proyecto': proyecto[0],
-                      'tareas': list(tareas)
-                    },
-                    'status': 'success'
-                }
-           */
+          
         }), catchError(e => this.errorService.handleError(e)));
     }
   }
 
   /**
-   * Actualiza un proyecto
+   * @description Actualiza un proyecto
    * SOLO ONLINE
    */
   actualizarProyecto(proyecto: Proyecto) {
@@ -128,6 +96,10 @@ export class ProyectosService {
 
   }
 
+  /**
+   * @description Actualiza la gestiónd e cambio de un proyecto, sea de cambio de equipo o de restriccion de inicio y fin del proyecto
+   * @param proyecto proyecto que será actualizado
+   */
   actualizarProyectoMovil(proyecto: Proyecto) {
     const headers = new HttpHeaders({
       Authorization: this.authService.token,
@@ -145,7 +117,7 @@ export class ProyectosService {
   }
 
   /**
-   * Obtiene las dimensiones territoriales por proyecto
+   * @description Obtiene las dimensiones territoriales por proyecto
    */
   dimensionesTerritoriales(proyid: string) {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline) {
@@ -156,19 +128,7 @@ export class ProyectosService {
         .pipe(map((resp: any) => {
           this.dataLocalService.guardarDimensionesTerritoriales(proyid, resp.dimensionesTerritoriales);
           return resp.dimensionesTerritoriales;
-          /**
-           * data = {
-            'code': 200,
-            'dimensionesTerritoriales': list(dimensionesTerritoriales) {
-                          dimensionid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-                          proyid = models.UUIDField(null=True)
-                          nombre = models.CharField(max_length=255, null=True)
-                          geojson = models.CharField(max_length=1000, null=True)
-                          estado = models.IntegerField(default=1)
-                   }
-            'status': 'success'
-            }
-           */
+          
         }), catchError(e => this.errorService.handleError(e)));
     }
   }

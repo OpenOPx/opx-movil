@@ -19,7 +19,7 @@ export class EquiposService {
   ) { }
 
   /**
-   * Lista de equipos por proyecto
+   * @description Lista de equipos por proyecto
    * @param proyid Id del proyecto
    */
   equiposPorProyecto(proyid: string) {
@@ -27,33 +27,24 @@ export class EquiposService {
 
     return this.http.get(`${URL}/list/${proyid}`, { headers })
       .pipe(map((resp: any) => {
-        console.log("Respuesta del listado de equipos asociados al proyecto")
-        console.log(resp)
         return resp.equipo;
-        //BEYCKER REVISAR
-        //Creo que retorna el equipo, es decir, todos los usarios del Proyecto cuyo ID sea el que se le pasa por parametro
-        //Decirle a Leonanardo que pruebe que retorna esta peticion
       }), catchError(e => this.errorService.handleError(e)));
   }
 
   /**
-   * Lista los usuarios disponibles por proyecto
+   * @description Lista los usuarios disponibles por proyecto
    * @param proyid Identificador del proyecto
    */
   usuariosDisponibles(proyid: string) {
     const headers = new HttpHeaders({ Authorization: this.authService.token });
     return this.http.get(`${URL}/${proyid}/equipos-disponibles/`, { headers })
       .pipe(map((resp: any) => {
-        //BEYCKER REVISAR - Que devuelve esto? Usuarios que atributos tiene
-        //Preguntarle a Leonardo que me devuelve esta peticion
-        console.log("Respuesta del listado de equipos que pueden ser asociados al proyecto")
-        console.log(resp)
         return resp.equipo;
       }), catchError(e => this.errorService.handleError(e)));
   }
 
   /**
-   * Método que se encarga de asignar un usuario a un proyecto
+   * @description Método que se encarga de asignar un usuario a un proyecto
    * Solo realizado por Proyectista
    */
   agregarEquipoProyecto(proyectoId: string, equipoId: string) {
@@ -68,7 +59,7 @@ export class EquiposService {
   }
 
   /**
-   * Elimina un usuario de proyecto
+   * @description Elimina un usuario de proyecto
    */
   eliminarEquipoProyecto(equid: string) {
     const headers = new HttpHeaders({ Authorization: this.authService.token });

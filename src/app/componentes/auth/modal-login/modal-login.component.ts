@@ -23,7 +23,6 @@ export class ModalLoginComponent implements OnInit {
 
   loading;
   type_device;
-  //tokenmovil: string;
 
   constructor(
     private modalCtrl: ModalController,
@@ -38,22 +37,18 @@ export class ModalLoginComponent implements OnInit {
     if (this.platform.is('ios')) {
       // This will only print when on iOS
       this.type_device = 'ios'
-      //console.log('I am an iOS device!');
      }
      if (this.platform.is('android')) {
       // This will only print when on Android
       this.type_device = 'android'
-      //console.log('I am an android device!');
      }
      if (this.platform.is('desktop')) {
       // This will only print when on Web
       this.type_device = 'web'
-      //console.log('I am an android device!');
      }
   }
 
   ngOnInit() { 
-    //this.fcmService.initPush();
   }
 
   /**
@@ -67,8 +62,7 @@ export class ModalLoginComponent implements OnInit {
     }
     
     this.loading = await this.uiService.presentLoading('Ingresando...');
-    
-    //BEYCKER REVISAR: Tengo que revisar si este tokenmovil lo puedo asignar asi, porque retorna una promesa
+   
     this.datalocalservice.obtenerTokenMovil().then(resp => {
       //this.tokenmovil = resp;
       this.authService.login(form.value.email, form.value.password, resp, this.type_device)

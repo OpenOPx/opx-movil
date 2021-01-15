@@ -17,7 +17,7 @@ export class NotificacionesPage implements OnInit {
   constructor(
     private router: Router,
     private navCtrl: NavController,
-    private notificacionesService: NotificacionesService
+    public notificacionesService: NotificacionesService
     ) { }
 
 

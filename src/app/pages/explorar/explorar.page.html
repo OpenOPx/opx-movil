@@ -36,12 +36,13 @@
   </ion-fab>
 
   <!-- Botón flotante para las notificaciones -->
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button color="light" routerLink="notificaciones">
-      <ion-icon color="primary" name="notifications-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
+  <div *ngIf="authService.user">
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+      <ion-fab-button color="light" routerLink="notificaciones">
+        <ion-icon color="primary" name="notifications-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
 
 </ion-content>
 
